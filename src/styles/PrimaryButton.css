@@ -1,0 +1,52 @@
+.primary-button {
+  display: block;
+  background-color: #F22B3E;
+  color: #F2F2F2;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.625rem 3rem;
+  width: 100% !important;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 0.375rem 0;
+}
+
+.primary-button-text {
+  color: #F2F2F2;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.primary-button-medium-margin {
+  display: block;
+  background-color: #F22B3E;
+  color: #F2F2F2;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.625rem 3rem;
+  width: 100% !important;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 0.625rem 0;
+}
+
+.primary-button-medium-margin-text {
+  color: #F2F2F2;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.disabled-button {
+  display: block;
+  background-color: #989898;
+  color: #131425;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.625rem 3rem;
+  width: 100% !important;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 0.375rem 0;
+  position: relative;
+}
+/*# sourceMappingURL=PrimaryButton.css.map */

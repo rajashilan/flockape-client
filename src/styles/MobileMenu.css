@@ -1,0 +1,74 @@
+.mobileMenuMask {
+  background-color: rgba(0, 0, 0, 0.9);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 50;
+}
+
+.mobileMenu {
+  background-color: #131425;
+  position: absolute;
+  padding: 1.5rem;
+  top: 0;
+  right: 0;
+  width: 75vw;
+  height: 100vh;
+  display: block;
+  z-index: 50;
+  text-align: center;
+}
+
+.closeDiv {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 2.125rem;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.closeButton {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.displayItems {
+  display: block;
+  margin-top: 4.625rem;
+}
+
+.noBullets {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menuItemsContainer {
+  margin-top: 1.25rem;
+}
+
+.menuItems {
+  display: block;
+  text-decoration: none;
+  color: #989898;
+  font-weight: 300;
+  font-size: 1rem;
+  margin-bottom: 1.875rem !important;
+}
+
+.menuItems-Priority {
+  color: #F2F2F2;
+  font-weight: 400;
+}
+
+.hidden {
+  display: none;
+}
+/*# sourceMappingURL=MobileMenu.css.map */

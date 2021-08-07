@@ -1,0 +1,40 @@
+@import "../scssVariables/variables.scss";
+
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+  background-color: $bgColor;
+}
+
+*,
+::after,
+::before {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Avenir", sans-serif;
+  color: $primaryText;
+}
+
+a {
+  text-decoration: none;
+}
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: $tertiaryText;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: $tertiaryText;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: $tertiaryText;
+}

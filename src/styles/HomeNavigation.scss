@@ -1,0 +1,23 @@
+@import "../scssVariables/variables.scss";
+
+.home-navigation {
+  &-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.25rem 0;
+  }
+
+  &-items {
+    color: $secondaryText;
+    font-weight: 300;
+    font-size: 1.125rem;
+    margin: 0 0.625rem;
+  }
+
+  &-items-active {
+    color: $primaryText;
+    font-weight: 500;
+    font-size: 1.375rem;
+  }
+}

@@ -1,0 +1,26 @@
+.home-navigation-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 1.25rem 0;
+}
+
+.home-navigation-items {
+  color: #D3D3D3;
+  font-weight: 300;
+  font-size: 1.125rem;
+  margin: 0 0.625rem;
+}
+
+.home-navigation-items-active {
+  color: #F2F2F2;
+  font-weight: 500;
+  font-size: 1.375rem;
+}
+/*# sourceMappingURL=HomeNavigation.css.map */
