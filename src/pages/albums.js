@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import HomeNavigation from "../components/HomeNavigation";
 import SearchBar from "../components/SearchBar";
 import Album from "../components/Album";
@@ -25,6 +26,18 @@ export class albums extends Component {
       });
   }
 
+  Verification = () => {
+    if (this.props.location.state) {
+      return (
+        <p className="label-verification">
+          A verification link has been sent to your email. Please click the link
+          and complete your registration process to start creating albums. Thank
+          you!
+        </p>
+      );
+    } else return null;
+  };
+
   render() {
     let albumData = this.state.albums ? (
       this.state.albums.map((album) => (
@@ -35,6 +48,7 @@ export class albums extends Component {
     );
     return (
       <div>
+        <this.Verification />
         <HomeNavigation />
         <SearchBar placeholder="Search for your albums..." />
         <div className="album-container">{albumData}</div>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 //css
 import "../styles/Navbar.css";
 import "../styles/MobileMenu.css";
@@ -7,12 +8,26 @@ import "../styles/PrimaryButton.css";
 //images
 import logo from "./images/logo@2x.png";
 import searchIcon from "./images/searchIcon@2x.png";
+import notificationIcon from "./images/notificationIcon@2x.png";
 //components
+import SearchedUserCard from "./SearchedUserCard";
+import LoadingSearchedUserCard from "./LoadingSearchedUserCard";
+
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+import { logoutUser } from "../redux/actions/userActions";
+
+//VIEW PROFILE AND SHARE PROFILE ONLY VISIBLE WHEN USER LOGGED IN
 
 export class Navbar2 extends Component {
   state = {
     showMobileMenu: false,
     showSearchButton: false,
+    loadingUser: false,
+    searchedUsers: null,
+    username: "", //for searching user
+    userNotFound: false,
   };
 
   showMenu = () => {
@@ -24,136 +39,319 @@ export class Navbar2 extends Component {
   showSearchBar = () => {
     this.setState({
       showSearchButton: !this.state.showSearchButton,
+      username: "",
+      searchedUsers: null,
     });
   };
 
-  render() {
-    //mobile menu subcomponent
-    const MobileMenu = (props) => {
-      if (props.isActive) {
-        return (
-          <div className="mobileMenuMask">
-            <div className="mobileMenu">
-              <div className="displayItems">
-                <Link
-                  onClick={this.showMenu}
-                  className="primary-button-medium-margin"
-                  to="/login"
-                >
-                  Log In
-                </Link>
-                <Link
-                  onClick={this.showMenu}
-                  className="primary-button-medium-margin"
-                  to="/signup"
-                >
-                  Sign Up
-                </Link>
-                <div className="menuItemsContainer">
-                  <ul className="noBullets">
-                    <li>
-                      <a href="#" className="menuItems">
-                        Leave Feedback
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="menuItems">
-                        Report a Bug
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="menuItems ">
-                        Share flockape
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="menuItems-Priority">
-                        Support Us
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
+  handleLogOut = () => {
+    this.showMenu();
+    this.props.logoutUser();
+  };
+
+  handleChange = (event) => {
+    this.setState(
+      {
+        [event.target.name]: event.target.value,
+        loadingUser: true,
+      },
+      () => {
+        if (this.state.username.length < 1) {
+          this.setState({
+            loadingUser: false,
+            searchedUsers: null,
+            userNotFound: false,
+          });
+        } else {
+          this.searchUser();
+        }
       }
-      return null;
+    );
+  };
+
+  searchUser = () => {
+    const searchUserData = {
+      username: this.state.username,
     };
-
-    //dynamic classnames for hamburger and close button in nav
-    //hide and show according to menu state
-    let hamburgerContainer;
-    let closeContainer;
-    let searchButtonContainer;
-    let searchBar;
-    let button;
-    let cancelButtonContainer;
-    let navBarLogoContainer;
-
-    if (this.state.showMobileMenu) {
-      hamburgerContainer = "navbar-hamburger-container navbar-hidden";
-      closeContainer = "navbar-close-container";
-    } else {
-      hamburgerContainer = "navbar-hamburger-container";
-      closeContainer = "navbar-close-container navbar-hidden";
+    if (searchUserData.username.length >= 3) {
+      axios
+        .post("/searchUser", searchUserData)
+        .then((res) => {
+          this.setState(
+            {
+              searchedUsers: res.data,
+              loadingUser: false,
+              userNotFound: false,
+            },
+            () => {
+              if (
+                this.state.searchedUsers &&
+                this.state.searchedUsers.length === 0
+              ) {
+                this.setState({
+                  userNotFound: true,
+                });
+              }
+            }
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
+  };
 
-    if (this.state.showSearchButton) {
-      searchButtonContainer = "navbar-search-button-container navbar-hidden";
-      searchBar = "navbar-search-bar";
-      button = "navbar-button navbar-hidden";
-      cancelButtonContainer = "navbar-cancel-button-container";
-      navBarLogoContainer = "navbar-controlled-link navbar-hidden";
-    } else {
-      searchButtonContainer = "navbar-search-button-container";
-      searchBar = "navbar-search-bar navbar-hidden";
-      button = "navbar-button";
-      cancelButtonContainer = "navbar-cancel-button-container navbar-hidden";
-      navBarLogoContainer = "navbar-controlled-link";
-    }
+  render() {
+    const {
+      user: {
+        authenticated,
+        loading,
+        credentials: { profileImg, notifications },
+      },
+    } = this.props;
+
+    let mobileMenuContainer = !authenticated ? (
+      <div className="displayItems">
+        <Link
+          onClick={this.showMenu}
+          className="primary-button-medium-margin"
+          to="/login"
+        >
+          Log In
+        </Link>
+        <Link
+          onClick={this.showMenu}
+          className="primary-button-medium-margin"
+          to="/signup"
+        >
+          Sign Up
+        </Link>
+        <div className="menuItemsContainer">
+          <ul className="noBullets">
+            <li>
+              <Link
+                onClick={this.showMenu}
+                className="menuItems-Priority"
+                to="/profile"
+              >
+                Support Us
+              </Link>
+            </li>
+            <li>
+              <Link onClick={this.showMenu} className="menuItems" to="/profile">
+                Leave Feedback
+              </Link>
+            </li>
+            <li>
+              <Link onClick={this.showMenu} className="menuItems" to="/profile">
+                Report a Bug
+              </Link>
+            </li>
+            <li>
+              <Link onClick={this.showMenu} className="menuItems" to="/profile">
+                Share flockape
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    ) : (
+      <div className="displayItems">
+        <Link
+          onClick={this.showMenu}
+          className="primary-button-medium-margin"
+          to="#"
+        >
+          Add an Album
+        </Link>
+        <div className="menuItemsContainer">
+          <ul className="noBullets">
+            <li>
+              <Link
+                onClick={this.showMenu}
+                className="menuItems-Priority"
+                to="/profile"
+              >
+                View Profile
+              </Link>
+            </li>
+            <li>
+              <Link
+                onClick={this.showMenu}
+                className="menuItems-Priority"
+                to="/profile"
+              >
+                Manage Account
+              </Link>
+            </li>
+            <li>
+              <Link
+                onClick={this.showMenu}
+                className="menuItems-Priority"
+                to="/profile"
+              >
+                Share your Profile
+              </Link>
+            </li>
+            <li>
+              <Link
+                onClick={this.showMenu}
+                className="menuItems-Priority"
+                to="/profile"
+              >
+                Support Us
+              </Link>
+            </li>
+            <li>
+              <Link onClick={this.showMenu} className="menuItems" to="/profile">
+                Leave Feedback
+              </Link>
+            </li>
+            <li>
+              <Link
+                onClick={this.showMenu}
+                className="menuItems"
+                to="/signup-add-details"
+              >
+                Report a Bug
+              </Link>
+            </li>
+            <li>
+              <p onClick={this.handleLogOut} className="menuItems">
+                Log Out
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+
+    let searchIconClassName = authenticated
+      ? "navbar-search-button-authenticated-container"
+      : "navbar-search-button-unauthenticated-container";
+
+    let userImageClassName = loading
+      ? "navbar-profile-image-loading"
+      : "navbar-profile-image";
+
+    let searchedUserData = this.state.searchedUsers ? (
+      this.state.searchedUsers.map((user) => (
+        <SearchedUserCard key={user.username} user={user} />
+      ))
+    ) : (
+      <p></p>
+    );
 
     return (
       <div className="navbar">
-        <Link to="/albums" className={navBarLogoContainer}>
-          <img className="navbar-logo" src={logo} alt="flockape" />
-        </Link>
+        {!this.state.showSearchButton && (
+          <Link to="/albums" className="navbar-controlled-link">
+            <img className="navbar-logo" src={logo} alt="flockape" />
+          </Link>
+        )}
 
-        <input
-          type="text"
-          placeholder="Search for a user"
-          className={searchBar}
-        />
+        {this.state.showSearchButton && (
+          <input
+            type="text"
+            placeholder="Search for a user"
+            name="username"
+            autoComplete="off"
+            className="navbar-search-bar"
+            value={this.state.username}
+            onChange={this.handleChange}
+          />
+        )}
 
-        <div onClick={this.showSearchBar} className={cancelButtonContainer}>
-          <p className="navbar-cancel-button">Cancel</p>
-        </div>
-
-        <div onClick={this.showSearchBar} className={searchButtonContainer}>
-          <img src={searchIcon} alt="search" className="navbar-search-button" />
-        </div>
-
-        <Link className={button} to="/signup">
-          Sign Up
-        </Link>
-
-        <div className={hamburgerContainer} onClick={this.showMenu}>
-          <div className="navbar-hamburger"></div>
-          <div className="navbar-hamburger"></div>
-          <div className="navbar-hamburger"></div>
-        </div>
-
-        <div className={closeContainer} onClick={this.showMenu}>
-          <div className="navbar-close-top">
-            <div className="navbar-close-bottom"></div>
+        {this.state.showSearchButton && (
+          <div
+            onClick={this.showSearchBar}
+            className="navbar-cancel-button-container"
+          >
+            <p className="navbar-cancel-button">Cancel</p>
           </div>
-        </div>
+        )}
 
-        {/* pass the state as a props and render mobile menu based on that */}
-        <MobileMenu isActive={this.state.showMobileMenu} />
+        {authenticated && !this.state.showSearchButton && (
+          <div className="navbar-profile-image-container">
+            <img src={profileImg} className={userImageClassName} />
+          </div>
+        )}
+
+        {!this.state.showSearchButton && (
+          <div onClick={this.showSearchBar} className={searchIconClassName}>
+            <img
+              src={searchIcon}
+              alt="search"
+              className="navbar-search-button"
+            />
+          </div>
+        )}
+
+        {!authenticated && !this.state.showSearchButton && (
+          <Link className="navbar-button" to="/signup">
+            Sign Up
+          </Link>
+        )}
+
+        {authenticated && !this.state.showSearchButton && (
+          <div className="navbar-notification-button-container">
+            <img
+              src={notificationIcon}
+              alt="notification icon"
+              className="navbar-notification-button"
+            />
+          </div>
+        )}
+
+        {!this.state.showMobileMenu && (
+          <div className="navbar-hamburger-container" onClick={this.showMenu}>
+            <div className="navbar-hamburger"></div>
+            <div className="navbar-hamburger"></div>
+            <div className="navbar-hamburger"></div>
+          </div>
+        )}
+
+        {this.state.showMobileMenu && (
+          <div className="navbar-close-container" onClick={this.showMenu}>
+            <div className="navbar-close-top">
+              <div className="navbar-close-bottom"></div>
+            </div>
+          </div>
+        )}
+
+        {this.state.username.length > 0 && (
+          <div className="searchUser-cards-container">
+            <LoadingSearchedUserCard
+              loadingUser={this.state.loadingUser}
+              notFound={this.state.userNotFound}
+            />
+          </div>
+        )}
+
+        {this.state.searchedUsers && (
+          <div className="searchUser-cards-container">{searchedUserData}</div>
+        )}
+
+        {this.state.showMobileMenu && (
+          <div className="mobileMenuMask">
+            <div className="mobileMenu">{mobileMenuContainer}</div>
+          </div>
+        )}
       </div>
     );
   }
 }
 
-export default Navbar2;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+const mapActionToProps = {
+  logoutUser,
+};
+
+Navbar2.propTypes = {
+  user: PropTypes.object.isRequired,
+};
+
+export default connect(mapStateToProps, mapActionToProps)(Navbar2);

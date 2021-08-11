@@ -1,0 +1,32 @@
+@import "../scssVariables/variables.scss";
+
+.back-button {
+  &-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0.9375rem 0 0 0;
+    padding: 0 1rem;
+  }
+
+  &-link {
+    height: auto;
+    width: auto;
+    display: flex;
+    align-items: center;
+  }
+
+  &-img {
+    height: 1.125rem;
+    width: 0.6875rem;
+    object-fit: cover;
+    margin: 0 0.625rem 0 0;
+  }
+
+  &-text {
+    color: $primaryText;
+    font-weight: 500;
+    font-size: 1rem;
+    margin: 0;
+  }
+}

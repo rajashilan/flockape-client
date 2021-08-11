@@ -43,17 +43,6 @@ class login extends Component {
     });
   };
 
-  Verification = () => {
-    if (this.props.location.state) {
-      return (
-        <p className="label-verification">
-          A verification link has been sent to your email account. Please click
-          on that link to complete your registration process. Thank you!
-        </p>
-      );
-    } else return null;
-  };
-
   render() {
     const {
       UI: { loading },
@@ -73,7 +62,6 @@ class login extends Component {
 
     return (
       <div>
-        <this.Verification />
         <div className="login-text-container">
           <h1 className="login-header">Log In</h1>
           <h3 className="login-paragraph">

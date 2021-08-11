@@ -64,8 +64,12 @@
 }
 
 .menuItems-Priority {
+  display: block;
+  text-decoration: none;
   color: #F2F2F2;
   font-weight: 400;
+  font-size: 1rem;
+  margin-bottom: 1.875rem !important;
 }
 
 .hidden {

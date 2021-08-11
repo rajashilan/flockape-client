@@ -1,0 +1,98 @@
+@import "../scssVariables/variables.scss";
+
+.signup-uploadImage {
+  &-container {
+    display: block;
+    padding: 0 1rem;
+    margin: 1.25rem 1rem;
+  }
+
+  &-header {
+    color: $primaryText;
+    font-weight: 700;
+    font-size: 1.375rem;
+    margin: 0;
+  }
+
+  &-text {
+    color: $secondaryText;
+    font-weight: 300;
+    font-size: 0.875rem;
+    margin: 0.3125rem 0 0 0;
+  }
+
+  &-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 1.875rem 0 0 0;
+  }
+
+  &-img {
+    height: 6.25rem;
+    min-width: 6.25rem;
+    width: 6.25rem;
+    max-width: 6.25rem;
+    border-radius: 50%;
+    border: none;
+    object-fit: cover;
+    margin: 0 1rem 0 0;
+
+    &-loading {
+      height: 6.25rem;
+      width: 6.25rem;
+      min-width: 6.25rem;
+      max-width: 6.25rem;
+      border-radius: 50%;
+      border: none;
+      margin: 0 1rem 0 0;
+      background-color: $tertiaryText;
+      object-fit: cover;
+    }
+  }
+
+  &-action-container {
+    display: block;
+    margin: 0;
+    width: 100%;
+  }
+
+  &-primary-button {
+    display: block;
+    background-color: $bgColorPrimaryButton;
+    color: $primaryText;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0.625rem 1rem;
+    width: 100% !important;
+    border: none;
+    border-radius: 0.3125rem;
+    margin: 0.375rem 0;
+  }
+
+  &-secondary-button {
+    display: block;
+    background-color: $bgColor3;
+    color: $primaryText;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0.625rem 1rem;
+    width: 100% !important;
+    border: none;
+    border-radius: 0.3125rem;
+    margin: 0.75rem 0;
+  }
+
+  &-disabled-button {
+    display: block;
+    background-color: $tertiaryText;
+    color: $bgColor;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0.625rem 1rem;
+    width: 100% !important;
+    border: none;
+    border-radius: 0.3125rem;
+    margin: 0.75rem 0;
+  }
+}

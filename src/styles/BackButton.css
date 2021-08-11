@@ -1,0 +1,40 @@
+.back-button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  margin: 0.9375rem 0 0 0;
+  padding: 0 1rem;
+}
+
+.back-button-link {
+  height: auto;
+  width: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.back-button-img {
+  height: 1.125rem;
+  width: 0.6875rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin: 0 0.625rem 0 0;
+}
+
+.back-button-text {
+  color: #F2F2F2;
+  font-weight: 500;
+  font-size: 1rem;
+  margin: 0;
+}
+/*# sourceMappingURL=BackButton.css.map */

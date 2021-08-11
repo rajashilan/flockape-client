@@ -5,6 +5,7 @@ import {
   CLEAR_ERRORS,
   LOADING_UI,
   SET_UNAUTHENTICATED,
+  LOADING_USER,
 } from "../types";
 
 export const loginUser = (userData, history) => (dispatch) => {
@@ -33,10 +34,7 @@ export const signupUser = (newUserData, history) => (dispatch) => {
       setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
       dispatch({ type: CLEAR_ERRORS });
-      history.push({
-        pathname: "/login",
-        state: { verification: res.data.message },
-      }); //should push to upload image and so on pages
+      history.push("/signup-upload-image");
     })
     .catch((error) => {
       dispatch({
@@ -52,9 +50,11 @@ export const logoutUser = () => (dispatch) => {
   dispatch({
     type: SET_UNAUTHENTICATED,
   });
+  window.location.href = "/login";
 };
 
 export const getUserData = () => (dispatch) => {
+  dispatch({ type: LOADING_USER });
   axios
     .get("/user")
     .then((res) => {
@@ -62,6 +62,30 @@ export const getUserData = () => (dispatch) => {
         type: SET_USER,
         payload: res.data,
       });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const uploadImage = (formData) => (dispatch) => {
+  dispatch({ type: LOADING_USER });
+  axios
+    .post("/user/image", formData)
+    .then(() => {
+      dispatch(getUserData());
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const editUserDetails = (userDetails) => (dispatch) => {
+  dispatch({ type: LOADING_USER });
+  axios
+    .post("/user", userDetails)
+    .then(() => {
+      dispatch(getUserData());
     })
     .catch((error) => {
       console.log(error);

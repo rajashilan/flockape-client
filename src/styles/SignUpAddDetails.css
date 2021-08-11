@@ -1,0 +1,137 @@
+.signup-add-details-container {
+  display: block;
+  margin: 1.25rem 1rem;
+}
+
+.signup-add-details-header {
+  color: #F2F2F2;
+  font-weight: 700;
+  font-size: 1.375rem;
+  margin: 0;
+  padding: 0 0.3125rem;
+}
+
+.signup-add-details-text {
+  color: #D3D3D3;
+  font-weight: 300;
+  font-size: 0.875rem;
+  margin: 0.3125rem 0 0 0;
+  padding: 0 0.3125rem;
+}
+
+.signup-add-details-form {
+  display: block;
+  margin: 1.875rem auto 0 auto;
+}
+
+.signup-add-details-input {
+  background-color: #4A4A64;
+  border-radius: 0.3125rem;
+  color: #F2F2F2;
+  font-weight: 300;
+  font-size: 1rem;
+  width: 100%;
+  padding: 0.75rem 0.625rem;
+  border: none;
+  border-color: transparent;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+}
+
+.signup-add-details-input-textarea {
+  background-color: #4A4A64;
+  border-radius: 0.3125rem;
+  color: #F2F2F2;
+  font-weight: 300;
+  font-size: 1rem;
+  width: 100%;
+  padding: 0.75rem 0.625rem;
+  border: none;
+  border-color: transparent;
+  margin-top: 0;
+  margin-bottom: 0.875rem;
+  resize: none;
+}
+
+.signup-add-details-input:focus {
+  border: none;
+  border-color: transparent;
+  outline-color: #F2F2F2 !important;
+}
+
+.signup-add-details-input-textarea:focus {
+  border: none;
+  border-color: transparent;
+  outline-color: #F2F2F2 !important;
+}
+
+.signup-add-details-errors {
+  display: block;
+  margin-top: -0.8125rem;
+  margin-bottom: 1.25rem;
+  margin-left: 0.3125rem;
+  color: #E2924E;
+  font-weight: 300;
+  font-size: 0.75rem;
+}
+
+.signup-add-details-errors-long {
+  display: block;
+  margin-top: -0.8125rem;
+  margin-bottom: 1.25rem;
+  margin-left: 0.3125rem;
+  color: #E2924E;
+  font-weight: 300;
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.signup-add-details-errors-general {
+  display: block;
+  margin-top: -0.8125rem;
+  margin-left: 0.3125rem;
+  text-align: center;
+  color: #E2924E;
+  font-weight: 300;
+  font-size: 0.75rem;
+}
+
+.signup-add-details-primary-button {
+  display: block;
+  background-color: #F22B3E;
+  color: #F2F2F2;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.625rem 1rem;
+  width: 100% !important;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 0.75rem 0;
+}
+
+.signup-add-details-secondary-button {
+  display: block;
+  background-color: #373753;
+  color: #F2F2F2;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.625rem 1rem;
+  width: 100% !important;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 0.75rem 0 0 0;
+}
+
+.signup-add-details-disabled-button {
+  display: block;
+  background-color: #989898;
+  color: #131425;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.625rem 1rem;
+  width: 100% !important;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 0.75rem 0 0 0;
+}
+/*# sourceMappingURL=SignUpAddDetails.css.map */

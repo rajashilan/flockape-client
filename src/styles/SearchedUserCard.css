@@ -1,0 +1,45 @@
+.searchUser-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0;
+  padding: 1rem 1.75rem;
+  background-color: #282840;
+}
+
+.searchUser-details-container {
+  display: block;
+  margin: 0;
+}
+
+.searchUser-img {
+  width: 2.875rem;
+  height: 2.875rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border: none;
+  border-radius: 50%;
+  border: none;
+  margin-right: 1rem;
+}
+
+.searchUser-username {
+  color: #F2F2F2;
+  font-weight: 500;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.searchUser-fullName {
+  color: #D3D3D3;
+  font-weight: 300;
+  font-size: 1rem;
+  margin: 0.125rem 0 0 0;
+}
+/*# sourceMappingURL=SearchedUserCard.css.map */

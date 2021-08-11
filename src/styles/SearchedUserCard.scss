@@ -1,0 +1,41 @@
+@import "../scssVariables/variables.scss";
+
+.searchUser {
+  &-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0;
+    padding: 1rem 1.75rem;
+    background-color: $bgColor1;
+  }
+
+  &-details-container {
+    display: block;
+    margin: 0;
+  }
+
+  &-img {
+    width: 2.875rem;
+    height: 2.875rem;
+    object-fit: cover;
+    border: none;
+    border-radius: 50%;
+    border: none;
+    margin-right: 1rem;
+  }
+
+  &-username {
+    color: $primaryText;
+    font-weight: 500;
+    font-size: 0.875rem;
+    margin: 0;
+  }
+
+  &-fullName {
+    color: $secondaryText;
+    font-weight: 300;
+    font-size: 1rem;
+    margin: 0.125rem 0 0 0;
+  }
+}

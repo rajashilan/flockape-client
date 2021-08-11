@@ -12,7 +12,6 @@ import privateDisplayIcon from "./images/privateDisplayIcon@2x.png";
 export class Album extends Component {
   render() {
     const {
-      classes,
       album: {
         albumTitle,
         albumImg,

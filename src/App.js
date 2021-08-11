@@ -21,6 +21,9 @@ import signup from "./pages/signup";
 import albums from "./pages/albums";
 import likedAlbums from "./pages/likedAlbums";
 import likedLinks from "./pages/likedLinks";
+import profile from "./pages/profile";
+import signupUploadImage from "./pages/signupUploadImage";
+import signupAddDetails from "./pages/signupAddDetails";
 
 const token = localStorage.FBIdToken;
 if (token) {
@@ -46,9 +49,16 @@ class App extends Component {
           <Switch>
             <AuthRoute exact path="/login" component={login} />
             <AuthRoute exact path="/signup" component={signup} />
+            <Route
+              exact
+              path="/signup-upload-image"
+              component={signupUploadImage}
+            />
+            <Route path="/signup-add-details" component={signupAddDetails} />
             <Route path="/albums" component={albums} />
             <Route path="/likedAlbums" component={likedAlbums} />
             <Route path="/likedLinks" component={likedLinks} />
+            <Route path="/profile" component={profile} />
           </Switch>
         </Router>
       </Provider>
