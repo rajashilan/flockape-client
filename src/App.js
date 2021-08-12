@@ -14,6 +14,7 @@ import { logoutUser, getUserData } from "./redux/actions/userActions";
 // import Navbar from "./components/Navbar";
 import Navbar2 from "./components/Navbar2";
 import AuthRoute from "./util/AuthRoute";
+import NonAuthRoute from "./util/NonAuthRoute";
 
 //pages
 import login from "./pages/login";
@@ -49,16 +50,19 @@ class App extends Component {
           <Switch>
             <AuthRoute exact path="/login" component={login} />
             <AuthRoute exact path="/signup" component={signup} />
-            <Route
+            <NonAuthRoute
               exact
               path="/signup-upload-image"
               component={signupUploadImage}
             />
-            <Route path="/signup-add-details" component={signupAddDetails} />
-            <Route path="/albums" component={albums} />
-            <Route path="/likedAlbums" component={likedAlbums} />
-            <Route path="/likedLinks" component={likedLinks} />
-            <Route path="/profile" component={profile} />
+            <NonAuthRoute
+              path="/signup-add-details"
+              component={signupAddDetails}
+            />
+            <NonAuthRoute path="/albums" component={albums} />
+            <NonAuthRoute path="/likedAlbums" component={likedAlbums} />
+            <NonAuthRoute path="/likedLinks" component={likedLinks} />
+            <NonAuthRoute path="/profile" component={profile} />
           </Switch>
         </Router>
       </Provider>

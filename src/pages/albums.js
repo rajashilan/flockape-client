@@ -6,24 +6,15 @@ import Album from "../components/Album";
 //css
 import "../styles/HomeNavigation.css";
 import "../styles/Album.css";
-import axios from "axios";
+
+import { getAlbums } from "../redux/actions/dataActions";
+
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 export class albums extends Component {
-  state = {
-    albums: null,
-  };
-
   componentDidMount() {
-    axios
-      .get("/user/user")
-      .then((res) => {
-        this.setState({
-          albums: res.data.albums,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.props.getAlbums();
   }
 
   Verification = () => {
@@ -39,10 +30,10 @@ export class albums extends Component {
   };
 
   render() {
-    let albumData = this.state.albums ? (
-      this.state.albums.map((album) => (
-        <Album key={album.albumID} album={album} />
-      ))
+    const { albums, loading } = this.props.data;
+
+    let albumData = !loading ? (
+      albums.map((album) => <Album key={album.albumID} album={album} />)
     ) : (
       <p>Loading...</p>
     );
@@ -57,4 +48,13 @@ export class albums extends Component {
   }
 }
 
-export default albums;
+const mapStateToProps = (state) => ({
+  data: state.data,
+});
+
+albums.propTypes = {
+  data: PropTypes.object.isRequired,
+  getAlbums: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, { getAlbums })(albums);

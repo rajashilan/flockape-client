@@ -5,14 +5,54 @@ import "../styles/Profile.css";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+//proper albums count, likes count, and views count
+
 class Profile extends Component {
   render() {
     const {
+      albums,
+      likes,
+      views,
       user: {
         credentials: { username, profileImg, fullName, bio, website, location },
         loading,
       },
     } = this.props;
+
+    function abbrNum(number, decPlaces) {
+      // 2 decimal places => 100, 3 => 1000, etc
+      decPlaces = Math.pow(10, decPlaces);
+
+      // Enumerate number abbreviations
+      var abbrev = ["k", "M", "B", "T"];
+
+      // Go through the array backwards, so we do the largest first
+      for (var i = abbrev.length - 1; i >= 0; i--) {
+        // Convert array index to "1000", "1000000", etc
+        var size = Math.pow(10, (i + 1) * 3);
+
+        // If the number is bigger or equal do the abbreviation
+        if (size <= number) {
+          // Here, we multiply by decPlaces, round, and then divide by decPlaces.
+          // This gives us nice rounding to a particular decimal place.
+          number = Math.round((number * decPlaces) / size) / decPlaces;
+
+          // Handle special case where we round up to the next abbreviation
+          if (number == 1000 && i < abbrev.length - 1) {
+            number = 1;
+            i++;
+          }
+
+          // Add the letter for the abbreviation
+          number += abbrev[i];
+
+          // We are done... stop
+          break;
+        }
+      }
+
+      return number;
+    }
 
     let profileContainer = !loading ? (
       <div className="profile-primary-container">
@@ -21,9 +61,11 @@ class Profile extends Component {
           <div className="profile-main-details-container">
             <h3 className="profile-username">@{username}</h3>
             <div className="profile-albums-details-container">
-              <p className="profile-album-details">500 albums</p>
-              <p className="profile-album-details">421 views</p>
-              <p className="profile-album-details">900 likes</p>
+              <p className="profile-album-details">
+                {abbrNum(albums, 1)} albums
+              </p>
+              <p className="profile-album-details">{abbrNum(views, 1)} views</p>
+              <p className="profile-album-details">{abbrNum(likes, 1)} likes</p>
             </div>
           </div>
         </div>

@@ -69,6 +69,14 @@ export class Navbar2 extends Component {
     );
   };
 
+  // handleShareProfile = () => {
+  //   window.clipboardData.setData("Text", "hello");
+  //   alert("Your profile is copied to clipboard.");
+  //   this.setState({
+  //     showMobileMenu: !this.state.showMobileMenu,
+  //   });
+  // };
+
   searchUser = () => {
     const searchUserData = {
       username: this.state.username,
@@ -144,11 +152,6 @@ export class Navbar2 extends Component {
             </li>
             <li>
               <Link onClick={this.showMenu} className="menuItems" to="/profile">
-                Report a Bug
-              </Link>
-            </li>
-            <li>
-              <Link onClick={this.showMenu} className="menuItems" to="/profile">
                 Share flockape
               </Link>
             </li>
@@ -166,6 +169,15 @@ export class Navbar2 extends Component {
         </Link>
         <div className="menuItemsContainer">
           <ul className="noBullets">
+            <li>
+              <Link
+                onClick={this.showMenu}
+                className="menuItems-Priority"
+                to="/albums"
+              >
+                Home
+              </Link>
+            </li>
             <li>
               <Link
                 onClick={this.showMenu}
@@ -203,17 +215,12 @@ export class Navbar2 extends Component {
               </Link>
             </li>
             <li>
-              <Link onClick={this.showMenu} className="menuItems" to="/profile">
-                Leave Feedback
-              </Link>
-            </li>
-            <li>
               <Link
                 onClick={this.showMenu}
                 className="menuItems"
                 to="/signup-add-details"
               >
-                Report a Bug
+                Leave Feedback
               </Link>
             </li>
             <li>
@@ -272,9 +279,9 @@ export class Navbar2 extends Component {
         )}
 
         {authenticated && !this.state.showSearchButton && (
-          <div className="navbar-profile-image-container">
+          <Link to="/profile" className="navbar-profile-image-container">
             <img src={profileImg} className={userImageClassName} />
-          </div>
+          </Link>
         )}
 
         {!this.state.showSearchButton && (

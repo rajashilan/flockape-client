@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import "../styles/SignUpUploadImage.css";
+import "../styles/ProgressSpinner.css";
 
 import { uploadImage } from "../redux/actions/userActions";
 
@@ -8,6 +9,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 class signupUploadImage extends Component {
+  state = {
+    loading: false,
+  };
+
   handleUploadImage = () => {
     const fileInput = document.getElementById("imageInput");
     fileInput.click();
@@ -32,20 +37,22 @@ class signupUploadImage extends Component {
       },
     } = this.props;
 
+    let sendImageButton = loading ? (
+      <div className="spinner-container-larger-margin">
+        <progress className="pure-material-progress-circular" />
+      </div>
+    ) : (
+      <button
+        onClick={this.handleUploadImage}
+        className="signup-uploadImage-secondary-button"
+      >
+        Select Image
+      </button>
+    );
+
     let userImageClassName = loading
       ? "signup-uploadImage-img-loading"
       : "signup-uploadImage-img";
-
-    let buttonText;
-    let buttonClass;
-
-    if (loading) {
-      buttonText = "Getting image...";
-      buttonClass = "signup-uploadImage-disabled-button";
-    } else {
-      buttonText = "Select Image";
-      buttonClass = "signup-uploadImage-secondary-button";
-    }
 
     return (
       <div className="signup-uploadImage-container">
@@ -58,9 +65,7 @@ class signupUploadImage extends Component {
         <div className="signup-uploadImage-image-container">
           <img src={profileImg} className={userImageClassName} />
           <div className="signup-uploadImage-action-container">
-            <button onClick={this.handleUploadImage} className={buttonClass}>
-              {buttonText}
-            </button>
+            {sendImageButton}
             <input
               type="file"
               id="imageInput"

@@ -41,5 +41,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://asia-southeast1-sharesite-test.cloudfunctions.net/api"
+  "proxy": "http://localhost:5500/sharesite-test/asia-southeast1/api"
 }

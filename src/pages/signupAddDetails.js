@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import "../styles/SignUpAddDetails.css";
+import "../styles/ProgressSpinner.css";
 
 import { editUserDetails } from "../redux/actions/userActions";
 
@@ -57,16 +58,15 @@ export class signupAddDetails extends Component {
       user: { loading },
     } = this.props;
 
-    let buttonText;
-    let buttonClass;
-
-    if (loading) {
-      buttonText = "Updating details...";
-      buttonClass = "signup-add-details-disabled-button";
-    } else {
-      buttonText = "Add Details";
-      buttonClass = "signup-add-details-secondary-button";
-    }
+    let addDetailButton = loading ? (
+      <div className="spinner-container-larger-margin-top">
+        <progress className="pure-material-progress-circular" />
+      </div>
+    ) : (
+      <button type="submit" className="signup-add-details-secondary-button">
+        Add Details
+      </button>
+    );
 
     return (
       <div className="signup-add-details-container">
@@ -103,9 +103,7 @@ export class signupAddDetails extends Component {
             placeholder="Your personal website/link"
             className="signup-add-details-input"
           />
-          <button type="submit" className={buttonClass}>
-            {buttonText}
-          </button>
+          {addDetailButton}
         </form>
         <button
           onClick={this.handleFinishAction}

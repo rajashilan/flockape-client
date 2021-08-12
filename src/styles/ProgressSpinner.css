@@ -1,3 +1,57 @@
+.spinner-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #282840;
+  width: 100% !important;
+  height: 2.375rem;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 0.375rem 0;
+}
+
+.spinner-container-larger-margin {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #282840;
+  width: 100% !important;
+  height: 2.375rem;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 0.75rem 0;
+}
+
+.spinner-container-larger-margin-top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #282840;
+  width: 100% !important;
+  height: 2.375rem;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 0.75rem 0 0 0;
+}
+
 .pure-material-progress-circular {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -8,16 +62,10 @@
   border-radius: 50%;
   width: 2em;
   height: 2em;
-  color: #373753;
+  color: #D3D3D3;
   background-color: transparent;
   font-size: 0.8rem;
   overflow: hidden;
-  margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
 }
 
 .pure-material-progress-circular::-webkit-progress-bar {

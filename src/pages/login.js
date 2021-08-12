@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 import "../styles/Login.css";
 import "../styles/PrimaryButton.css";
+import "../styles/ProgressSpinner.css";
 
 //redux
 import { connect } from "react-redux";
@@ -49,16 +50,20 @@ class login extends Component {
     } = this.props;
     const { errors } = this.state;
 
-    let buttonText;
-    let buttonClass;
-
-    if (loading) {
-      buttonText = "Logging in...";
-      buttonClass = "disabled-button";
-    } else {
-      buttonText = "Log In";
-      buttonClass = "primary-button";
-    }
+    let logInButton = loading ? (
+      <div className="spinner-container">
+        <progress className="pure-material-progress-circular" />
+      </div>
+    ) : (
+      <button
+        id="logInButton"
+        type="submit"
+        className="primary-button"
+        disabled={loading}
+      >
+        Log In
+      </button>
+    );
 
     return (
       <div>
@@ -100,14 +105,7 @@ class login extends Component {
           {errors.general && (
             <label className="login-errors-general">{errors.general}</label>
           )}
-          <button
-            id="logInButton"
-            type="submit"
-            className={buttonClass}
-            disabled={loading}
-          >
-            {buttonText}
-          </button>
+          {logInButton}
         </form>
         <div className="login-links-container">
           <p className="register-text">

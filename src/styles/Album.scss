@@ -25,8 +25,6 @@
     padding: 0.5rem 0.3125rem 0 0.3125rem;
     margin: 0;
     width: 100%;
-    position: relative;
-    z-index: -10;
   }
 
   &-details {
@@ -36,8 +34,7 @@
     &-icons {
       display: flex;
       align-items: center;
-      position: absolute;
-      right: 0;
+      margin: 0 0 0 auto;
     }
   }
 
@@ -67,13 +64,12 @@
   &-privateIcon {
     height: 1.25rem;
     width: 0.9375;
-    margin-right: 1.25rem;
+    margin-right: 0.875rem;
   }
 
   &-moreButton {
     height: 0.375rem;
     width: 1.375rem;
-    margin-right: 1.25rem;
   }
 
   &-likeButton {
@@ -114,5 +110,81 @@
     width: 1rem;
     height: 0.6875rem;
     margin-right: 0.375rem;
+  }
+
+  &-more {
+    &-container {
+      width: 100%;
+      height: 8.875rem;
+      background-color: $bgColor1;
+      padding: 0.625rem 1rem;
+      display: block;
+      border: none;
+      border-radius: 0.3125rem;
+      text-align: center;
+      margin: 0 0 0.375rem 0;
+    }
+
+    &-primary-button {
+      display: block;
+      background-color: $bgColorPrimaryButton;
+      color: $primaryText;
+      font-size: 1rem;
+      font-weight: 400;
+      padding: 0.625rem 1rem;
+      width: 100% !important;
+      border: none;
+      border-radius: 0.3125rem;
+      margin: 0;
+    }
+
+    &-secondary-button {
+      display: block;
+      background-color: $bgColor3;
+      color: $secondaryText;
+      font-size: 1rem;
+      font-weight: 400;
+      padding: 0.625rem 1rem;
+      width: 100% !important;
+      border: none;
+      border-radius: 0.3125rem;
+      margin: 0.625rem 0 0 0;
+    }
+
+    &-delete-button {
+      display: block;
+      background-color: $bgColorPrimaryButton;
+      color: $primaryText;
+      font-size: 1rem;
+      font-weight: 400;
+      padding: 0.625rem 1rem;
+      width: 100% !important;
+      border: none;
+      border-radius: 0.3125rem;
+      margin: 0.375rem 0 0 0;
+    }
+
+    &-cancel-button {
+      display: block;
+      margin-top: 0.625rem 0 0 0;
+      color: $primaryText;
+      font-weight: 300;
+      font-size: 1rem;
+    }
+
+    &-delete-text-container {
+      display: block;
+      padding: 0.625rem 1rem;
+      width: 100% !important;
+      border: none;
+      margin: 0;
+    }
+
+    &-delete-text {
+      color: $primaryText;
+      font-size: 1rem;
+      font-weight: 300;
+      margin: 0;
+    }
   }
 }
