@@ -1,10 +1,11 @@
-import { action } from "commander";
 import {
   SET_ALBUMS,
   LIKE_ALBUM,
   DELETE_ALBUM,
   LOADING_DATA,
   SET_LIKED_ALBUMS,
+  ADD_ALBUM,
+  UPDATE_ONE_ALBUM,
 } from "../types";
 
 const initialState = {
@@ -50,6 +51,20 @@ export default function (state = initialState, action) {
       state.albums.splice(index, 1);
       return {
         ...state,
+      };
+    case ADD_ALBUM:
+      return {
+        ...state,
+        albums: [action.payload, ...state.albums],
+      };
+    case UPDATE_ONE_ALBUM:
+      index = state.albums.findIndex(
+        (album) => album.albumID === action.payload.albumID
+      );
+      state.albums[index] = action.payload;
+      return {
+        ...state,
+        loading: false,
       };
     default:
       return state;

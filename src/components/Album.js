@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+
 import "../styles/Album.css";
 
 import moreIcon from "./images/moreDisplayIcon@2x.png";
@@ -105,8 +106,10 @@ export class Album extends Component {
         viewCount,
         albumID,
         username,
+        profileImg,
         security,
       },
+      options,
     } = this.props;
 
     const likeButton = !authenticated ? (
@@ -126,7 +129,7 @@ export class Album extends Component {
     );
 
     const moreButton =
-      authenticated && credentials.username === username ? (
+      options && authenticated && credentials.username === username ? (
         <div onClick={this.handleMoreButton} className="album-icon-div">
           <img src={moreIcon} className="album-moreButton" />
         </div>
@@ -157,14 +160,21 @@ export class Album extends Component {
       <AlbumImage />
     );
 
+    let userDisplay =
+      !authenticated || credentials.username !== username ? (
+        <div className="album-user-display-container">
+          <img src={profileImg} className="album-user-display-img" />
+          <h3 className="album-user-display-name">@{username}</h3>
+        </div>
+      ) : null;
+
     return (
       <div className="album-albums-container">
+        {userDisplay}
         <div className="album-details-container">
           {albumDisplay}
           <div className="album-details">
-            <Link to={`/album/${albumID}`} className="album-title">
-              {albumTitle}
-            </Link>
+            <h3 className="album-title">{albumTitle}</h3>
             <div className="album-details-icons">
               {privateIcon}
               {moreButton}

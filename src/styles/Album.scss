@@ -30,6 +30,7 @@
   &-details {
     display: flex;
     align-items: center;
+    padding-left: 0.3125rem;
 
     &-icons {
       display: flex;
@@ -40,7 +41,7 @@
 
   &-title {
     color: $primaryText;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 1rem;
     width: 60%;
     margin-top: 0;
@@ -81,6 +82,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 0;
+    padding-left: 0.3125rem;
 
     &-likes {
       display: flex;
@@ -110,6 +112,50 @@
     width: 1rem;
     height: 0.6875rem;
     margin-right: 0.375rem;
+  }
+
+  &-user-display-container {
+    margin-bottom: 0.3125rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 0.625rem;
+  }
+
+  &-user-display-img {
+    height: 2.1875rem;
+    width: 2.1875rem;
+    min-width: 2.1875rem;
+    max-width: 2.1875rem;
+    object-fit: cover;
+    border-radius: 50%;
+    border: none;
+    margin: 0 1rem 0 0;
+  }
+
+  &-user-display-name {
+    color: $secondaryText;
+    font-weight: 500;
+    font-size: 0.875rem;
+    margin: 0;
+  }
+
+  &-button-container {
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  &-primary-button {
+    display: block;
+    background-color: $bgColorPrimaryButton;
+    color: $primaryText;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0.625rem 1rem;
+    width: 100%;
+    border: none;
+    border-radius: 0.3125rem;
+    margin: 1.875rem 0;
   }
 
   &-more {

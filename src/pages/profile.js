@@ -17,7 +17,9 @@ export class profile extends Component {
     } = this.props;
 
     let albumData = !loading ? (
-      albums.map((album) => <Album key={album.albumID} album={album} />)
+      albums.map((album) => (
+        <Album key={album.albumID} album={album} options={true} />
+      ))
     ) : (
       <p>Loading...</p>
     );

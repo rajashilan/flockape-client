@@ -1,0 +1,170 @@
+.addAlbum {
+  /* Hide the browser's default checkbox */
+  /* Create a custom checkbox */
+  /* When the checkbox is checked, add primary color background */
+  /* Create the checkmark/indicator (hidden when not checked) */
+  /* Show the checkmark when checked */
+}
+
+.addAlbum-container {
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: block;
+}
+
+.addAlbum-title {
+  color: #f2f2f2;
+  font-weight: 500;
+  font-size: 1.375rem;
+  margin: 1.5rem 0.3125rem 1.25rem 0.3125rem;
+}
+
+.addAlbum-input {
+  background-color: #4a4a64;
+  border-radius: 0.3125rem;
+  color: #f2f2f2;
+  font-weight: 300;
+  font-size: 1rem;
+  width: 100%;
+  padding: 0.75rem 0.625rem;
+  border: none;
+  border-color: transparent;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+}
+
+.addAlbum-input:focus {
+  border: none;
+  border-color: transparent;
+  outline-color: #f2f2f2 !important;
+}
+
+.addAlbum-security-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.addAlbum-security-checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 2.1875rem;
+  cursor: pointer;
+  font-size: 1rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-right: 1.5rem;
+}
+
+.addAlbum-security-checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.addAlbum-checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1.5625rem;
+  width: 1.5625rem;
+  background-color: #4a4a64;
+  border: none;
+  border-radius: 0.3125rem;
+}
+
+.addAlbum-security-checkbox-container input:checked ~ .addAlbum-checkmark {
+  background-color: #f22b3e;
+}
+
+.addAlbum-checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.addAlbum-checkmark input:checked ~ .addAlbum-checkmark:after {
+  display: block;
+}
+
+.addAlbum-button-container {
+  display: block;
+  margin-top: 1.625rem;
+  text-align: center;
+}
+
+.addAlbum-primary-button {
+  display: block;
+  background-color: #f22b3e;
+  color: #f2f2f2;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.625rem 1rem;
+  width: 100% !important;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 0.375rem 0;
+}
+
+.addAlbum-secondary-button {
+  display: block;
+  background-color: #4a4a64;
+  color: #f2f2f2;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.625rem 1rem;
+  width: 100% !important;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 0.75rem 0;
+}
+
+.addAlbum-cancel-button {
+  display: block;
+  color: #d3d3d3;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-top: 1rem;
+}
+
+.addAlbum-errors {
+  display: block;
+  margin-top: -0.9375rem;
+  margin-bottom: 1.25rem;
+  margin-left: 0.3125rem;
+  color: #e2924e;
+  font-weight: 300;
+  font-size: 0.75rem;
+}
+
+.addAlbum-errors-long {
+  display: block;
+  margin-top: -0.8125rem;
+  margin-bottom: 1.25rem;
+  margin-left: 0.3125rem;
+  color: #e2924e;
+  font-weight: 300;
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.addAlbum-errors-general {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.625rem;
+  text-align: center;
+  color: #e2924e;
+  font-weight: 300;
+  font-size: 0.75rem;
+}
+/*# sourceMappingURL=AddAlbum.css.map */

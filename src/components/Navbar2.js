@@ -163,7 +163,7 @@ export class Navbar2 extends Component {
         <Link
           onClick={this.showMenu}
           className="primary-button-medium-margin"
-          to="#"
+          to="/addAlbum"
         >
           Add an Album
         </Link>
@@ -209,7 +209,7 @@ export class Navbar2 extends Component {
               <Link
                 onClick={this.showMenu}
                 className="menuItems-Priority"
-                to="/profile"
+                to="/addAlbumImage"
               >
                 Support Us
               </Link>

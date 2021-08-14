@@ -16,3 +16,5 @@ export const SET_ALBUM = "SET_ALBUM";
 export const LIKE_ALBUM = "LIKE_ALBUM";
 export const DELETE_ALBUM = "DELETE_ALBUM";
 export const SET_LIKED_ALBUMS = "SET_LIKED_ALBUMS";
+export const ADD_ALBUM = "ADD_ALBUM";
+export const UPDATE_ONE_ALBUM = "UPDATE_ONE_ALBUM";
