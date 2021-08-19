@@ -1,7 +1,7 @@
 .navbar {
   height: 4.5rem;
   width: 100%;
-  background-color: #07080F;
+  background-color: #07080f;
   padding: 1.125rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -35,7 +35,7 @@
 .navbar-hamburger {
   width: 1.75rem;
   height: 0.1875rem;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   margin: 0.28125rem auto;
 }
 
@@ -55,7 +55,7 @@
 .navbar-close-top {
   width: 1.75rem;
   height: 0.1875rem;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
   -webkit-transition: all 0.3s ease;
@@ -67,7 +67,7 @@
 .navbar-close-bottom {
   width: 1.75rem;
   height: 0.1875rem;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg);
   -webkit-transition: all 0.3s ease;
@@ -186,8 +186,8 @@
 }
 
 .navbar-button {
-  background-color: #F22B3E;
-  color: #F2F2F2;
+  background-color: #f22b3e;
+  color: #f2f2f2;
   font-size: 1rem;
   font-weight: 400;
   padding: 0.5rem;
@@ -201,15 +201,15 @@
 }
 
 .navbar-button-text {
-  color: #F2F2F2;
+  color: #f2f2f2;
   font-size: 1rem;
   font-weight: 400;
 }
 
 .navbar-search-bar {
-  background-color: #4A4A64;
+  background-color: #4a4a64;
   border-radius: 0.3125rem;
-  color: #F2F2F2;
+  color: #f2f2f2;
   font-weight: 300;
   font-size: 1rem;
   width: 100%;
@@ -223,7 +223,7 @@
 .navbar-search-bar:focus {
   border: none;
   border-color: transparent;
-  outline-color: #F2F2F2 !important;
+  outline-color: #f2f2f2 !important;
 }
 
 .navbar-cancel-button-container {
@@ -234,7 +234,7 @@
 }
 
 .navbar-cancel-button {
-  color: #F2F2F2;
+  color: #f2f2f2;
   font-size: 1rem;
   font-weight: 400;
 }

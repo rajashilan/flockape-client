@@ -20,7 +20,7 @@
 
 .album-details-container {
   display: block;
-  padding: 0.5rem 0.3125rem 0 0.3125rem;
+  padding: 0.5rem 0 0 0;
   margin: 0;
   width: 100%;
 }
@@ -150,7 +150,7 @@
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
-  padding: 0 0.625rem;
+  padding: 0 0.3125rem;
 }
 
 .album-user-display-img {

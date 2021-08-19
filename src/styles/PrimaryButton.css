@@ -1,7 +1,7 @@
 .primary-button {
   display: block;
-  background-color: #F22B3E;
-  color: #F2F2F2;
+  background-color: #f22b3e;
+  color: #f2f2f2;
   font-size: 1rem;
   font-weight: 400;
   padding: 0.625rem 3rem;
@@ -12,15 +12,15 @@
 }
 
 .primary-button-text {
-  color: #F2F2F2;
+  color: #f2f2f2;
   font-size: 1rem;
   font-weight: 400;
 }
 
 .primary-button-medium-margin {
   display: block;
-  background-color: #F22B3E;
-  color: #F2F2F2;
+  background-color: #f22b3e;
+  color: #f2f2f2;
   font-size: 1rem;
   font-weight: 400;
   padding: 0.625rem 3rem;
@@ -31,7 +31,7 @@
 }
 
 .primary-button-medium-margin-text {
-  color: #F2F2F2;
+  color: #f2f2f2;
   font-size: 1rem;
   font-weight: 400;
 }
@@ -52,8 +52,8 @@
 
 .secondary-button {
   display: block;
-  background-color: #4A4A64;
-  color: #F2F2F2;
+  background-color: #4a4a64;
+  color: #f2f2f2;
   font-size: 1rem;
   font-weight: 400;
   padding: 0.625rem 1rem;

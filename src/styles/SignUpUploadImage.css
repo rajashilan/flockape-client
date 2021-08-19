@@ -5,14 +5,14 @@
 }
 
 .signup-uploadImage-header {
-  color: #F2F2F2;
+  color: #f2f2f2;
   font-weight: 700;
   font-size: 1.375rem;
   margin: 0;
 }
 
 .signup-uploadImage-text {
-  color: #D3D3D3;
+  color: #d3d3d3;
   font-weight: 300;
   font-size: 0.875rem;
   margin: 0.3125rem 0 0 0;
@@ -64,8 +64,8 @@
 
 .signup-uploadImage-primary-button {
   display: block;
-  background-color: #F22B3E;
-  color: #F2F2F2;
+  background-color: #f22b3e;
+  color: #f2f2f2;
   font-size: 1rem;
   font-weight: 400;
   padding: 0.625rem 1rem;
@@ -77,8 +77,8 @@
 
 .signup-uploadImage-secondary-button {
   display: block;
-  background-color: #4A4A64;
-  color: #F2F2F2;
+  background-color: #4a4a64;
+  color: #f2f2f2;
   font-size: 1rem;
   font-weight: 400;
   padding: 0.625rem 1rem;

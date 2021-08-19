@@ -19,7 +19,7 @@ export class HomeNavigation extends Component {
           className="home-navigation-items"
           to="/likedAlbums"
         >
-          Liked Albums
+          Follows
         </NavLink>
         <NavLink
           activeClassName="home-navigation-items-active"

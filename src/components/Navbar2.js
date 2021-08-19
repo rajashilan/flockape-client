@@ -218,7 +218,7 @@ export class Navbar2 extends Component {
               <Link
                 onClick={this.showMenu}
                 className="menuItems"
-                to="/signup-add-details"
+                to="/albumDetails"
               >
                 Leave Feedback
               </Link>

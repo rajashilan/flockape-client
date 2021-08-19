@@ -61,7 +61,7 @@ class addAlbumImage extends Component {
     const { loading } = this.props.data;
 
     //handle redirect on refresh
-    if (this.props.data.albums.length == 0) {
+    if (this.props.data.albums.length === 0) {
       this.props.history.push("/albums");
     }
 

@@ -65,6 +65,7 @@ export const getUserData = () => (dispatch) => {
     })
     .catch((error) => {
       console.log(error);
+      dispatch(handleUnauthorised(error));
     });
 };
 
@@ -77,6 +78,7 @@ export const uploadImage = (formData) => (dispatch) => {
     })
     .catch((error) => {
       console.log(error);
+      dispatch(handleUnauthorised(error));
     });
 };
 
@@ -89,6 +91,7 @@ export const editUserDetails = (userDetails) => (dispatch) => {
     })
     .catch((error) => {
       console.log(error);
+      dispatch(handleUnauthorised(error));
     });
 };
 
@@ -96,4 +99,11 @@ const setAuthorizationHeader = (token) => {
   const FBIdToken = `Bearer ${token}`;
   localStorage.setItem("FBIdToken", FBIdToken);
   axios.defaults.headers.common["Authorization"] = FBIdToken;
+};
+
+export const handleUnauthorised = (error) => (dispatch) => {
+  if (error.response.status && error.response.status === 403) {
+    console.log("handled");
+    dispatch(logoutUser());
+  }
 };

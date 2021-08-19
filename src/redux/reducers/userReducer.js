@@ -6,6 +6,7 @@ import {
   SET_AUTHENTICATED,
   SET_UNAUTHENTICATED,
   LIKE_ALBUM,
+  LIKE_LINK,
 } from "../types";
 
 const initialState = {
@@ -39,12 +40,12 @@ export default function (state = initialState, action) {
       };
     case LIKE_ALBUM:
       //check if likes album already has the payload's album id in it
-      const findLike = state.likesAlbum.find(
+      const findLikeAlbum = state.likesAlbum.find(
         (like) => like.albumID === action.payload.albumID
       );
 
       //if yes, delete that like (unlike request)
-      if (findLike) {
+      if (findLikeAlbum) {
         return {
           ...state,
           likesAlbum: state.likesAlbum.filter(
@@ -60,6 +61,33 @@ export default function (state = initialState, action) {
             {
               username: state.credentials.username,
               albumID: action.payload.albumID,
+            },
+          ],
+        };
+      }
+    case LIKE_LINK:
+      //check if likes link already has the payload's link id in it
+      const findLikeLink = state.likesLink.find(
+        (like) => like.linkID === action.payload.linkID
+      );
+
+      //if yes, delete that like (unlike request)
+      if (findLikeLink) {
+        return {
+          ...state,
+          likesLink: state.likesLink.filter(
+            (likesLink) => likesLink.linkID !== action.payload.linkID
+          ),
+        };
+      } else {
+        //if no, add a new like (like request)
+        return {
+          ...state,
+          likesLink: [
+            ...state.likesLink,
+            {
+              username: state.credentials.username,
+              linkID: action.payload.linkID,
             },
           ],
         };

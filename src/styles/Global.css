@@ -16,7 +16,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Avenir", sans-serif;
-  color: #F2F2F2;
+  color: #f2f2f2;
 }
 
 a {
@@ -66,7 +66,7 @@ a {
   border-radius: 0.3125rem;
   padding: 1rem;
   margin: 2.5rem 1rem 0 1rem;
-  color: #D3D3D3;
+  color: #d3d3d3;
   font-weight: 300;
   font-size: 1rem;
   line-height: 1.8;

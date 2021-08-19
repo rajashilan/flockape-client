@@ -27,6 +27,9 @@ import signupUploadImage from "./pages/signupUploadImage";
 import signupAddDetails from "./pages/signupAddDetails";
 import addAlbum from "./pages/addAlbum";
 import addAlbumImage from "./pages/addAlbumImage";
+import albumDetails from "./pages/albumDetails";
+import addLink from "./pages/addLink";
+import addLinkManually from "./pages/addLinkManually";
 
 const token = localStorage.FBIdToken;
 if (token) {
@@ -67,6 +70,9 @@ class App extends Component {
             <NonAuthRoute path="/profile" component={profile} />
             <NonAuthRoute path="/addAlbum" component={addAlbum} />
             <NonAuthRoute path="/addAlbumImage" component={addAlbumImage} />
+            <Route path="/album/:albumID" component={albumDetails} />
+            <NonAuthRoute path="/addLink" component={addLink} />
+            <NonAuthRoute path="/addLinkManually" component={addLinkManually} />
           </Switch>
         </Router>
       </Provider>

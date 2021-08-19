@@ -8,8 +8,8 @@
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
-  margin: 0.9375rem 0 0 0;
-  padding: 0 1rem;
+  margin: 0.3125rem 0 0 0;
+  padding: 0 1rem 0 0;
 }
 
 .back-button-link {
@@ -32,7 +32,7 @@
 }
 
 .back-button-text {
-  color: #F2F2F2;
+  color: #f2f2f2;
   font-weight: 500;
   font-size: 1rem;
   margin: 0;

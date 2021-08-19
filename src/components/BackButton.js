@@ -11,7 +11,6 @@ class BackButton extends Component {
       <div className="back-button-container">
         <Link to={this.props.to} className="back-button-link">
           <img src={backArrow} alt="back" className="back-button-img" />
-          <p className="back-button-text">Back</p>
         </Link>
       </div>
     );

@@ -22,7 +22,19 @@ export class albums extends Component {
   };
 
   componentDidMount() {
-    this.props.getAlbums();
+    // //if album is coming back from albumDetails page, no need to reload data
+    // if (
+    //   this.props.location.state &&
+    //   this.props.location.state.from &&
+    //   this.props.location.state.from === "component"
+    // ) {
+    //   //just get the album that is already set in the state
+    //   console.log("ho");
+    // } else {
+    //   console.log("hee");
+    //   this.props.getAlbums(this.props.history);
+    // }
+    this.props.getAlbums(this.props.history);
   }
 
   handleSearch = (event) => {
@@ -38,7 +50,11 @@ export class albums extends Component {
   };
 
   Verification = () => {
-    if (this.props.location.state) {
+    if (
+      this.props.location.state &&
+      this.props.location.state.verification &&
+      this.props.location.state.verification === "verified"
+    ) {
       return (
         <p className="label-verification">
           A verification link has been sent to your email. Please click the link
@@ -50,6 +66,12 @@ export class albums extends Component {
   };
 
   render() {
+    // setTimeout(() => {
+    //   if (!this.props.albums) {
+    //     this.props.getAlbums(this.props.history);
+    //   }
+    // }, 4000);
+
     const { albums, loading } = this.props.data;
 
     let albumData = !loading ? (

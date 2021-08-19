@@ -35,6 +35,7 @@ export class Album extends Component {
   handleMoreButton = () => {
     this.setState({
       showMoreButton: !this.state.showMoreButton,
+      showDeleteDialog: false,
     });
   };
 
@@ -142,9 +143,14 @@ export class Album extends Component {
         <img src={privateDisplayIcon} className="album-privateIcon" />
       ) : null;
 
+    const toAlbumDetails = {
+      pathname: `/album/${albumID}`,
+      state: { history: window.location.pathname },
+    };
+
     function AlbumImage() {
       return (
-        <Link to={`/album/${albumID}`}>
+        <Link to={toAlbumDetails}>
           <img src={albumImg} className="album-img" />
         </Link>
       );
