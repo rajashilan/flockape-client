@@ -15,6 +15,10 @@ import {
   SET_ERRORS,
   CLEAR_ERRORS,
   STOP_LOADING_UI,
+  LOADING_UI_LIKE_ALBUM,
+  STOP_LOADING_UI_LIKE_ALBUM,
+  LOADING_UI_LIKE_LINK,
+  STOP_LOADING_UI_LIKE_LINK,
 } from "../types";
 import axios from "axios";
 import firebase from "../../firebase/firebase";
@@ -110,6 +114,7 @@ export const getLikedLinks = () => (dispatch) => {
 };
 
 export const likeAlbum = (albumID) => (dispatch) => {
+  dispatch({ type: LOADING_UI_LIKE_ALBUM, payload: albumID });
   axios
     .get(`/album/${albumID}/like`)
     .then((res) => {
@@ -117,6 +122,7 @@ export const likeAlbum = (albumID) => (dispatch) => {
         type: LIKE_ALBUM,
         payload: res.data,
       });
+      dispatch({ type: STOP_LOADING_UI_LIKE_ALBUM, payload: albumID });
       console.log(res.data);
     })
     .catch((error) => {
@@ -312,6 +318,7 @@ export const addNewLinkManually = (newLink, albumID, history) => (dispatch) => {
 };
 
 export const likeLink = (linkID) => (dispatch) => {
+  dispatch({ type: LOADING_UI_LIKE_LINK, payload: linkID });
   axios
     .get(`/link/${linkID}/like`)
     .then((res) => {
@@ -319,6 +326,7 @@ export const likeLink = (linkID) => (dispatch) => {
         type: LIKE_LINK,
         payload: res.data,
       });
+      dispatch({ type: STOP_LOADING_UI_LIKE_LINK, payload: linkID });
       console.log(res.data);
     })
     .catch((error) => {

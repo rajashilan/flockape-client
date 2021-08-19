@@ -11,6 +11,7 @@ import privateDisplayIcon from "./images/privateDisplayIcon@2x.png";
 import BackButton from "./BackButton";
 
 import "../styles/AlbumDetails.css";
+import "../styles/ProgressSpinnerLikeButton.css";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -48,6 +49,19 @@ export class AlbumDetails extends Component {
       UI: { loading },
     } = this.props;
 
+    let isLikeLoading = false;
+    let findIndexLike = -1;
+    findIndexLike = this.props.UI.loadingLikeAlbum.find(
+      (like) => like.albumID === this.props.albumID
+    );
+
+    if (findIndexLike) {
+      isLikeLoading = true;
+    }
+
+    console.log(findIndexLike);
+    console.log(isLikeLoading);
+
     const likeButton = !authenticated ? (
       <Link to="/login">
         <div className="albumDetails-icon-div">
@@ -55,8 +69,18 @@ export class AlbumDetails extends Component {
         </div>
       </Link>
     ) : this.likedAlbum() ? (
-      <div onClick={this.likeAlbum} className="albumDetails-icon-div">
-        <img src={likedFullIcon} className="albumDetails-likeButton" />
+      isLikeLoading ? (
+        <div className="albumDetails-icon-div">
+          <progress className="pure-material-progress-circular-unlike-button" />
+        </div>
+      ) : (
+        <div onClick={this.likeAlbum} className="albumDetails-icon-div">
+          <img src={likedFullIcon} className="albumDetails-likeButton" />
+        </div>
+      )
+    ) : isLikeLoading ? (
+      <div className="albumDetails-icon-div">
+        <progress className="pure-material-progress-circular-like-button" />
       </div>
     ) : (
       <div onClick={this.likeAlbum} className="albumDetails-icon-div">

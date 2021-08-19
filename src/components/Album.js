@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import "../styles/Album.css";
+import "../styles/ProgressSpinnerLikeButton.css";
 
 import moreIcon from "./images/moreDisplayIcon@2x.png";
 import likeIcon from "./images/likeButton@2x.png";
@@ -113,6 +114,19 @@ export class Album extends Component {
       options,
     } = this.props;
 
+    let isLikeLoading = false;
+    let findIndexLike = -1;
+    findIndexLike = this.props.UI.loadingLikeAlbum.find(
+      (like) => like.albumID === this.props.album.albumID
+    );
+
+    if (findIndexLike) {
+      isLikeLoading = true;
+    }
+
+    console.log(findIndexLike);
+    console.log(isLikeLoading);
+
     const likeButton = !authenticated ? (
       <Link to="/login">
         <div className="album-icon-div">
@@ -120,8 +134,18 @@ export class Album extends Component {
         </div>
       </Link>
     ) : this.likedAlbum() ? (
-      <div onClick={this.likeAlbum} className="album-icon-div">
-        <img src={likedFullIcon} className="album-likeButton" />
+      isLikeLoading ? (
+        <div className="album-icon-div">
+          <progress className="pure-material-progress-circular-unlike-button" />
+        </div>
+      ) : (
+        <div onClick={this.likeAlbum} className="album-icon-div">
+          <img src={likedFullIcon} className="album-likeButton" />
+        </div>
+      )
+    ) : isLikeLoading ? (
+      <div className="album-icon-div">
+        <progress className="pure-material-progress-circular-like-button" />
       </div>
     ) : (
       <div onClick={this.likeAlbum} className="album-icon-div">
@@ -205,6 +229,7 @@ export class Album extends Component {
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  UI: state.UI,
 });
 
 const mapActionsToProps = {
@@ -214,6 +239,7 @@ const mapActionsToProps = {
 
 Album.propTypes = {
   user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
   likeAlbum: PropTypes.func.isRequired,
   album: PropTypes.object.isRequired,
   deleteAlbum: PropTypes.func.isRequired,

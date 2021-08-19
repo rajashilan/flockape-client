@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import "../styles/Link.css";
+import "../styles/ProgressSpinnerLikeButton.css";
 
 import moreIcon from "./images/moreDisplayIcon@2x.png";
 import likeIcon from "./images/likeButton@2x.png";
@@ -129,6 +130,19 @@ export class LinkComponent extends Component {
       );
     }
 
+    let isLikeLoading = false;
+    let findIndexLike = -1;
+    findIndexLike = this.props.UI.loadingLikeLink.find(
+      (like) => like.linkID === this.props.link.linkID
+    );
+
+    if (findIndexLike) {
+      isLikeLoading = true;
+    }
+
+    console.log(findIndexLike);
+    console.log(isLikeLoading);
+
     const likeButton = !authenticated ? (
       <Link to="/login">
         <div className="link-like-icon-div">
@@ -137,9 +151,19 @@ export class LinkComponent extends Component {
         </div>
       </Link>
     ) : this.likedLink() ? (
-      <div onClick={this.likeLink} className="link-like-icon-div">
-        <img src={likedFullIcon} className="link-likeButton" />
-        <p className="link-like-count">{likeCount}</p>
+      isLikeLoading ? (
+        <div className="link-like-icon-div">
+          <progress className="pure-material-progress-circular-unlike-button" />
+        </div>
+      ) : (
+        <div onClick={this.likeLink} className="link-like-icon-div">
+          <img src={likedFullIcon} className="link-likeButton" />
+          <p className="link-like-count">{likeCount}</p>
+        </div>
+      )
+    ) : isLikeLoading ? (
+      <div className="link-like-icon-div">
+        <progress className="pure-material-progress-circular-like-button" />
       </div>
     ) : (
       <div onClick={this.likeLink} className="link-like-icon-div">
@@ -185,6 +209,7 @@ export class LinkComponent extends Component {
 const mapStateToProps = (state) => ({
   album: state.data.album,
   user: state.user,
+  UI: state.UI,
 });
 
 const mapActionsToProps = {
@@ -194,6 +219,7 @@ const mapActionsToProps = {
 
 LinkComponent.propTypes = {
   user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
   album: PropTypes.object.isRequired,
   likeLink: PropTypes.func.isRequired,
 };
