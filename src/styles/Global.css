@@ -71,4 +71,15 @@ a {
   font-size: 1rem;
   line-height: 1.8;
 }
+
+.label-verification-yellow {
+  background-color: #bf7e45;
+  border-radius: 0.3125rem;
+  padding: 1rem;
+  margin: 2.5rem 1rem 0 1rem;
+  color: #242424;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.8;
+}
 /*# sourceMappingURL=Global.css.map */

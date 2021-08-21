@@ -19,6 +19,7 @@ import {
   STOP_LOADING_UI_LIKE_ALBUM,
   LOADING_UI_LIKE_LINK,
   STOP_LOADING_UI_LIKE_LINK,
+  SET_ANOTHER_USER_PROFILE,
 } from "../types";
 import axios from "axios";
 import firebase from "../../firebase/firebase";
@@ -345,6 +346,22 @@ export const uploadAlbumImage = (formData, albumID) => (dispatch) => {
     .catch((error) => {
       console.log(error);
       dispatch(handleUnauthorised(error));
+    });
+};
+
+export const getAnotherUserProfile = (username) => (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  console.log("leggo");
+  axios
+    .get(`/user/${username}`)
+    .then((res) => {
+      dispatch({
+        type: SET_ANOTHER_USER_PROFILE,
+        payload: res.data,
+      });
+    })
+    .catch((error) => {
+      console.log(error.response.data);
     });
 };
 

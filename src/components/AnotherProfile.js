@@ -7,16 +7,14 @@ import { connect } from "react-redux";
 
 //proper albums count, likes count, and views count
 
-class Profile extends Component {
+class AnotherProfile extends Component {
   render() {
     const {
       albums,
       likes,
       views,
-      user: {
-        credentials: { username, profileImg, fullName, bio, website, location },
-        loading,
-      },
+      user: { username, fullName, profileImg, website, location, bio },
+      data: { loading },
     } = this.props;
 
     function abbrNum(number, decPlaces) {
@@ -72,7 +70,7 @@ class Profile extends Component {
           </div>
         </div>
         <div className="profile-tertiary-container">
-          {fullName && <h2 className="profile-name">{fullName}</h2>}
+          <h2 className="profile-name">{fullName}</h2>
           {bio && <h4 className="profile-other-details">{bio}</h4>}
           {location && <h4 className="profile-other-details">{location}</h4>}
           {website && (
@@ -111,11 +109,12 @@ class Profile extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user,
+  data: state.data,
 });
 
-Profile.propTypes = {
+AnotherProfile.propTypes = {
+  data: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps)(AnotherProfile);

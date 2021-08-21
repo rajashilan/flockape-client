@@ -14,7 +14,6 @@ import { logoutUser, getUserData } from "./redux/actions/userActions";
 // import Navbar from "./components/Navbar";
 import Navbar2 from "./components/Navbar2";
 import AuthRoute from "./util/AuthRoute";
-import NonAuthRoute from "./util/NonAuthRoute";
 
 //pages
 import login from "./pages/login";
@@ -30,6 +29,7 @@ import addAlbumImage from "./pages/addAlbumImage";
 import albumDetails from "./pages/albumDetails";
 import addLink from "./pages/addLink";
 import addLinkManually from "./pages/addLinkManually";
+import anotherUser from "./pages/anotherUser";
 
 const token = localStorage.FBIdToken;
 if (token) {
@@ -55,24 +55,22 @@ class App extends Component {
           <Switch>
             <AuthRoute exact path="/login" component={login} />
             <AuthRoute exact path="/signup" component={signup} />
-            <NonAuthRoute
+            <Route
               exact
               path="/signup-upload-image"
               component={signupUploadImage}
             />
-            <NonAuthRoute
-              path="/signup-add-details"
-              component={signupAddDetails}
-            />
-            <NonAuthRoute path="/albums" component={albums} />
-            <NonAuthRoute path="/likedAlbums" component={likedAlbums} />
-            <NonAuthRoute path="/likedLinks" component={likedLinks} />
-            <NonAuthRoute path="/profile" component={profile} />
-            <NonAuthRoute path="/addAlbum" component={addAlbum} />
-            <NonAuthRoute path="/addAlbumImage" component={addAlbumImage} />
+            <Route path="/signup-add-details" component={signupAddDetails} />
+            <Route path="/albums" component={albums} />
+            <Route path="/likedAlbums" component={likedAlbums} />
+            <Route path="/likedLinks" component={likedLinks} />
+            <Route path="/profile" component={profile} />
+            <Route path="/addAlbum" component={addAlbum} />
+            <Route path="/addAlbumImage" component={addAlbumImage} />
             <Route path="/album/:albumID" component={albumDetails} />
-            <NonAuthRoute path="/addLink" component={addLink} />
-            <NonAuthRoute path="/addLinkManually" component={addLinkManually} />
+            <Route path="/addLink" component={addLink} />
+            <Route path="/addLinkManually" component={addLinkManually} />
+            <Route path="/:username" component={anotherUser} />
           </Switch>
         </Router>
       </Provider>

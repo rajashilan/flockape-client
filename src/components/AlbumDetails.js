@@ -16,9 +16,26 @@ import "../styles/ProgressSpinnerLikeButton.css";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+import { setIsAlbumTrue, setIsAlbumFalse } from "../redux/actions/uiActions";
+
 import { likeAlbum, deleteAlbum } from "../redux/actions/dataActions";
 
 export class AlbumDetails extends Component {
+  componentDidMount() {
+    if (
+      this.props.user.authenticated &&
+      this.props.user.credentials.username === this.props.username
+    ) {
+      this.props.setIsAlbumTrue();
+    } else {
+      this.props.setIsAlbumFalse();
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.setIsAlbumFalse();
+  }
+
   likeAlbum = () => {
     this.props.likeAlbum(this.props.albumID);
   };
@@ -58,9 +75,6 @@ export class AlbumDetails extends Component {
     if (findIndexLike) {
       isLikeLoading = true;
     }
-
-    console.log(findIndexLike);
-    console.log(isLikeLoading);
 
     const likeButton = !authenticated ? (
       <Link to="/login">
@@ -149,12 +163,16 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = {
   likeAlbum,
   deleteAlbum,
+  setIsAlbumTrue,
+  setIsAlbumFalse,
 };
 
 AlbumDetails.propTypes = {
   user: PropTypes.object.isRequired,
   likeAlbum: PropTypes.func.isRequired,
   deleteAlbum: PropTypes.func.isRequired,
+  setIsAlbumTrue: PropTypes.func.isRequired,
+  setIsAlbumFalse: PropTypes.func.isRequired,
   UI: PropTypes.object.isRequired,
 };
 

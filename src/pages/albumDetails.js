@@ -17,17 +17,25 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 class albumDetails extends Component {
+  state = {
+    searchText: "",
+  };
+
   componentDidMount() {
-    //if link is coming back from addlinks page, no need to reload data
-    if (
-      this.props.location.state &&
-      this.props.match.params.albumID === this.props.location.state.albumID
-    ) {
-      //just get the album that is already set in the state
-    } else {
-      this.props.getAlbum(this.props.match.params.albumID);
-    }
+    this.props.getAlbum(this.props.match.params.albumID);
   }
+
+  handleSearch = (event) => {
+    this.setState({
+      searchText: event.target.value,
+    });
+  };
+
+  handleSearchReset = () => {
+    this.setState({
+      searchText: "",
+    });
+  };
 
   render() {
     setTimeout(() => {
@@ -52,6 +60,24 @@ class albumDetails extends Component {
       UI: { loading },
     } = this.props;
 
+    //searching functionalities
+    let searches = [];
+
+    if (this.state.searchText !== "") {
+      let searchText = this.state.searchText;
+      if (links && links.length > 0) {
+        links.forEach((link) => {
+          if (
+            link.linkTitle.toLowerCase().substring(0, searchText.length) ===
+            searchText.toLowerCase()
+          ) {
+            searches.push(link);
+          }
+        });
+      }
+    }
+    //end of searching functionalities
+
     let linkCount = 0;
     if (links && links.length > 0) {
       links.forEach((link) => linkCount++);
@@ -60,14 +86,25 @@ class albumDetails extends Component {
     let linksDisplay =
       links && links.length > 0 ? (
         !loading ? (
-          links.map((link) => (
-            <LinkComponent
-              key={link.linkID}
-              link={link}
-              options={true}
-              albumID={albumID}
-            />
-          ))
+          this.state.searchText === "" ? (
+            links.map((link) => (
+              <LinkComponent
+                key={link.linkID}
+                link={link}
+                options={true}
+                albumID={albumID}
+              />
+            ))
+          ) : (
+            searches.map((link) => (
+              <LinkComponent
+                key={link.linkID}
+                link={link}
+                options={true}
+                albumID={albumID}
+              />
+            ))
+          )
         ) : (
           <p>Loading...</p>
         )
@@ -94,7 +131,16 @@ class albumDetails extends Component {
     this.props.location.state && this.props.location.state.history
       ? (toHistory = this.props.location.state.history)
       : (toHistory = "/albums");
-    console.log("tohistory", toHistory);
+
+    let searchBarIcon = this.state.searchText ? (
+      <img
+        onClick={this.handleSearchReset}
+        className="search-icon"
+        src={closeIcon}
+      />
+    ) : (
+      <img className="search-icon" src={searchIcon} />
+    );
 
     return (
       <div>
@@ -118,9 +164,11 @@ class albumDetails extends Component {
           <input
             className="search-bar"
             type="text"
-            placeholder="Search for your links..."
+            placeholder="Search for links"
+            value={this.state.searchText}
+            onChange={this.handleSearch}
           />
-          <img className="search-icon" src={searchIcon} />
+          {searchBarIcon}
         </div>
         <div className="link-main-container">{linksDisplay}</div>
         {addLinkButton}
@@ -135,6 +183,10 @@ const mapStateToProps = (state) => ({
   UI: state.UI,
 });
 
+const mapActionToProps = {
+  getAlbum,
+};
+
 albumDetails.propTypes = {
   user: PropTypes.object.isRequired,
   album: PropTypes.object.isRequired,
@@ -142,4 +194,4 @@ albumDetails.propTypes = {
   UI: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps, { getAlbum })(albumDetails);
+export default connect(mapStateToProps, mapActionToProps)(albumDetails);

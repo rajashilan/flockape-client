@@ -109,6 +109,17 @@ export class Navbar2 extends Component {
     }
   };
 
+  handleUserClick = () => {
+    this.setState({
+      showMobileMenu: false,
+      showSearchButton: false,
+      loadingUser: false,
+      searchedUsers: null,
+      username: "", //for searching user
+      userNotFound: false,
+    });
+  };
+
   render() {
     const {
       user: {
@@ -117,6 +128,24 @@ export class Navbar2 extends Component {
         credentials: { profileImg, notifications },
       },
     } = this.props;
+
+    let addAlbumOrLinkButton = !this.props.UI.isAlbum ? (
+      <Link
+        onClick={this.showMenu}
+        className="primary-button-medium-margin"
+        to="/addAlbum"
+      >
+        Add an Album
+      </Link>
+    ) : (
+      <Link
+        onClick={this.showMenu}
+        className="primary-button-medium-margin"
+        to="/addLink"
+      >
+        Add a Link
+      </Link>
+    );
 
     let mobileMenuContainer = !authenticated ? (
       <div className="displayItems">
@@ -160,13 +189,7 @@ export class Navbar2 extends Component {
       </div>
     ) : (
       <div className="displayItems">
-        <Link
-          onClick={this.showMenu}
-          className="primary-button-medium-margin"
-          to="/addAlbum"
-        >
-          Add an Album
-        </Link>
+        {addAlbumOrLinkButton}
         <div className="menuItemsContainer">
           <ul className="noBullets">
             <li>
@@ -209,7 +232,7 @@ export class Navbar2 extends Component {
               <Link
                 onClick={this.showMenu}
                 className="menuItems-Priority"
-                to="/addAlbumImage"
+                to="/user"
               >
                 Support Us
               </Link>
@@ -336,7 +359,12 @@ export class Navbar2 extends Component {
         )}
 
         {this.state.searchedUsers && (
-          <div className="searchUser-cards-container">{searchedUserData}</div>
+          <div
+            onClick={this.handleUserClick}
+            className="searchUser-cards-container"
+          >
+            {searchedUserData}
+          </div>
         )}
 
         {this.state.showMobileMenu && (
@@ -351,6 +379,7 @@ export class Navbar2 extends Component {
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  UI: state.UI,
 });
 
 const mapActionToProps = {
@@ -359,6 +388,7 @@ const mapActionToProps = {
 
 Navbar2.propTypes = {
   user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps, mapActionToProps)(Navbar2);

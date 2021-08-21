@@ -140,9 +140,6 @@ export class LinkComponent extends Component {
       isLikeLoading = true;
     }
 
-    console.log(findIndexLike);
-    console.log(isLikeLoading);
-
     const likeButton = !authenticated ? (
       <Link to="/login">
         <div className="link-like-icon-div">

@@ -12,6 +12,7 @@ import {
   SET_LIKED_LINKS,
   ADD_ALBUM,
   UPDATE_ONE_ALBUM,
+  SET_ANOTHER_USER_PROFILE,
 } from "../types";
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
   album: {},
   likedAlbums: [],
   likedLinks: [],
+  anotherUserProfile: {},
   loading: false,
 };
 
@@ -59,6 +61,9 @@ export default function (state = initialState, action) {
         (album) => album.albumID === action.payload.albumID
       );
       state.albums[index] = action.payload;
+      if (state.album && state.album.albumID === action.payload.albumID) {
+        state.album.likeCount = action.payload.likeCount;
+      }
       return {
         ...state,
       };
@@ -126,6 +131,12 @@ export default function (state = initialState, action) {
       state.albums[index] = action.payload;
       return {
         ...state,
+        loading: false,
+      };
+    case SET_ANOTHER_USER_PROFILE:
+      return {
+        ...state,
+        anotherUserProfile: action.payload,
         loading: false,
       };
     default:

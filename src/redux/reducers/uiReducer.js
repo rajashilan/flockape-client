@@ -7,6 +7,8 @@ import {
   STOP_LOADING_UI_LIKE_ALBUM,
   LOADING_UI_LIKE_LINK,
   STOP_LOADING_UI_LIKE_LINK,
+  IS_ALBUM,
+  IS_NOT_ALBUM,
 } from "../types";
 
 const initialState = {
@@ -14,6 +16,7 @@ const initialState = {
   errors: null,
   loadingLikeAlbum: [],
   loadingLikeLink: [],
+  isAlbum: false,
 };
 
 export default function (state = initialState, action) {
@@ -77,6 +80,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false,
+      };
+    case IS_ALBUM:
+      return {
+        ...state,
+        isAlbum: true,
+      };
+    case IS_NOT_ALBUM:
+      return {
+        ...state,
+        isAlbum: false,
       };
     default:
       return state;

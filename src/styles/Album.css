@@ -173,7 +173,7 @@
 }
 
 .album-button-container {
-  margin: 0 auto;
+  margin: 0 auto 1.25rem auto;
   padding: 0 1rem;
 }
 
@@ -188,6 +188,31 @@
   border: none;
   border-radius: 0.3125rem;
   margin: 1.875rem 0;
+  text-align: center;
+}
+
+.album-secondary-button {
+  display: block;
+  background-color: #373753;
+  color: #989898;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.625rem 1rem;
+  width: 100%;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 1.875rem 0;
+  text-align: center;
+}
+
+.album-label-error {
+  display: block;
+  margin-top: -0.8125rem;
+  margin-bottom: 1.25rem;
+  margin-left: 0.3125rem;
+  color: #e2924e;
+  font-weight: 300;
+  font-size: 0.875rem;
 }
 
 .album-more-container {

@@ -41,11 +41,37 @@ export class likedLinks extends Component {
       data: { likedLinks, loading },
     } = this.props;
 
+    //searching functionalities
+    let searches = [];
+
+    if (this.state.searchText !== "") {
+      let searchText = this.state.searchText;
+      if (likedLinks && likedLinks.length > 0) {
+        likedLinks.forEach((link) => {
+          if (
+            link.linkTitle.toLowerCase().substring(0, searchText.length) ===
+              searchText.toLowerCase() ||
+            link.username.toLowerCase().substring(0, searchText.length) ===
+              searchText.toLowerCase()
+          ) {
+            searches.push(link);
+          }
+        });
+      }
+    }
+    //end of searching functionalities
+
     let linkData =
       !loading && likedLinks ? (
-        likedLinks.map((link) => (
-          <LinkComponent key={link.linkID} link={link} options={true} />
-        ))
+        this.state.searchText === "" ? (
+          likedLinks.map((link) => (
+            <LinkComponent key={link.linkID} link={link} options={true} />
+          ))
+        ) : (
+          searches.map((link) => (
+            <LinkComponent key={link.linkID} link={link} options={true} />
+          ))
+        )
       ) : (
         <p>Loading...</p>
       );
@@ -67,7 +93,7 @@ export class likedLinks extends Component {
           <input
             className="search-bar"
             type="text"
-            placeholder="Search for your links"
+            placeholder="Search for your liked links"
             value={this.state.searchText}
             onChange={this.handleSearch}
           />

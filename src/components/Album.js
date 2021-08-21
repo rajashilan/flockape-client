@@ -124,9 +124,6 @@ export class Album extends Component {
       isLikeLoading = true;
     }
 
-    console.log(findIndexLike);
-    console.log(isLikeLoading);
-
     const likeButton = !authenticated ? (
       <Link to="/login">
         <div className="album-icon-div">
@@ -192,10 +189,12 @@ export class Album extends Component {
 
     let userDisplay =
       !authenticated || credentials.username !== username ? (
-        <div className="album-user-display-container">
-          <img src={profileImg} className="album-user-display-img" />
-          <h3 className="album-user-display-name">@{username}</h3>
-        </div>
+        <Link to={`/${username}`}>
+          <div className="album-user-display-container">
+            <img src={profileImg} className="album-user-display-img" />
+            <h3 className="album-user-display-name">@{username}</h3>
+          </div>
+        </Link>
       ) : null;
 
     return (

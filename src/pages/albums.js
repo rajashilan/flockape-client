@@ -19,21 +19,10 @@ import { connect } from "react-redux";
 export class albums extends Component {
   state = {
     searchText: "",
+    showNotVerifiedText: false,
   };
 
   componentDidMount() {
-    // //if album is coming back from albumDetails page, no need to reload data
-    // if (
-    //   this.props.location.state &&
-    //   this.props.location.state.from &&
-    //   this.props.location.state.from === "component"
-    // ) {
-    //   //just get the album that is already set in the state
-    //   console.log("ho");
-    // } else {
-    //   console.log("hee");
-    //   this.props.getAlbums(this.props.history);
-    // }
     this.props.getAlbums(this.props.history);
   }
 
@@ -46,6 +35,12 @@ export class albums extends Component {
   handleSearchReset = () => {
     this.setState({
       searchText: "",
+    });
+  };
+
+  handleButtonNotVerified = () => {
+    this.setState({
+      showNotVerifiedText: true,
     });
   };
 
@@ -66,21 +61,61 @@ export class albums extends Component {
   };
 
   render() {
-    // setTimeout(() => {
-    //   if (!this.props.albums) {
-    //     this.props.getAlbums(this.props.history);
-    //   }
-    // }, 4000);
-
     const { albums, loading } = this.props.data;
 
+    const { credentials } = this.props.user;
+
+    //searching functionalities
+    let searches = [];
+
+    if (this.state.searchText !== "") {
+      let searchText = this.state.searchText;
+      if (albums && albums.length > 0) {
+        albums.forEach((album) => {
+          if (
+            album.albumTitle.toLowerCase().substring(0, searchText.length) ===
+            searchText.toLowerCase()
+          ) {
+            searches.push(album);
+          }
+        });
+      }
+    }
+    //end of searching functionalities
+
     let albumData = !loading ? (
-      albums.map((album) => (
-        <Album key={album.albumID} album={album} options={true} />
-      ))
+      this.state.searchText === "" ? (
+        albums.map((album) => (
+          <Album key={album.albumID} album={album} options={true} />
+        ))
+      ) : (
+        searches.map((album) => (
+          <Album key={album.albumID} album={album} options={true} />
+        ))
+      )
     ) : (
       <p>Loading...</p>
     );
+
+    let addAnAlbumButton = credentials.isVerified ? (
+      <Link to="/addAlbum" className="album-primary-button">
+        Add an Album
+      </Link>
+    ) : (
+      <button
+        type="button"
+        onClick={this.handleButtonNotVerified}
+        className="album-secondary-button"
+      >
+        Add an Album
+      </button>
+    );
+
+    let verificationErrorLabel = this.state.showNotVerifiedText ? (
+      <p className="album-label-error">
+        Please verify your email to create an album
+      </p>
+    ) : null;
 
     let searchBarIcon = this.state.searchText ? (
       <img
@@ -107,9 +142,8 @@ export class albums extends Component {
         </div>
         <div className="album-container">{albumData}</div>
         <div className="album-button-container">
-          <Link to="/addAlbum" className="album-primary-button">
-            Add an Album
-          </Link>
+          {addAnAlbumButton}
+          {verificationErrorLabel}
         </div>
       </div>
     );
@@ -118,10 +152,12 @@ export class albums extends Component {
 
 const mapStateToProps = (state) => ({
   data: state.data,
+  user: state.user,
 });
 
 albums.propTypes = {
   data: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
   getAlbums: PropTypes.func.isRequired,
 };
 
