@@ -30,6 +30,8 @@ import albumDetails from "./pages/albumDetails";
 import addLink from "./pages/addLink";
 import addLinkManually from "./pages/addLinkManually";
 import anotherUser from "./pages/anotherUser";
+import manageAccount from "./pages/manageAccount";
+import editAlbum from "./pages/editAlbum";
 
 const token = localStorage.FBIdToken;
 if (token) {
@@ -70,6 +72,8 @@ class App extends Component {
             <Route path="/album/:albumID" component={albumDetails} />
             <Route path="/addLink" component={addLink} />
             <Route path="/addLinkManually" component={addLinkManually} />
+            <Route path="/manageAccount" component={manageAccount} />
+            <Route path="/editAlbum" component={editAlbum} />
             <Route path="/:username" component={anotherUser} />
           </Switch>
         </Router>

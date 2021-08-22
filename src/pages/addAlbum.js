@@ -114,7 +114,6 @@ class addAlbum extends Component {
           )}
           <div className="addAlbum-security-container">
             <label className="addAlbum-security-checkbox-container">
-              Public album
               <input
                 type="checkbox"
                 onChange={this.handlePublicCheckBox}
@@ -122,8 +121,8 @@ class addAlbum extends Component {
               />
               <span className="addAlbum-checkmark"></span>
             </label>
+            <p className="addAlbum-security-label">Public</p>
             <label className="addAlbum-security-checkbox-container">
-              Private album
               <input
                 type="checkbox"
                 onChange={this.handlePrivateCheckBox}
@@ -131,6 +130,7 @@ class addAlbum extends Component {
               />
               <span className="addAlbum-checkmark"></span>
             </label>
+            <p className="addAlbum-security-label">Private</p>
           </div>
           <div className="addAlbum-button-container">
             {errors.general && (

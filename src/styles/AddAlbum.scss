@@ -34,6 +34,13 @@
     outline-color: $primaryText !important;
   }
 
+  &-security-label {
+    color: $primaryText;
+    font-weight: 300;
+    font-size: 1rem;
+    margin-right: 1rem;
+  }
+
   &-security-container {
     display: flex;
     align-items: center;
@@ -41,8 +48,8 @@
   }
 
   &-security-checkbox-container {
-    display: block;
-    position: relative;
+    display: inline-block;
+    // position: relative;
     padding-left: 2.1875rem;
     cursor: pointer;
     font-size: 1rem;
@@ -50,12 +57,13 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    margin-right: 1.5rem;
+    margin-right: 0.875rem;
   }
 
   /* Hide the browser's default checkbox */
   &-security-checkbox-container input {
-    position: absolute;
+    // position: absolute;
+    display: flex;
     opacity: 0;
     cursor: pointer;
     height: 0;
@@ -64,7 +72,8 @@
 
   /* Create a custom checkbox */
   &-checkmark {
-    position: absolute;
+    // position: absolute;
+    display: inline-block;
     top: 0;
     left: 0;
     height: 1.5625rem;
@@ -87,7 +96,7 @@
   /* Create the checkmark/indicator (hidden when not checked) */
   &-checkmark:after {
     content: "";
-    position: absolute;
+    // position: absolute;
     display: none;
   }
 
@@ -128,6 +137,16 @@
     margin: 0.75rem 0;
   }
 
+  &-change-img-button {
+    display: block;
+    color: $bgColorPrimaryButton;
+    font-weight: 500;
+    font-size: 1rem;
+    margin: 0;
+    width: auto;
+    text-align: center;
+  }
+
   &-cancel-button {
     display: block;
     color: $secondaryText;
@@ -165,5 +184,19 @@
       font-weight: 300;
       font-size: 0.75rem;
     }
+  }
+
+  &-img {
+    width: 100%;
+    height: 8.875rem;
+    object-fit: cover;
+    border: none;
+    border-radius: 0.3125rem;
+    margin: 0 0 1rem 0;
+  }
+
+  &-editAlbum-container {
+    margin: 1.25rem 0;
+    display: block;
   }
 }

@@ -21,6 +21,11 @@ import { setIsAlbumTrue, setIsAlbumFalse } from "../redux/actions/uiActions";
 import { likeAlbum, deleteAlbum } from "../redux/actions/dataActions";
 
 export class AlbumDetails extends Component {
+  state = {
+    showMoreButton: false,
+    showDeleteDialog: false,
+  };
+
   componentDidMount() {
     if (
       this.props.user.authenticated &&
@@ -49,6 +54,77 @@ export class AlbumDetails extends Component {
     )
       return true;
     else return false;
+  };
+
+  handleMoreButton = () => {
+    this.setState({
+      showMoreButton: !this.state.showMoreButton,
+      showDeleteDialog: false,
+    });
+  };
+
+  handleDeleteButton = () => {
+    this.setState({
+      showDeleteDialog: !this.state.showDeleteDialog,
+    });
+  };
+
+  deleteAlbum = () => {
+    this.props.deleteAlbum(this.props.album.albumID);
+    this.setState({
+      showMoreButton: !this.state.showMoreButton,
+    });
+    this.props.history.push("/albums");
+  };
+
+  MoreContainer = () => {
+    return (
+      <div className="albumDetails-more-container">
+        <div className="albumDetails-more-button-container">
+          <Link to="/editAlbum" className="albumDetails-more-primary-button">
+            Edit Album
+          </Link>
+          <button
+            onClick={this.handleDeleteButton}
+            className="albumDetails-more-secondary-button"
+          >
+            Delete Album
+          </button>
+        </div>
+        <h3
+          onClick={this.handleMoreButton}
+          className="albumDetails-more-cancel-button"
+        >
+          Cancel
+        </h3>
+      </div>
+    );
+  };
+
+  DeleteDialog = () => {
+    return (
+      <div className="albumDetails-more-container">
+        <div className="albumDetails-more-delete-text-container">
+          <h4 className="albumDetails-more-delete-text">
+            Are you sure to delete this album?
+          </h4>
+        </div>
+        <div className="albumDetails-more-delete-button-container">
+          <button
+            onClick={this.deleteAlbum}
+            className="albumDetails-more-delete-button"
+          >
+            Delete
+          </button>
+          <h3
+            onClick={this.handleDeleteButton}
+            className="albumDetails-more-cancel-delete-button"
+          >
+            Cancel
+          </h3>
+        </div>
+      </div>
+    );
   };
   render() {
     const {
@@ -111,7 +187,7 @@ export class AlbumDetails extends Component {
 
     const moreButton =
       options && authenticated && credentials.username === username ? (
-        <div className="albumDetails-icon-div">
+        <div onClick={this.handleMoreButton} className="albumDetails-icon-div">
           <img src={moreIcon} className="albumDetails-moreButton" />
         </div>
       ) : null;
@@ -122,31 +198,39 @@ export class AlbumDetails extends Component {
     };
 
     const loadingAlbumDetails = !loading ? (
-      <div
-        className="albumDetails-container"
-        style={{
-          backgroundImage: `url(${albumImg})`,
-        }}
-      >
-        <div className="albumDetails-opacity-container">
-          <div className="albumDetails-inner-container">
-            {authenticated && <BackButton to={backToUrl} />}
-            <div className="albumDetails-details-container">
-              <h3 className="albumDetails-title">{albumTitle}</h3>
-              <div className="albumDetails-details-inner-container">
-                <p className="albumDetails-details">{likeCount} likes</p>
-                <p className="albumDetails-details">{viewCount} views</p>
-                <p className="albumDetails-details">{linkCount} links</p>
+      this.state.showMoreButton ? (
+        this.state.showDeleteDialog ? (
+          <this.DeleteDialog />
+        ) : (
+          <this.MoreContainer />
+        )
+      ) : (
+        <div
+          className="albumDetails-container"
+          style={{
+            backgroundImage: `url(${albumImg})`,
+          }}
+        >
+          <div className="albumDetails-opacity-container">
+            <div className="albumDetails-inner-container">
+              {authenticated && <BackButton to={backToUrl} />}
+              <div className="albumDetails-details-container">
+                <h3 className="albumDetails-title">{albumTitle}</h3>
+                <div className="albumDetails-details-inner-container">
+                  <p className="albumDetails-details">{likeCount} likes</p>
+                  <p className="albumDetails-details">{viewCount} views</p>
+                  <p className="albumDetails-details">{linkCount} links</p>
+                </div>
               </div>
-            </div>
-            <div className="albumDetails-icon-container">
-              {likeButton}
-              {moreButton}
-              {privateIcon}
+              <div className="albumDetails-icon-container">
+                {likeButton}
+                {moreButton}
+                {privateIcon}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )
     ) : (
       <p>Loading...</p>
     );

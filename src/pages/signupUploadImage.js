@@ -10,8 +10,14 @@ import { connect } from "react-redux";
 
 class signupUploadImage extends Component {
   state = {
-    loading: false,
+    errors: {},
   };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.UI.errors && nextProps.UI.errors !== this.props.UI.errors) {
+      this.setState({ errors: nextProps.UI.errors });
+    }
+  }
 
   handleUploadImage = () => {
     const fileInput = document.getElementById("imageInput");
@@ -36,6 +42,8 @@ class signupUploadImage extends Component {
         credentials: { profileImg },
       },
     } = this.props;
+
+    const { errors } = this.state;
 
     let sendImageButton = loading ? (
       <div className="spinner-container-larger-margin">
@@ -81,6 +89,9 @@ class signupUploadImage extends Component {
             </button>
           </div>
         </div>
+        {errors.image && (
+          <p className="signup-uploadImage-errors">{errors.image}</p>
+        )}
       </div>
     );
   }
@@ -88,6 +99,7 @@ class signupUploadImage extends Component {
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  UI: state.UI,
 });
 
 const mapActionsToProps = {
@@ -96,6 +108,7 @@ const mapActionsToProps = {
 
 signupUploadImage.propTypes = {
   user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
   uploadImage: PropTypes.func.isRequired,
 };
 

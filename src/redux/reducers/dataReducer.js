@@ -129,6 +129,9 @@ export default function (state = initialState, action) {
         (album) => album.albumID === action.payload.albumID
       );
       state.albums[index] = action.payload;
+      if (state.album) {
+        state.album = action.payload;
+      }
       return {
         ...state,
         loading: false,

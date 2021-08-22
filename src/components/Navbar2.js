@@ -125,19 +125,39 @@ export class Navbar2 extends Component {
       user: {
         authenticated,
         loading,
-        credentials: { profileImg, notifications },
+        credentials: { profileImg, notifications, isVerified },
       },
     } = this.props;
 
-    let addAlbumOrLinkButton = !this.props.UI.isAlbum ? (
+    let editAlbumButton = this.props.UI.isAlbum ? (
       <Link
         onClick={this.showMenu}
         className="primary-button-medium-margin"
-        to="/addAlbum"
+        to="/editAlbum"
       >
-        Add an Album
+        Edit Album
       </Link>
-    ) : (
+    ) : null;
+
+    let addAlbumOrLinkButton = !this.props.UI.isAlbum ? (
+      isVerified ? (
+        <Link
+          onClick={this.showMenu}
+          className="primary-button-medium-margin"
+          to="/addAlbum"
+        >
+          Add an Album
+        </Link>
+      ) : (
+        <button
+          type="button"
+          onClick={this.showMenu}
+          className="secondary-button-medium-margin"
+        >
+          Add an Album
+        </button>
+      )
+    ) : isVerified ? (
       <Link
         onClick={this.showMenu}
         className="primary-button-medium-margin"
@@ -145,6 +165,14 @@ export class Navbar2 extends Component {
       >
         Add a Link
       </Link>
+    ) : (
+      <button
+        onClick={this.showMenu}
+        className="secondary-button-medium-margin"
+        type="button"
+      >
+        Add a Link
+      </button>
     );
 
     let mobileMenuContainer = !authenticated ? (
@@ -190,6 +218,7 @@ export class Navbar2 extends Component {
     ) : (
       <div className="displayItems">
         {addAlbumOrLinkButton}
+        {editAlbumButton}
         <div className="menuItemsContainer">
           <ul className="noBullets">
             <li>
@@ -214,7 +243,7 @@ export class Navbar2 extends Component {
               <Link
                 onClick={this.showMenu}
                 className="menuItems-Priority"
-                to="/profile"
+                to="/manageAccount"
               >
                 Manage Account
               </Link>

@@ -60,7 +60,6 @@ export class Album extends Component {
   MoreContainer = () => {
     return (
       <div className="album-more-container">
-        <button className="album-more-primary-button">Edit Album</button>
         <button
           onClick={this.handleDeleteButton}
           className="album-more-secondary-button"

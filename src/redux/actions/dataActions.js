@@ -158,6 +158,27 @@ export const addNewAlbum = (newAlbum, history) => (dispatch) => {
     });
 };
 
+export const editAlbumDetails =
+  (editedAlbum, albumID, history) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    axios
+      .post(`/album/${albumID}`, editedAlbum)
+      .then(() => {
+        dispatch(getAlbumOnly(albumID));
+        dispatch({
+          type: CLEAR_ERRORS,
+        });
+        history.push(`/album/${albumID}`);
+      })
+      .catch((error) => {
+        dispatch({
+          type: SET_ERRORS,
+          payload: error.response.data,
+        });
+        dispatch(handleUnauthorised(error));
+      });
+  };
+
 export const addNewLink = (newLink, albumID, history) => (dispatch) => {
   console.log("sending link");
   dispatch({ type: LOADING_UI });
@@ -342,6 +363,9 @@ export const uploadAlbumImage = (formData, albumID) => (dispatch) => {
     .post(`/album/${albumID}/image`, formData)
     .then(() => {
       dispatch(getAlbumOnly(albumID));
+      dispatch({
+        type: CLEAR_ERRORS,
+      });
     })
     .catch((error) => {
       console.log(error);

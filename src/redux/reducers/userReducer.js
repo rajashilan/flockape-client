@@ -20,6 +20,16 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case SET_ERRORS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        loading: false,
+      };
     case SET_AUTHENTICATED:
       return {
         ...state,

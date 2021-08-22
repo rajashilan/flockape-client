@@ -166,4 +166,114 @@
   margin: 1.875rem 0;
   text-align: center;
 }
+
+.albumDetails-more-container {
+  width: 100%;
+  height: 7.375rem;
+  border: none;
+  border-radius: 0.3125rem;
+  background-color: #282840;
+  padding: 1rem;
+}
+
+.albumDetails-more-button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.albumDetails-more-primary-button {
+  display: block;
+  background-color: #f22b3e;
+  color: #f2f2f2;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.625rem 1rem;
+  width: 100% !important;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 0 0.375rem 0 0;
+  text-align: center;
+}
+
+.albumDetails-more-secondary-button {
+  display: block;
+  background-color: #4a4a64;
+  color: #d3d3d3;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.625rem 1rem;
+  width: 100% !important;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 0 0 0 0.375rem;
+  text-align: center;
+}
+
+.albumDetails-more-delete-button {
+  display: block;
+  background-color: #f22b3e;
+  color: #f2f2f2;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.625rem 1rem;
+  width: 40% !important;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 0.375rem 0 0 0;
+  text-align: center;
+}
+
+.albumDetails-more-cancel-button {
+  display: block;
+  margin-top: 0.625rem 0 0 0;
+  color: #f2f2f2;
+  font-weight: 300;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.albumDetails-more-cancel-delete-button {
+  display: block;
+  margin-top: 0.625rem 0 0 0;
+  color: #f2f2f2;
+  font-weight: 300;
+  font-size: 1rem;
+  text-align: center;
+  width: 40% !important;
+}
+
+.albumDetails-more-delete-text-container {
+  display: block;
+  text-align: center;
+  padding: 0.25rem 0 0.25rem 0;
+  width: 100% !important;
+  border: none;
+  margin: 0;
+}
+
+.albumDetails-more-delete-button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.albumDetails-more-delete-text {
+  color: #f2f2f2;
+  font-size: 1rem;
+  font-weight: 300;
+  margin: 0;
+}
 /*# sourceMappingURL=AlbumDetails.css.map */

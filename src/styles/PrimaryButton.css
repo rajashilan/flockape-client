@@ -36,6 +36,25 @@
   font-weight: 400;
 }
 
+.secondary-button-medium-margin {
+  display: block;
+  background-color: #373753;
+  color: #989898;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.625rem 3rem;
+  width: 100% !important;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 0.625rem 0;
+}
+
+.secondary-button-medium-margin-text {
+  color: #f2f2f2;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
 .disabled-button {
   display: block;
   background-color: #989898;

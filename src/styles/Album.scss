@@ -2,7 +2,7 @@
 
 .album {
   &-container {
-    margin: 0 auto;
+    margin: 0 auto 1.25rem auto;
   }
 
   &-albums-container {
@@ -207,6 +207,7 @@
       border: none;
       border-radius: 0.3125rem;
       margin: 0;
+      text-align: center;
     }
 
     &-secondary-button {
@@ -220,6 +221,7 @@
       border: none;
       border-radius: 0.3125rem;
       margin: 0.625rem 0 0 0;
+      text-align: center;
     }
 
     &-delete-button {
@@ -233,6 +235,7 @@
       border: none;
       border-radius: 0.3125rem;
       margin: 0.375rem 0 0 0;
+      text-align: center;
     }
 
     &-cancel-button {
@@ -245,7 +248,7 @@
 
     &-delete-text-container {
       display: block;
-      padding: 0.625rem 1rem;
+      padding: 0.3125rem 1rem;
       width: 100% !important;
       border: none;
       margin: 0;

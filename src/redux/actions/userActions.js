@@ -74,10 +74,15 @@ export const uploadImage = (formData) => (dispatch) => {
   axios
     .post("/user/image", formData)
     .then(() => {
+      dispatch({ type: CLEAR_ERRORS });
       dispatch(getUserData());
     })
     .catch((error) => {
       console.log(error);
+      dispatch({
+        type: SET_ERRORS,
+        payload: error.response.data,
+      });
       dispatch(handleUnauthorised(error));
     });
 };
@@ -88,9 +93,14 @@ export const editUserDetails = (userDetails) => (dispatch) => {
     .post("/user", userDetails)
     .then(() => {
       dispatch(getUserData());
+      dispatch({ type: CLEAR_ERRORS });
     })
     .catch((error) => {
       console.log(error);
+      dispatch({
+        type: SET_ERRORS,
+        payload: error.response.data,
+      });
       dispatch(handleUnauthorised(error));
     });
 };

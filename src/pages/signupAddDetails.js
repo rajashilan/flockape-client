@@ -33,7 +33,7 @@ export class signupAddDetails extends Component {
     this.props.editUserDetails(userDetails);
   };
 
-  componentWillMount = () => {
+  componentDidMount() {
     const {
       user: {
         credentials: { bio, location, website },
@@ -44,7 +44,7 @@ export class signupAddDetails extends Component {
       location: location ? location : "",
       website: website ? website : "",
     });
-  };
+  }
 
   handleFinishAction = () => {
     this.props.history.push({
@@ -122,6 +122,7 @@ const mapStateToProps = (state) => ({
 
 signupAddDetails.propTypes = {
   editUserDetails: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps, { editUserDetails })(signupAddDetails);
