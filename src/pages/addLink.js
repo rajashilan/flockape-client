@@ -26,11 +26,13 @@ export class addLink extends Component {
 
   handleBack = () => {
     this.props.UI.errors = null;
-    this.props.history.push({
-      pathname: `/album/${this.props.album.albumID}`,
-      state: { albumID: this.props.album.albumID },
-    });
-    // this.props.history.push(`/album/${this.props.album.albumID}`);
+    // this.props.history.push({
+    //   pathname: `/album/${this.props.album.albumID}`,
+    //   state: { albumID: this.props.album.albumID },
+    // });
+    this.props.history.push(
+      `/@${this.props.album.username}/album/${this.props.album.albumID}`
+    );
   };
 
   handleForward = () => {
@@ -43,6 +45,7 @@ export class addLink extends Component {
     this.props.addNewLink(
       this.state.link,
       this.props.album.albumID,
+      this.props.album.username,
       this.props.history
     );
   };

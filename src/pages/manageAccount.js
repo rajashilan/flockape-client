@@ -17,6 +17,7 @@ export class manageAccount extends Component {
     website: "",
     location: "",
     errors: {},
+    back: false,
   };
 
   componentDidMount() {
@@ -36,6 +37,12 @@ export class manageAccount extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors && nextProps.UI.errors !== this.props.UI.errors) {
       this.setState({ errors: nextProps.UI.errors });
+    }
+
+    if (!nextProps.UI.errors && !this.props.user.loading) {
+      this.setState({
+        back: true,
+      });
     }
   }
 
@@ -92,7 +99,7 @@ export class manageAccount extends Component {
       </div>
     ) : (
       <button type="submit" className="manageAccount-primary-button">
-        Add Details
+        Update Details
       </button>
     );
 
@@ -108,6 +115,15 @@ export class manageAccount extends Component {
         Change Profile Picture
       </h3>
     );
+
+    let cancelText = this.state.back
+      ? (cancelText = "back")
+      : (cancelText = "cancel");
+
+    let toHistory;
+    this.props.location.state && this.props.location.state.history
+      ? (toHistory = this.props.location.state.history)
+      : (toHistory = "/albums");
 
     return (
       <div className="manageAccount-container">
@@ -171,11 +187,11 @@ export class manageAccount extends Component {
           />
           {addDetailButton}
         </form>
-        <Link to="/changePassword" className="manageAccount-secondary-button">
+        <Link to="/updatePassword" className="manageAccount-secondary-button">
           Change Password
         </Link>
-        <Link to="/albums" className="manageAccount-cancel-button">
-          Cancel
+        <Link to={toHistory} className="manageAccount-cancel-button">
+          {cancelText}
         </Link>
       </div>
     );

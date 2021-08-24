@@ -23,6 +23,7 @@ class albumDetails extends Component {
 
   componentDidMount() {
     this.props.getAlbum(this.props.match.params.albumID);
+    console.log("mounted album details");
   }
 
   handleSearch = (event) => {
@@ -112,10 +113,13 @@ class albumDetails extends Component {
 
     let userDisplay =
       !loading && (!authenticated || credentials.username !== username) ? (
-        <div className="albumDetails-user-display-container">
+        <Link
+          to={`/@${username}`}
+          className="albumDetails-user-display-container"
+        >
           <img src={profileImg} className="albumDetails-user-display-img" />
           <h3 className="albumDetails-user-display-name">@{username}</h3>
-        </div>
+        </Link>
       ) : null;
 
     let addLinkButton =

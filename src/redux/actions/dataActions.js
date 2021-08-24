@@ -76,7 +76,7 @@ export const getAlbum = (albumID) => (dispatch) => {
     })
     .catch((error) => {
       console.log(error);
-      dispatch(handleUnauthorised(error));
+      dispatch(handleUnauthorisedPrivateAlbum(error));
     });
 };
 
@@ -159,7 +159,7 @@ export const addNewAlbum = (newAlbum, history) => (dispatch) => {
 };
 
 export const editAlbumDetails =
-  (editedAlbum, albumID, history) => (dispatch) => {
+  (editedAlbum, albumID, username, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios
       .post(`/album/${albumID}`, editedAlbum)
@@ -168,7 +168,7 @@ export const editAlbumDetails =
         dispatch({
           type: CLEAR_ERRORS,
         });
-        history.push(`/album/${albumID}`);
+        history.push(`/@${username}/album/${albumID}`);
       })
       .catch((error) => {
         dispatch({
@@ -179,165 +179,198 @@ export const editAlbumDetails =
       });
   };
 
-export const addNewLink = (newLink, albumID, history) => (dispatch) => {
-  console.log("sending link");
-  dispatch({ type: LOADING_UI });
+export const addNewLink =
+  (newLink, albumID, username, history) => (dispatch) => {
+    console.log("sending link");
+    dispatch({ type: LOADING_UI });
 
-  const sendLink = {
-    linkUrl: newLink,
-    linkTitle: "",
-    linkDesc: "",
-    linkImg: "",
-    linkDomain: "",
-  };
+    const sendLink = {
+      linkUrl: newLink,
+      linkTitle: "",
+      linkDesc: "",
+      linkImg: "",
+      linkDomain: "",
+    };
 
-  axios
-    .post("/fetchUrl?search=" + newLink)
-    .then((res) => {
-      console.log(res.data);
-      return res.data;
-    })
-    .then((details) => {
-      console.log("data fetched from /fetchUrl");
-
-      sendLink.linkTitle = details.title;
-      sendLink.linkDesc = details.description;
-      sendLink.linkDomain = details.domain;
-
-      let thumbnail = details.img;
-
-      let imageUrl = "/fetchImage?search=" + thumbnail;
-
-      // if (details.domain === "tiktok.com") {
-      //   imageUrl = thumbnail;
-      // }
-
-      console.log("URL used to fetch blob: ", imageUrl);
-
-      var storage = firebase.storage();
-      var storageRef = storage.ref();
-      var filename = `${Math.round(Math.random() * 1000000000000000)}-link-img`;
-
-      fetch(imageUrl, {
-        mode: "cors",
-        method: "POST",
-        header: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-          "Access-Control-Allow-Headers":
-            "Origin, X-Requested-With, Content-Type, Accept, authorization",
-        },
+    axios
+      .post("/fetchUrl?search=" + newLink)
+      .then((res) => {
+        console.log(res.data);
+        return res.data;
       })
-        .then((res) => {
-          return res.blob();
-        })
-        .then((blob) => {
-          console.log("type", blob.type);
+      .then((details) => {
+        console.log("data fetched from /fetchUrl");
 
-          if (
-            blob.type !== "image/jpeg" &&
-            blob.type !== "image/png" &&
-            blob.type !== "image/webp"
-          ) {
-            console.log("uploading default image");
-            const defaultImg =
-              "https://firebasestorage.googleapis.com/v0/b/sharesite-test.appspot.com/o/link-thumbnails%2Fdefault-link-img.jpg?alt=media&token=cedbb964-547c-4480-9b12-f8e0b6acb70c";
-            sendLink.linkImg = defaultImg;
+        sendLink.linkTitle = details.title;
+        sendLink.linkDesc = details.description;
+        sendLink.linkDomain = details.domain;
 
-            axios
-              .post(`/album/${albumID}/link`, sendLink)
-              .then((res) => {
-                dispatch({
-                  type: SET_LINK,
-                  payload: res.data,
-                });
-                dispatch({
-                  type: CLEAR_ERRORS,
-                });
-                history.push(`album/${albumID}`);
-                console.log(res.data);
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          } else {
-            console.log("uploading the original image");
-            storageRef
-              .child("link-thumbnails/" + filename)
-              .put(blob)
-              .then(function (snapshot) {
-                return snapshot.ref.getDownloadURL();
-              })
-              .catch((error) => {
-                console.log("Error getting image from imageURL", error);
-              })
-              .then((imgLink) => {
-                console.log("Img uploaded at:", imgLink);
+        let thumbnail = details.img;
 
-                sendLink.linkImg = imgLink;
+        let imageUrl = thumbnail;
 
-                axios.post(`/album/${albumID}/link`, sendLink).then((res) => {
-                  dispatch({
-                    type: SET_LINK,
-                    payload: res.data,
+        //start of if
+        if (details.domain === "tiktok.com") {
+          imageUrl = thumbnail;
+
+          console.log("URL used to fetch blob: ", imageUrl);
+
+          var storage = firebase.storage();
+          var storageRef = storage.ref();
+          var filename = `${Math.round(
+            Math.random() * 1000000000000000
+          )}-link-img`;
+
+          fetch(imageUrl, {
+            mode: "cors",
+            method: "get",
+            header: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods":
+                "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+              "Access-Control-Allow-Headers":
+                "Origin, X-Requested-With, Content-Type, Accept, authorization",
+            },
+          })
+            .then((res) => {
+              return res.blob();
+            })
+            .then((blob) => {
+              console.log("type", blob.type);
+
+              if (
+                blob.type !== "image/jpeg" &&
+                blob.type !== "image/png" &&
+                blob.type !== "image/webp"
+              ) {
+                console.log("uploading default image");
+                const defaultImg =
+                  "https://firebasestorage.googleapis.com/v0/b/sharesite-test.appspot.com/o/link-thumbnails%2Fdefault-link-img.jpg?alt=media&token=cedbb964-547c-4480-9b12-f8e0b6acb70c";
+                sendLink.linkImg = defaultImg;
+
+                axios
+                  .post(`/album/${albumID}/link`, sendLink)
+                  .then((res) => {
+                    dispatch({
+                      type: SET_LINK,
+                      payload: res.data,
+                    });
+                    dispatch({
+                      type: CLEAR_ERRORS,
+                    });
+                    history.push(`/@${username}/album/${albumID}`);
+                    console.log(res.data);
+                  })
+                  .catch((error) => {
+                    console.log(error);
                   });
-                  dispatch({
-                    type: CLEAR_ERRORS,
+              } else {
+                console.log("uploading the original image");
+                storageRef
+                  .child("link-thumbnails/" + filename)
+                  .put(blob)
+                  .then(function (snapshot) {
+                    return snapshot.ref.getDownloadURL();
+                  })
+                  .catch((error) => {
+                    console.log("Error getting image from imageURL", error);
+                  })
+                  .then((imgLink) => {
+                    console.log("Img uploaded at:", imgLink);
+
+                    sendLink.linkImg = imgLink;
+
+                    axios
+                      .post(`/album/${albumID}/link`, sendLink)
+                      .then((res) => {
+                        dispatch({
+                          type: SET_LINK,
+                          payload: res.data,
+                        });
+                        dispatch({
+                          type: CLEAR_ERRORS,
+                        });
+                        history.push(`/@${username}/album/${albumID}`);
+                        console.log(res.data);
+                      });
                   });
-                  history.push(`album/${albumID}`);
-                  console.log(res.data);
-                });
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              if (error === "TypeError: Failed to fetch") {
+                dispatch({ type: SET_ERRORS, payload: error });
+              } else {
+                dispatch({ type: SET_ERRORS, payload: error.response.data });
+              }
+            });
+        } // end of if
+        else {
+          sendLink.linkImg = details.img;
+          console.log("uploading image directly from fetch");
+
+          axios
+            .post(`/album/${albumID}/link`, sendLink)
+            .then((res) => {
+              dispatch({
+                type: SET_LINK,
+                payload: res.data,
               });
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          dispatch({ type: SET_ERRORS, payload: error.response.data });
-        });
-    })
-    .catch((error) => {
-      console.log(error);
-      dispatch({ type: SET_ERRORS, payload: error.response.data });
-      dispatch(handleUnauthorised(error));
-    });
-};
-
-export const addNewLinkManually = (newLink, albumID, history) => (dispatch) => {
-  console.log("sending link manually");
-  dispatch({ type: LOADING_UI });
-
-  const sendLink = {
-    linkUrl: newLink.link,
-    linkTitle: newLink.title,
-    linkDesc: "",
-    linkImg: "",
-    linkDomain: "",
+              dispatch({
+                type: CLEAR_ERRORS,
+              });
+              history.push(`/@${username}/album/${albumID}`);
+              console.log(res.data);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch({ type: SET_ERRORS, payload: error.response.data });
+        dispatch(handleUnauthorised(error));
+      });
   };
 
-  const defaultImg =
-    "https://firebasestorage.googleapis.com/v0/b/sharesite-test.appspot.com/o/link-thumbnails%2Fdefault-link-img.jpg?alt=media&token=cedbb964-547c-4480-9b12-f8e0b6acb70c";
-  sendLink.linkImg = defaultImg;
+export const addNewLinkManually =
+  (newLink, albumID, username, history) => (dispatch) => {
+    console.log("sending link manually");
+    dispatch({ type: LOADING_UI });
 
-  sendLink.linkDesc = "Manually added link";
+    const sendLink = {
+      linkUrl: newLink.link,
+      linkTitle: newLink.title,
+      linkDesc: "",
+      linkImg: "",
+      linkDomain: "",
+    };
 
-  axios
-    .post(`/album/${albumID}/link`, sendLink)
-    .then((res) => {
-      dispatch({
-        type: SET_LINK,
-        payload: res.data,
+    const defaultImg =
+      "https://firebasestorage.googleapis.com/v0/b/sharesite-test.appspot.com/o/link-thumbnails%2Fdefault-link-img.jpg?alt=media&token=cedbb964-547c-4480-9b12-f8e0b6acb70c";
+    sendLink.linkImg = defaultImg;
+
+    sendLink.linkDesc = "Manually added link";
+
+    axios
+      .post(`/album/${albumID}/link`, sendLink)
+      .then((res) => {
+        dispatch({
+          type: SET_LINK,
+          payload: res.data,
+        });
+        dispatch({
+          type: CLEAR_ERRORS,
+        });
+        history.push(`/@${username}/album/${albumID}`);
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch({ type: SET_ERRORS, payload: error.response.data });
       });
-      dispatch({
-        type: CLEAR_ERRORS,
-      });
-      history.push(`album/${albumID}`);
-      console.log(res.data);
-    })
-    .catch((error) => {
-      console.log(error);
-      dispatch({ type: SET_ERRORS, payload: error.response.data });
-    });
-};
+  };
 
 export const likeLink = (linkID) => (dispatch) => {
   dispatch({ type: LOADING_UI_LIKE_LINK, payload: linkID });
@@ -419,7 +452,16 @@ export const handleUnauthorised = (error) => (dispatch) => {
     error.response.status &&
     error.response.status === 403
   ) {
-    console.log("handled");
     dispatch(logoutUser());
+  }
+};
+
+export const handleUnauthorisedPrivateAlbum = (error) => (dispatch) => {
+  if (
+    error.response &&
+    error.response.status &&
+    error.response.status === 403
+  ) {
+    window.location.href = "/albums";
   }
 };

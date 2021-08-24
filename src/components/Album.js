@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import "../styles/Album.css";
-import "../styles/ProgressSpinnerLikeButton.css";
+import "../styles/ProgressSpinnerFollowButton.css";
 
 import moreIcon from "./images/moreDisplayIcon@2x.png";
 import likeIcon from "./images/likeButton@2x.png";
 import likedFullIcon from "./images/likedFullButton@2x.png";
+import followButton from "./images/followButton@2x.png";
+import followedButton from "./images/followedButton@2x.png";
 import heartDisplayIcon from "./images/heartDisplayIcon@2x.png";
 import viewsDisplayIcon from "./images/viewsDisplayIcon@2x.png";
 import privateDisplayIcon from "./images/privateDisplayIcon@2x.png";
@@ -126,26 +128,26 @@ export class Album extends Component {
     const likeButton = !authenticated ? (
       <Link to="/login">
         <div className="album-icon-div">
-          <img src={likeIcon} className="album-likeButton" />
+          <img src={followButton} className="album-likeButton" />
         </div>
       </Link>
     ) : this.likedAlbum() ? (
       isLikeLoading ? (
         <div className="album-icon-div">
-          <progress className="pure-material-progress-circular-unlike-button" />
+          <progress className="pure-material-progress-circular-unfollow-button" />
         </div>
       ) : (
         <div onClick={this.likeAlbum} className="album-icon-div">
-          <img src={likedFullIcon} className="album-likeButton" />
+          <img src={followedButton} className="album-likeButton" />
         </div>
       )
     ) : isLikeLoading ? (
       <div className="album-icon-div">
-        <progress className="pure-material-progress-circular-like-button" />
+        <progress className="pure-material-progress-circular-follow-button" />
       </div>
     ) : (
       <div onClick={this.likeAlbum} className="album-icon-div">
-        <img src={likeIcon} className="album-likeButton" />
+        <img src={followButton} className="album-likeButton" />
       </div>
     );
 
@@ -164,7 +166,7 @@ export class Album extends Component {
       ) : null;
 
     const toAlbumDetails = {
-      pathname: `/album/${albumID}`,
+      pathname: `/@${username}/album/${albumID}`,
       state: { history: window.location.pathname },
     };
 
@@ -188,7 +190,7 @@ export class Album extends Component {
 
     let userDisplay =
       !authenticated || credentials.username !== username ? (
-        <Link to={`/${username}`}>
+        <Link to={`/@${username}`}>
           <div className="album-user-display-container">
             <img src={profileImg} className="album-user-display-img" />
             <h3 className="album-user-display-name">@{username}</h3>

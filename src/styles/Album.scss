@@ -46,10 +46,11 @@
     width: 60%;
     margin-top: 0;
     margin-bottom: 0;
+    white-space: nowrap;
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
+    display: block;
     -webkit-line-clamp: 1; /* number of lines to show */
     -webkit-box-orient: vertical;
   }

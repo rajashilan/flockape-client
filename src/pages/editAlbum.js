@@ -106,13 +106,14 @@ export class editAlbum extends Component {
     this.props.editAlbumDetails(
       editedAlbum,
       this.props.album.albumID,
+      this.props.album.username,
       this.props.history
     );
   };
 
   render() {
     const { loading } = this.props.data;
-    const { albumImg } = this.props.album;
+    const { albumImg, username } = this.props.album;
     const { errors } = this.state;
 
     // handle redirect on refresh
@@ -194,7 +195,7 @@ export class editAlbum extends Component {
               )}
               {editAlbumButton}
               <Link
-                to={`/album/${this.props.album.albumID}`}
+                to={`/@${username}/album/${this.props.album.albumID}`}
                 className="addAlbum-cancel-button"
               >
                 Cancel

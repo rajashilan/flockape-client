@@ -44,10 +44,11 @@
     font-weight: 500;
     font-size: 1rem;
     margin: 0;
+    white-space: nowrap;
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
+    display: block;
     -webkit-line-clamp: 1; /* number of lines to show */
     -webkit-box-orient: vertical;
   }
@@ -57,10 +58,11 @@
     font-weight: 300;
     font-size: 0.75rem;
     margin: 0.3125rem 0 0 0;
+    white-space: nowrap;
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
+    display: block;
     -webkit-line-clamp: 1; /* number of lines to show */
     -webkit-box-orient: vertical;
   }

@@ -4,14 +4,15 @@ import { Link } from "react-router-dom";
 import moreIcon from "./images/moreDisplayIcon@2x.png";
 import likeIcon from "./images/likeButton@2x.png";
 import likedFullIcon from "./images/likedFullButton@2x.png";
-import heartDisplayIcon from "./images/heartDisplayIcon@2x.png";
-import viewsDisplayIcon from "./images/viewsDisplayIcon@2x.png";
+import followButton from "./images/followButton@2x.png";
+import followedButton from "./images/followedButton@2x.png";
 import privateDisplayIcon from "./images/privateDisplayIcon@2x.png";
 
 import BackButton from "./BackButton";
 
 import "../styles/AlbumDetails.css";
 import "../styles/ProgressSpinnerLikeButton.css";
+import "../styles/ProgressSpinnerFollowButton.css";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -70,7 +71,7 @@ export class AlbumDetails extends Component {
   };
 
   deleteAlbum = () => {
-    this.props.deleteAlbum(this.props.album.albumID);
+    this.props.deleteAlbum(this.props.albumID);
     this.setState({
       showMoreButton: !this.state.showMoreButton,
     });
@@ -155,26 +156,26 @@ export class AlbumDetails extends Component {
     const likeButton = !authenticated ? (
       <Link to="/login">
         <div className="albumDetails-icon-div">
-          <img src={likeIcon} className="albumDetails-likeButton" />
+          <img src={followButton} className="albumDetails-likeButton" />
         </div>
       </Link>
     ) : this.likedAlbum() ? (
       isLikeLoading ? (
         <div className="albumDetails-icon-div">
-          <progress className="pure-material-progress-circular-unlike-button" />
+          <progress className="pure-material-progress-circular-unfollow-button" />
         </div>
       ) : (
         <div onClick={this.likeAlbum} className="albumDetails-icon-div">
-          <img src={likedFullIcon} className="albumDetails-likeButton" />
+          <img src={followedButton} className="albumDetails-likeButton" />
         </div>
       )
     ) : isLikeLoading ? (
       <div className="albumDetails-icon-div">
-        <progress className="pure-material-progress-circular-like-button" />
+        <progress className="pure-material-progress-circular-follow-button" />
       </div>
     ) : (
       <div onClick={this.likeAlbum} className="albumDetails-icon-div">
-        <img src={likeIcon} className="albumDetails-likeButton" />
+        <img src={followButton} className="albumDetails-likeButton" />
       </div>
     );
 

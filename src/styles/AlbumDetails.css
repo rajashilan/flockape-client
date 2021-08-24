@@ -42,6 +42,7 @@
 .albumDetails-details-container {
   display: block;
   margin: 0 1rem 0 0;
+  width: 70%;
 }
 
 .albumDetails-title {
@@ -51,10 +52,11 @@
   margin: 0;
   width: 100%;
   word-wrap: break-word;
+  /* autoprefixer: off */
+  display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   /* number of lines to show */
   -webkit-box-orient: vertical;
 }

@@ -4,8 +4,6 @@ import thunk from "redux-thunk";
 import userReducer from "./reducers/userReducer";
 import dataReducer from "./reducers/dataReducer";
 import uiReducer from "./reducers/uiReducer";
-import { create } from "istanbul-reports";
-import { apply } from "check-types";
 
 const initialiseState = {};
 

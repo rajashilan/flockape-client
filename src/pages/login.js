@@ -115,7 +115,7 @@ class login extends Component {
             </Link>
             instead.
           </p>
-          <Link className="forgot-password-link" to="/">
+          <Link className="forgot-password-link" to="/resetPassword">
             Forgot password?
           </Link>
         </div>

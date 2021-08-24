@@ -11,7 +11,7 @@ export class SearchedUserCard extends Component {
       user: { username, avatar, fullName },
     } = this.props;
     return (
-      <Link to={`/${username}`}>
+      <Link to={`/@${username}`}>
         <div className="searchUser-container">
           <img src={avatar} alt="avatar" className="searchUser-img" />
           <div className="searchUser-details-container">

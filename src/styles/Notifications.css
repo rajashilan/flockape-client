@@ -1,0 +1,90 @@
+.notifications-main-container {
+  margin: 1rem auto 1.25rem auto;
+  padding: 0;
+  display: block;
+}
+
+.notifications-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  padding: 1rem;
+  width: 100%;
+  height: auto;
+}
+
+.notifications-link {
+  height: 3.4375rem;
+  width: 3.4375rem;
+  margin: 0 1rem 0 0;
+}
+
+.notifications-sender-profileImg {
+  border-radius: 50%;
+  height: 3.4375rem;
+  min-height: 3.4375rem;
+  max-height: 3.4375rem;
+  width: 3.4375rem;
+  min-width: 3.4375rem;
+  max-width: 3.4375rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin: 0 1rem 0 0;
+}
+
+.notifications-default-title {
+  color: #d3d3d3;
+  font-weight: 400;
+  font-size: 1rem;
+  margin: 1rem 0 0 0;
+  text-align: center;
+}
+
+.notifications-details-container {
+  display: block;
+  margin: 0.125rem auto 0 auto;
+  padding: 0;
+  width: 100%;
+}
+
+.notifications-details-action {
+  width: 100%;
+  max-width: 100%;
+  color: #f2f2f2;
+  font-weight: 400;
+  font-size: 0.875rem;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
+
+.notifications-details-contentCreatedAt {
+  color: #989898;
+  font-weight: 300;
+  font-size: 0.75rem;
+  margin: 0.25rem 0 0 0;
+}
+
+.notifications-contentImg {
+  border-radius: 0.3125rem;
+  height: 3.4375rem;
+  min-height: 3.4375rem;
+  max-height: 3.4375rem;
+  width: 3.4375rem;
+  min-width: 3.4375rem;
+  max-width: 3.4375rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin: 0 0 0 1rem;
+}
+/*# sourceMappingURL=Notifications.css.map */

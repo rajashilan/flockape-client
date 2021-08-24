@@ -1,0 +1,86 @@
+@import "../scssVariables/variables.scss";
+
+.notifications {
+  &-main-container {
+    margin: 1rem auto 1.25rem auto;
+    padding: 0;
+    display: block;
+  }
+
+  &-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    padding: 1rem;
+    width: 100%;
+    height: auto;
+  }
+
+  &-link {
+    height: 3.4375rem;
+    width: 3.4375rem;
+    margin: 0 1rem 0 0;
+  }
+
+  &-sender-profileImg {
+    border-radius: 50%;
+    height: 3.4375rem;
+    min-height: 3.4375rem;
+    max-height: 3.4375rem;
+    width: 3.4375rem;
+    min-width: 3.4375rem;
+    max-width: 3.4375rem;
+    object-fit: cover;
+    margin: 0 1rem 0 0;
+  }
+
+  &-default-title {
+    color: $secondaryText;
+    font-weight: 400;
+    font-size: 1rem;
+    margin: 1rem 0 0 0;
+    text-align: center;
+  }
+
+  &-details-container {
+    display: block;
+    margin: 0.125rem auto 0 auto;
+    padding: 0;
+    width: 100%;
+  }
+
+  &-details {
+    &-action {
+      width: 100%;
+      max-width: 100%;
+      color: $primaryText;
+      font-weight: 400;
+      font-size: 0.875rem;
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* number of lines to show */
+      -webkit-box-orient: vertical;
+    }
+
+    &-contentCreatedAt {
+      color: $tertiaryText;
+      font-weight: 300;
+      font-size: 0.75rem;
+      margin: 0.25rem 0 0 0;
+    }
+  }
+
+  &-contentImg {
+    border-radius: 0.3125rem;
+    height: 3.4375rem;
+    min-height: 3.4375rem;
+    max-height: 3.4375rem;
+    width: 3.4375rem;
+    min-width: 3.4375rem;
+    max-width: 3.4375rem;
+    object-fit: cover;
+    margin: 0 0 0 1rem;
+  }
+}

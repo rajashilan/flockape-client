@@ -6,6 +6,8 @@ import {
   LOADING_UI,
   SET_UNAUTHENTICATED,
   LOADING_USER,
+  STOP_LOADING_UI,
+  MARK_NOTIFICATIONS_READ,
 } from "../types";
 
 export const loginUser = (userData, history) => (dispatch) => {
@@ -102,6 +104,53 @@ export const editUserDetails = (userDetails) => (dispatch) => {
         payload: error.response.data,
       });
       dispatch(handleUnauthorised(error));
+    });
+};
+
+export const resetUserPassword = (email) => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  axios
+    .post("/password/reset", email)
+    .then(() => {
+      dispatch({ type: STOP_LOADING_UI });
+      dispatch({ type: CLEAR_ERRORS });
+    })
+    .catch((error) => {
+      console.log(error);
+      dispatch({
+        type: SET_ERRORS,
+        payload: error.response.data,
+      });
+    });
+};
+
+export const updateUserPassword = (passwords, history) => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  axios
+    .post("/password/update", passwords)
+    .then(() => {
+      dispatch({ type: STOP_LOADING_UI });
+      dispatch({ type: CLEAR_ERRORS });
+      history.push("/manageAccount");
+    })
+    .catch((error) => {
+      console.log(error);
+      dispatch({
+        type: SET_ERRORS,
+        payload: error.response.data,
+      });
+      dispatch(handleUnauthorised(error));
+    });
+};
+
+export const markNotificationsRead = (notificationIds) => (dispatch) => {
+  axios
+    .post("/notifications", notificationIds)
+    .then((res) => {
+      dispatch({ type: MARK_NOTIFICATIONS_READ });
+    })
+    .catch((error) => {
+      console.log(error);
     });
 };
 

@@ -27,11 +27,13 @@ export class addLinkManually extends Component {
 
   handleBack = () => {
     this.props.UI.errors = null;
-    this.props.history.push({
-      pathname: `/album/${this.props.album.albumID}`,
-      state: { albumID: this.props.album.albumID },
-    });
-    // this.props.history.push(`/album/${this.props.album.albumID}`);
+    // this.props.history.push({
+    //   pathname: `/album/${this.props.album.albumID}`,
+    //   state: { albumID: this.props.album.albumID },
+    // });
+    this.props.history.push(
+      `/@${this.props.album.username}/album/${this.props.album.albumID}`
+    );
   };
 
   handleGoToOri = () => {
@@ -48,6 +50,7 @@ export class addLinkManually extends Component {
     this.props.addNewLinkManually(
       newManualLink,
       this.props.album.albumID,
+      this.props.album.username,
       this.props.history
     );
   };

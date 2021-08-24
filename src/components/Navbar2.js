@@ -9,6 +9,7 @@ import "../styles/PrimaryButton.css";
 import logo from "./images/logo@2x.png";
 import searchIcon from "./images/searchIcon@2x.png";
 import notificationIcon from "./images/notificationIcon@2x.png";
+import notificationAlertIcon from "./images/notificationAlertIcon@2x.png";
 //components
 import SearchedUserCard from "./SearchedUserCard";
 import LoadingSearchedUserCard from "./LoadingSearchedUserCard";
@@ -125,9 +126,11 @@ export class Navbar2 extends Component {
       user: {
         authenticated,
         loading,
-        credentials: { profileImg, notifications, isVerified },
+        credentials: { profileImg, isVerified },
       },
     } = this.props;
+
+    const notifications = this.props.notifications;
 
     let editAlbumButton = this.props.UI.isAlbum ? (
       <Link
@@ -174,6 +177,11 @@ export class Navbar2 extends Component {
         Add a Link
       </button>
     );
+
+    const toManageAccount = {
+      pathname: "/manageAccount",
+      state: { history: window.location.pathname },
+    };
 
     let mobileMenuContainer = !authenticated ? (
       <div className="displayItems">
@@ -243,7 +251,7 @@ export class Navbar2 extends Component {
               <Link
                 onClick={this.showMenu}
                 className="menuItems-Priority"
-                to="/manageAccount"
+                to={toManageAccount}
               >
                 Manage Account
               </Link>
@@ -301,6 +309,14 @@ export class Navbar2 extends Component {
       <p></p>
     );
 
+    let notificationDisplay = notificationIcon;
+    if (notifications && notifications.length > 0) {
+      notifications.filter((notification) => notification.read === false)
+        .length > 0
+        ? (notificationDisplay = notificationAlertIcon)
+        : (notificationDisplay = notificationIcon);
+    }
+
     return (
       <div className="navbar">
         {!this.state.showSearchButton && (
@@ -353,13 +369,16 @@ export class Navbar2 extends Component {
         )}
 
         {authenticated && !this.state.showSearchButton && (
-          <div className="navbar-notification-button-container">
+          <Link
+            to="/notifications"
+            className="navbar-notification-button-container"
+          >
             <img
-              src={notificationIcon}
+              src={notificationDisplay}
               alt="notification icon"
               className="navbar-notification-button"
             />
-          </div>
+          </Link>
         )}
 
         {!this.state.showMobileMenu && (
@@ -409,6 +428,7 @@ export class Navbar2 extends Component {
 const mapStateToProps = (state) => ({
   user: state.user,
   UI: state.UI,
+  notifications: state.user.notifications,
 });
 
 const mapActionToProps = {
@@ -418,6 +438,7 @@ const mapActionToProps = {
 Navbar2.propTypes = {
   user: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired,
+  notifications: PropTypes.array.isRequired,
 };
 
 export default connect(mapStateToProps, mapActionToProps)(Navbar2);
