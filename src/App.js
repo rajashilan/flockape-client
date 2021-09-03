@@ -13,7 +13,10 @@ import { logoutUser, getUserData } from "./redux/actions/userActions";
 //components
 // import Navbar from "./components/Navbar";
 import Navbar2 from "./components/Navbar2";
+import ProfileCardMain from "./components/ProfileCardMain";
 import AuthRoute from "./util/AuthRoute";
+
+import "../src/styles/AppContainer.css";
 
 //pages
 import login from "./pages/login";
@@ -61,29 +64,32 @@ class App extends Component {
         <Router>
           <Navbar2 />
           <Switch>
-            <Route exact path={["/", "/albums"]} component={albums} />
             <AuthRoute exact path="/login" component={login} />
             <AuthRoute exact path="/signup" component={signup} />
-            <AuthRoute exact path="/resetPassword" component={resetPassword} />
+            <AuthRoute exact path="/reset-password" component={resetPassword} />
             <Route
               exact
               path="/signup-upload-image"
               component={signupUploadImage}
             />
             <Route path="/signup-add-details" component={signupAddDetails} />
-            <Route path="/likedAlbums" component={likedAlbums} />
-            <Route path="/likedLinks" component={likedLinks} />
-            <Route path="/profile" component={profile} />
-            <Route path="/notifications" component={notifications} />
-            <Route path="/addAlbum" component={addAlbum} />
-            <Route path="/addAlbumImage" component={addAlbumImage} />
-            <Route path="/addLink" component={addLink} />
-            <Route path="/addLinkManually" component={addLinkManually} />
-            <Route path="/manageAccount" component={manageAccount} />
-            <Route path="/editAlbum" component={editAlbum} />
-            <Route path="/updatePassword" component={updatePassword} />
-            <Route path="/@:username/album/:albumID" component={albumDetails} />
-            <Route path="/@:username" component={anotherUser} />
+            <div className="app-main-container">
+              <Route exact path={["/", "/books"]} component={albums} />
+              <Route path="/followed-books" component={likedAlbums} />
+              <Route path="/liked-pages" component={likedLinks} />
+              <Route path="/profile" component={profile} />
+              <Route path="/notifications" component={notifications} />
+              <Route path="/create-book" component={addAlbum} />
+              <Route path="/add-book-cover" component={addAlbumImage} />
+              <Route path="/add-page" component={addLink} />
+              <Route path="/add-page-manually" component={addLinkManually} />
+              <Route path="/manage-account" component={manageAccount} />
+              <Route path="/edit-book" component={editAlbum} />
+              <Route path="/update-password" component={updatePassword} />
+              <Route path="/:username/book/:albumID" component={albumDetails} />
+              <Route path="/@:username" component={anotherUser} />
+              <ProfileCardMain />
+            </div>
           </Switch>
         </Router>
       </Provider>

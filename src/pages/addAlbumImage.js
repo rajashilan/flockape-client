@@ -26,7 +26,7 @@ class addAlbumImage extends Component {
     }
 
     if (!this.props.location.state) {
-      this.props.history.push("/albums");
+      this.props.history.push("/books");
     }
   }
 
@@ -42,7 +42,7 @@ class addAlbumImage extends Component {
   }
 
   handleFinish = () => {
-    this.props.history.push("/albums");
+    this.props.history.push("/books");
   };
 
   handleUploadImage = () => {
@@ -62,7 +62,7 @@ class addAlbumImage extends Component {
 
     //handle redirect on refresh
     if (this.props.data.albums.length === 0) {
-      this.props.history.push("/albums");
+      this.props.history.push("/books");
     }
 
     let sendImageButton = loading ? (
@@ -74,36 +74,40 @@ class addAlbumImage extends Component {
         onClick={this.handleUploadImage}
         className="addAlbumImage-secondary-button"
       >
-        Upload Image
+        Upload Cover
       </button>
     );
 
     return (
-      <div className="addAlbumImage-container">
-        <h2 className="addAlbumImage-title">
-          {this.state.album.security} album created
-        </h2>
-        <Album
-          key={this.state.album.albumID}
-          album={this.state.album}
-          options={false}
-        />
+      <div className="addAlbumImage-main-overall-container">
+        <div className="addAlbumImage-card-container">
+          <div className="addAlbumImage-container">
+            <h2 className="addAlbumImage-title">
+              {this.state.album.security} Book created
+            </h2>
+            <Album
+              key={this.state.album.albumID}
+              album={this.state.album}
+              options={false}
+            />
 
-        <div className="addAlbumImage-button-container">
-          {sendImageButton}
-          <input
-            type="file"
-            id="imageInput"
-            accept="image/*"
-            onChange={this.handleImageChange}
-            hidden="hidden"
-          />
-          <button
-            onClick={this.handleFinish}
-            className="addAlbumImage-primary-button"
-          >
-            Finish
-          </button>
+            <div className="addAlbumImage-button-container">
+              {sendImageButton}
+              <input
+                type="file"
+                id="imageInput"
+                accept="image/*"
+                onChange={this.handleImageChange}
+                hidden="hidden"
+              />
+              <button
+                onClick={this.handleFinish}
+                className="addAlbumImage-primary-button"
+              >
+                Finish
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );

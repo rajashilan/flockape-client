@@ -1,6 +1,6 @@
 .signup-add-details-container {
   display: block;
-  margin: 1.25rem 1rem;
+  margin: 1.25rem 1rem 2rem 1rem;
 }
 
 .signup-add-details-header {
@@ -125,7 +125,7 @@
 .signup-add-details-disabled-button {
   display: block;
   background-color: #989898;
-  color: #131425;
+  color: #0d0d15;
   font-size: 1rem;
   font-weight: 400;
   padding: 0.625rem 1rem;
@@ -133,5 +133,24 @@
   border: none;
   border-radius: 0.3125rem;
   margin: 0.75rem 0 0 0;
+}
+
+@media only screen and (min-width: 38.75em) {
+  .signup-add-details-main-container {
+    padding: 1.5rem 4rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .signup-add-details-card-container {
+    background-color: #1e1e2b;
+    border: none;
+    border-radius: 0.3125rem;
+    padding: 1.75rem 5rem;
+    width: 38rem;
+  }
 }
 /*# sourceMappingURL=SignUpAddDetails.css.map */

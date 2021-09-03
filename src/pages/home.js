@@ -13,9 +13,9 @@ export class home extends Component {
     return (
       <Router>
         <Switch>
-          <Route path="/albums" component={albums} />
-          <Route path="/likedAlbums" component={likedAlbums} />
-          <Route path="/likedLinks" component={likedLinks} />
+          <Route path="/books" component={albums} />
+          <Route path="/followed-books" component={likedAlbums} />
+          <Route path="/liked-pages" component={likedLinks} />
         </Switch>
       </Router>
     );

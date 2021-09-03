@@ -66,58 +66,60 @@ class login extends Component {
     );
 
     return (
-      <div>
-        <div className="login-text-container">
-          <h1 className="login-header">Log In</h1>
-          <h3 className="login-paragraph">
-            and continue sharing everything you love about the Internet.
-          </h3>
-        </div>
-        <form noValidate onSubmit={this.handleSubmit} className="login-form">
-          <input
-            id="email"
-            name="email"
-            placeholder="Email"
-            type="email"
-            className="login-input"
-            value={this.state.email}
-            onChange={this.handleChange}
-          />
-          {errors.email && (
-            <label htmlFor="email" className="login-errors">
-              {errors.email}
-            </label>
-          )}
-          <input
-            id="password"
-            name="password"
-            placeholder="Password"
-            type="password"
-            className="login-input"
-            value={this.state.password}
-            onChange={this.handleChange}
-          />
-          {errors.password && (
-            <label htmlFor="password" className="login-errors">
-              {errors.password}
-            </label>
-          )}
-          {errors.general && (
-            <label className="login-errors-general">{errors.general}</label>
-          )}
-          {logInButton}
-        </form>
-        <div className="login-links-container">
-          <p className="register-text">
-            Don't have an account yet?
-            <Link className="register-link" to="/signup">
-              Register
+      <div className="login-main-container">
+        <div className="login-card-container">
+          <div className="login-text-container">
+            <h1 className="login-header">Log In</h1>
+            <h3 className="login-paragraph">
+              and continue sharing everything you love about the Internet.
+            </h3>
+          </div>
+          <form noValidate onSubmit={this.handleSubmit} className="login-form">
+            <input
+              id="email"
+              name="email"
+              placeholder="Email"
+              type="email"
+              className="login-input"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+            {errors.email && (
+              <label htmlFor="email" className="login-errors">
+                {errors.email}
+              </label>
+            )}
+            <input
+              id="password"
+              name="password"
+              placeholder="Password"
+              type="password"
+              className="login-input"
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+            {errors.password && (
+              <label htmlFor="password" className="login-errors">
+                {errors.password}
+              </label>
+            )}
+            {errors.general && (
+              <label className="login-errors-general">{errors.general}</label>
+            )}
+            {logInButton}
+          </form>
+          <div className="login-links-container">
+            <p className="register-text">
+              Don't have an account yet?
+              <Link className="register-link" to="/signup">
+                Register
+              </Link>
+              instead.
+            </p>
+            <Link className="forgot-password-link" to="/reset-password">
+              Forgot password?
             </Link>
-            instead.
-          </p>
-          <Link className="forgot-password-link" to="/resetPassword">
-            Forgot password?
-          </Link>
+          </div>
         </div>
       </div>
     );

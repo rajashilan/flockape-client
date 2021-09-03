@@ -13,6 +13,11 @@ import {
   UPDATE_ONE_ALBUM,
   ADD_ALBUM,
   SET_ERRORS,
+  SET_LINK_ERROR,
+  CLEAR_LINK_ERROR,
+  REMOVE_ONE_FAILED_LINK,
+  SET_FAILED_LINKS,
+  CLEAR_FAILED_LINKS,
   CLEAR_ERRORS,
   STOP_LOADING_UI,
   LOADING_UI_LIKE_ALBUM,
@@ -63,6 +68,8 @@ export const getAlbumOnly = (albumID) => (dispatch) => {
 
 export const getAlbum = (albumID) => (dispatch) => {
   dispatch({ type: LOADING_UI });
+  dispatch({ type: CLEAR_FAILED_LINKS });
+  dispatch({ type: CLEAR_LINK_ERROR });
   console.log(albumID);
   axios
     .get(`/album/${albumID}`)
@@ -145,7 +152,7 @@ export const addNewAlbum = (newAlbum, history) => (dispatch) => {
         type: CLEAR_ERRORS,
       });
       history.push({
-        pathname: "/addAlbumImage",
+        pathname: "/add-book-cover",
         state: { albumID: res.data.albumID },
       });
     })
@@ -168,7 +175,7 @@ export const editAlbumDetails =
         dispatch({
           type: CLEAR_ERRORS,
         });
-        history.push(`/@${username}/album/${albumID}`);
+        history.push(`/${username}/book/${albumID}`);
       })
       .catch((error) => {
         dispatch({
@@ -179,163 +186,403 @@ export const editAlbumDetails =
       });
   };
 
+// export const addNewLink =
+//   (newLink, albumID, username, history) => (dispatch) => {
+//     console.log("sending link");
+//     dispatch({ type: LOADING_UI });
+
+//     const sendLink = {
+//       linkUrl: newLink,
+//       linkTitle: "",
+//       linkDesc: "",
+//       linkImg: "",
+//       linkDomain: "",
+//     };
+
+//     axios
+//       .post("/fetchUrl?search=" + newLink)
+//       .then((res) => {
+//         console.log(res.data);
+//         return res.data;
+//       })
+//       .then((details) => {
+//         console.log("data fetched from /fetchUrl");
+
+//         sendLink.linkTitle = details.title;
+//         sendLink.linkDesc = details.description;
+//         sendLink.linkDomain = details.domain;
+
+//         let thumbnail = details.img;
+
+//         let imageUrl = thumbnail;
+
+//         //start of if
+//         if (details.domain === "tiktok.com") {
+//           imageUrl = thumbnail;
+
+//           console.log("URL used to fetch blob: ", imageUrl);
+
+//           var storage = firebase.storage();
+//           var storageRef = storage.ref();
+//           var filename = `${Math.round(
+//             Math.random() * 1000000000000000
+//           )}-link-img`;
+
+//           fetch(imageUrl, {
+//             mode: "cors",
+//             method: "get",
+//             header: {
+//               "Access-Control-Allow-Origin": "*",
+//               "Access-Control-Allow-Methods":
+//                 "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+//               "Access-Control-Allow-Headers":
+//                 "Origin, X-Requested-With, Content-Type, Accept, authorization",
+//             },
+//           })
+//             .then((res) => {
+//               return res.blob();
+//             })
+//             .then((blob) => {
+//               console.log("type", blob.type);
+
+//               if (
+//                 blob.type !== "image/jpeg" &&
+//                 blob.type !== "image/png" &&
+//                 blob.type !== "image/webp"
+//               ) {
+//                 console.log("uploading default image");
+//                 const defaultImg =
+//                   "https://firebasestorage.googleapis.com/v0/b/sharesite-test.appspot.com/o/link-thumbnails%2Fdefault-link-img.jpg?alt=media&token=cedbb964-547c-4480-9b12-f8e0b6acb70c";
+//                 sendLink.linkImg = defaultImg;
+
+//                 axios
+//                   .post(`/album/${albumID}/link`, sendLink)
+//                   .then((res) => {
+//                     dispatch({
+//                       type: SET_LINK,
+//                       payload: res.data,
+//                     });
+//                     dispatch({
+//                       type: CLEAR_ERRORS,
+//                     });
+//                     history.push(`/${username}/book/${albumID}`);
+//                     console.log(res.data);
+//                   })
+//                   .catch((error) => {
+//                     console.log(error);
+//                   });
+//               } else {
+//                 console.log("uploading the original image");
+//                 storageRef
+//                   .child("link-thumbnails/" + filename)
+//                   .put(blob)
+//                   .then(function (snapshot) {
+//                     return snapshot.ref.getDownloadURL();
+//                   })
+//                   .catch((error) => {
+//                     console.log("Error getting image from imageURL", error);
+//                   })
+//                   .then((imgLink) => {
+//                     console.log("Img uploaded at:", imgLink);
+
+//                     sendLink.linkImg = imgLink;
+
+//                     axios
+//                       .post(`/album/${albumID}/link`, sendLink)
+//                       .then((res) => {
+//                         dispatch({
+//                           type: SET_LINK,
+//                           payload: res.data,
+//                         });
+//                         dispatch({
+//                           type: CLEAR_ERRORS,
+//                         });
+//                         history.push(`/${username}/book/${albumID}`);
+//                         console.log(res.data);
+//                       });
+//                   });
+//               }
+//             })
+//             .catch((error) => {
+//               console.log(error);
+//               if (error === "TypeError: Failed to fetch") {
+//                 dispatch({ type: SET_ERRORS, payload: error });
+//               } else {
+//                 dispatch({ type: SET_ERRORS, payload: error.response.data });
+//               }
+//             });
+//         } // end of if
+//         else {
+//           sendLink.linkImg = details.img;
+//           console.log("uploading image directly from fetch");
+
+//           axios
+//             .post(`/album/${albumID}/link`, sendLink)
+//             .then((res) => {
+//               dispatch({
+//                 type: SET_LINK,
+//                 payload: res.data,
+//               });
+//               dispatch({
+//                 type: CLEAR_ERRORS,
+//               });
+//               history.push(`/${username}/book/${albumID}`);
+//               console.log(res.data);
+//             })
+//             .catch((error) => {
+//               console.log(error);
+//             });
+//         }
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//         if (error.response && error.response.data)
+//           dispatch({ type: SET_ERRORS, payload: error.response.data });
+//         else
+//           dispatch({
+//             type: SET_ERRORS,
+//             payload: { error: "Oops! Unable to extract link's details." },
+//           });
+//         dispatch(handleUnauthorised(error));
+//       });
+//   };
+
 export const addNewLink =
   (newLink, albumID, username, history) => (dispatch) => {
-    console.log("sending link");
-    dispatch({ type: LOADING_UI });
+    newLink = newLink.replace(/(\r\n|\n|\r)/gm, "");
+    let newLinkSplit = newLink.trim().split(",").filter(Boolean);
+    if (newLinkSplit.length === 0) newLinkSplit = [""];
+    console.log(newLinkSplit);
 
-    const sendLink = {
-      linkUrl: newLink,
-      linkTitle: "",
-      linkDesc: "",
-      linkImg: "",
-      linkDomain: "",
-    };
+    let isMultiple = false;
+    if (newLinkSplit.length > 1) isMultiple = true;
+    console.log("len", newLinkSplit.length);
 
-    axios
-      .post("/fetchUrl?search=" + newLink)
-      .then((res) => {
-        console.log(res.data);
-        return res.data;
-      })
-      .then((details) => {
-        console.log("data fetched from /fetchUrl");
+    dispatch({ type: CLEAR_FAILED_LINKS });
+    dispatch({ type: CLEAR_LINK_ERROR });
+    dispatch({ type: CLEAR_ERRORS });
 
-        sendLink.linkTitle = details.title;
-        sendLink.linkDesc = details.description;
-        sendLink.linkDomain = details.domain;
+    newLinkSplit.forEach((newLink) => {
+      dispatch({ type: LOADING_UI });
 
-        let thumbnail = details.img;
+      const sendLink = {
+        linkUrl: newLink,
+        linkTitle: "",
+        linkDesc: "",
+        linkImg: "",
+        linkDomain: "",
+      };
 
-        let imageUrl = thumbnail;
+      axios
+        .post("/fetchUrl?search=" + newLink)
+        .then((res) => {
+          console.log(res.data);
+          return res.data;
+        })
+        .then((details) => {
+          console.log("data fetched from /fetchUrl");
 
-        //start of if
-        if (details.domain === "tiktok.com") {
-          imageUrl = thumbnail;
+          sendLink.linkTitle = details.title;
+          sendLink.linkDesc = details.description;
+          sendLink.linkDomain = details.domain;
 
-          console.log("URL used to fetch blob: ", imageUrl);
+          let thumbnail = details.img;
+          let imageUrl = thumbnail;
 
-          var storage = firebase.storage();
-          var storageRef = storage.ref();
-          var filename = `${Math.round(
-            Math.random() * 1000000000000000
-          )}-link-img`;
+          //start of if
+          if (details.domain === "tiktok.com") {
+            imageUrl = thumbnail;
 
-          fetch(imageUrl, {
-            mode: "cors",
-            method: "get",
-            header: {
-              "Access-Control-Allow-Origin": "*",
-              "Access-Control-Allow-Methods":
-                "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-              "Access-Control-Allow-Headers":
-                "Origin, X-Requested-With, Content-Type, Accept, authorization",
-            },
-          })
-            .then((res) => {
-              return res.blob();
+            console.log("URL used to fetch blob: ", imageUrl);
+
+            var storage = firebase.storage();
+            var storageRef = storage.ref();
+            var filename = `${Math.round(
+              Math.random() * 1000000000000000
+            )}-link-img`;
+
+            fetch(imageUrl, {
+              mode: "cors",
+              method: "get",
+              header: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods":
+                  "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+                "Access-Control-Allow-Headers":
+                  "Origin, X-Requested-With, Content-Type, Accept, authorization",
+              },
             })
-            .then((blob) => {
-              console.log("type", blob.type);
+              .then((res) => {
+                return res.blob();
+              })
+              .then((blob) => {
+                console.log("type", blob.type);
 
-              if (
-                blob.type !== "image/jpeg" &&
-                blob.type !== "image/png" &&
-                blob.type !== "image/webp"
-              ) {
-                console.log("uploading default image");
-                const defaultImg =
-                  "https://firebasestorage.googleapis.com/v0/b/sharesite-test.appspot.com/o/link-thumbnails%2Fdefault-link-img.jpg?alt=media&token=cedbb964-547c-4480-9b12-f8e0b6acb70c";
-                sendLink.linkImg = defaultImg;
+                if (
+                  blob.type !== "image/jpeg" &&
+                  blob.type !== "image/png" &&
+                  blob.type !== "image/webp"
+                ) {
+                  console.log("uploading default image");
+                  const defaultImg =
+                    "https://firebasestorage.googleapis.com/v0/b/sharesite-test.appspot.com/o/link-thumbnails%2Fdefault-link-img.jpg?alt=media&token=cedbb964-547c-4480-9b12-f8e0b6acb70c";
+                  sendLink.linkImg = defaultImg;
 
-                axios
-                  .post(`/album/${albumID}/link`, sendLink)
-                  .then((res) => {
-                    dispatch({
-                      type: SET_LINK,
-                      payload: res.data,
-                    });
-                    dispatch({
-                      type: CLEAR_ERRORS,
-                    });
-                    history.push(`/@${username}/album/${albumID}`);
-                    console.log(res.data);
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
-              } else {
-                console.log("uploading the original image");
-                storageRef
-                  .child("link-thumbnails/" + filename)
-                  .put(blob)
-                  .then(function (snapshot) {
-                    return snapshot.ref.getDownloadURL();
-                  })
-                  .catch((error) => {
-                    console.log("Error getting image from imageURL", error);
-                  })
-                  .then((imgLink) => {
-                    console.log("Img uploaded at:", imgLink);
-
-                    sendLink.linkImg = imgLink;
-
-                    axios
-                      .post(`/album/${albumID}/link`, sendLink)
-                      .then((res) => {
-                        dispatch({
-                          type: SET_LINK,
-                          payload: res.data,
-                        });
-                        dispatch({
-                          type: CLEAR_ERRORS,
-                        });
-                        history.push(`/@${username}/album/${albumID}`);
-                        console.log(res.data);
+                  axios
+                    .post(`/album/${albumID}/link`, sendLink)
+                    .then((res) => {
+                      dispatch({
+                        type: SET_LINK,
+                        payload: res.data,
                       });
-                  });
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-              if (error === "TypeError: Failed to fetch") {
-                dispatch({ type: SET_ERRORS, payload: error });
-              } else {
-                dispatch({ type: SET_ERRORS, payload: error.response.data });
-              }
-            });
-        } // end of if
-        else {
-          sendLink.linkImg = details.img;
-          console.log("uploading image directly from fetch");
+                      // dispatch({ type: STOP_LOADING_UI });
+                      dispatch({
+                        type: CLEAR_ERRORS,
+                      });
+                      // history.push(`/${username}/book/${albumID}`);
+                      console.log(res.data);
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+                } else {
+                  console.log("uploading the original image");
+                  storageRef
+                    .child("link-thumbnails/" + filename)
+                    .put(blob)
+                    .then(function (snapshot) {
+                      return snapshot.ref.getDownloadURL();
+                    })
+                    .catch((error) => {
+                      console.log("Error getting image from imageURL", error);
+                    })
+                    .then((imgLink) => {
+                      console.log("Img uploaded at:", imgLink);
 
-          axios
-            .post(`/album/${albumID}/link`, sendLink)
-            .then((res) => {
-              dispatch({
-                type: SET_LINK,
-                payload: res.data,
+                      sendLink.linkImg = imgLink;
+
+                      axios
+                        .post(`/album/${albumID}/link`, sendLink)
+                        .then((res) => {
+                          dispatch({
+                            type: SET_LINK,
+                            payload: res.data,
+                          });
+                          // dispatch({ type: STOP_LOADING_UI });
+                          dispatch({
+                            type: CLEAR_ERRORS,
+                          });
+                          // history.push(`/${username}/book/${albumID}`);
+                          console.log(res.data);
+                        });
+                    });
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+                if (error === "TypeError: Failed to fetch") {
+                  dispatch({ type: SET_ERRORS, payload: error });
+                  console.log("first", error);
+                } else {
+                  dispatch({
+                    type: SET_ERRORS,
+                    payload: error.response.data,
+                  });
+                  console.log("second", error.response.data);
+                }
+                dispatch({ type: SET_LINK_ERROR });
+                dispatch({ type: SET_FAILED_LINKS, payload: newLink });
               });
-              dispatch({
-                type: CLEAR_ERRORS,
+          } // end of if
+          else {
+            sendLink.linkImg = details.img;
+            console.log("uploading image directly from fetch");
+
+            axios
+              .post(`/album/${albumID}/link`, sendLink)
+              .then((res) => {
+                dispatch({
+                  type: SET_LINK,
+                  payload: res.data,
+                });
+                // dispatch({ type: STOP_LOADING_UI });
+                dispatch({
+                  type: CLEAR_ERRORS,
+                });
+                // history.push(`/${username}/book/${albumID}`);
+                console.log(res.data);
+              })
+              .catch((error) => {
+                console.log(error);
               });
-              history.push(`/@${username}/album/${albumID}`);
-              console.log(res.data);
-            })
-            .catch((error) => {
-              console.log(error);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          console.log(isMultiple);
+          if (error.response && error.response.data) {
+            if (!isMultiple)
+              dispatch({ type: SET_ERRORS, payload: error.response.data });
+            console.log("last", error.response.data);
+          } else
+            dispatch({
+              type: SET_ERRORS,
+              payload: { error: "Unable to extract link's details." },
             });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        dispatch({ type: SET_ERRORS, payload: error.response.data });
-        dispatch(handleUnauthorised(error));
-      });
+          dispatch({ type: SET_LINK_ERROR });
+          dispatch({ type: SET_FAILED_LINKS, payload: newLink });
+          dispatch(handleUnauthorised(error));
+        });
+    });
   };
 
+// export const addNewLinkManually =
+//   (newLink, albumID, username, history) => (dispatch) => {
+//     console.log("sending link manually");
+//     dispatch({ type: LOADING_UI });
+
+//     const sendLink = {
+//       linkUrl: newLink.link,
+//       linkTitle: newLink.title,
+//       linkDesc: "",
+//       linkImg: "",
+//       linkDomain: "",
+//     };
+
+//     const defaultImg =
+//       "https://firebasestorage.googleapis.com/v0/b/sharesite-test.appspot.com/o/link-thumbnails%2Fdefault-link-img.jpg?alt=media&token=cedbb964-547c-4480-9b12-f8e0b6acb70c";
+//     sendLink.linkImg = defaultImg;
+
+//     sendLink.linkDesc = "Manually added page";
+
+//     axios
+//       .post(`/album/${albumID}/link`, sendLink)
+//       .then((res) => {
+//         dispatch({
+//           type: SET_LINK,
+//           payload: res.data,
+//         });
+//         dispatch({
+//           type: CLEAR_ERRORS,
+//         });
+//         history.push(`/${username}/book/${albumID}`);
+//         console.log(res.data);
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//         if (error.response && error.response.data)
+//           dispatch({ type: SET_ERRORS, payload: error.response.data });
+//         else
+//           dispatch({
+//             type: SET_ERRORS,
+//             payload: { error: "Something went wrong, please try again." },
+//           });
+//         dispatch(handleUnauthorised(error));
+//       });
+//   };
+
 export const addNewLinkManually =
-  (newLink, albumID, username, history) => (dispatch) => {
+  (newLink, albumID, username, history, isUserUpload) => (dispatch) => {
     console.log("sending link manually");
     dispatch({ type: LOADING_UI });
 
@@ -351,7 +598,7 @@ export const addNewLinkManually =
       "https://firebasestorage.googleapis.com/v0/b/sharesite-test.appspot.com/o/link-thumbnails%2Fdefault-link-img.jpg?alt=media&token=cedbb964-547c-4480-9b12-f8e0b6acb70c";
     sendLink.linkImg = defaultImg;
 
-    sendLink.linkDesc = "Manually added link";
+    sendLink.linkDesc = "Manually added page";
 
     axios
       .post(`/album/${albumID}/link`, sendLink)
@@ -363,14 +610,29 @@ export const addNewLinkManually =
         dispatch({
           type: CLEAR_ERRORS,
         });
-        history.push(`/@${username}/album/${albumID}`);
+        dispatch({
+          type: REMOVE_ONE_FAILED_LINK,
+        });
+        if (isUserUpload) history.push(`/${username}/book/${albumID}`);
+        else history.push("/add-page-manually");
         console.log(res.data);
       })
       .catch((error) => {
         console.log(error);
-        dispatch({ type: SET_ERRORS, payload: error.response.data });
+        if (error.response && error.response.data)
+          dispatch({ type: SET_ERRORS, payload: error.response.data });
+        else
+          dispatch({
+            type: SET_ERRORS,
+            payload: { error: "Something went wrong, please try again." },
+          });
+        dispatch(handleUnauthorised(error));
       });
   };
+
+export const clearFailedLinks = () => (dispatch) => {
+  dispatch({ type: CLEAR_FAILED_LINKS });
+};
 
 export const likeLink = (linkID) => (dispatch) => {
   dispatch({ type: LOADING_UI_LIKE_LINK, payload: linkID });
@@ -434,17 +696,19 @@ export const deleteAlbum = (albumID) => (dispatch) => {
     });
 };
 
-export const deleteLink = (linkID) => (dispatch) => {
-  axios
-    .delete(`/link/${linkID}`)
-    .then(() => {
-      dispatch({ type: DELETE_LINK, payload: linkID });
-    })
-    .catch((error) => {
-      console.log(error);
-      dispatch(handleUnauthorised(error));
-    });
-};
+export const deleteLink =
+  (linkID, albumID, username, history) => (dispatch) => {
+    axios
+      .delete(`/link/${linkID}`)
+      .then(() => {
+        dispatch({ type: DELETE_LINK, payload: linkID });
+        if (history) history.push(`/${username}/book/${albumID}`);
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(handleUnauthorised(error));
+      });
+  };
 
 export const handleUnauthorised = (error) => (dispatch) => {
   if (
@@ -465,3 +729,8 @@ export const handleUnauthorisedPrivateAlbum = (error) => (dispatch) => {
     window.location.href = "/albums";
   }
 };
+
+//loading are all called at once
+//stop loading is called for each link added
+//loading should be called after each link added,
+//as long as the foreach loop isnt at the end

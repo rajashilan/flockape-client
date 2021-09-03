@@ -45,4 +45,39 @@
     border-radius: 0.3125rem;
     margin: 0.75rem 0;
   }
+
+  //620PX SCREEN SIZE (LARGER TABLET)
+  @media only screen and (min-width: 38.75em) {
+    &-main-overall-container {
+      padding: 1.5rem 4rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    &-card-container {
+      background-color: $bgColorDiv;
+      border: none;
+      border-radius: 0.3125rem;
+      padding: 1rem 1rem;
+      width: 38rem;
+    }
+  }
+
+  //980PX SCREEN SIZE (LARGER TABLET)
+  @media only screen and (min-width: 61.25em) {
+    &-main-overall-container {
+      padding: 1.5rem 1rem;
+      display: flex;
+      justify-content: center;
+      margin: 0 0 0 auto;
+    }
+
+    &-card-container {
+      background-color: $bgColorDiv;
+      border: none;
+      border-radius: 0.3125rem;
+      padding: 1rem 1rem;
+      width: 38rem;
+    }
+  }
 }

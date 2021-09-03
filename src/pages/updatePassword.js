@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import "../styles/ProgressSpinner.css";
-import "../styles/ResetPassword.css";
+import "../styles/UpdatePassword.css";
 
 import { updateUserPassword } from "../redux/actions/userActions";
 
@@ -52,67 +52,75 @@ export class updatePassword extends Component {
     ) : (
       <button
         onClick={this.handleSubmit}
-        className="resetPassword-primary-button"
+        className="updatePassword-primary-button"
       >
-        Reset Password
+        Update
       </button>
     );
 
     return (
-      <div className="resetPassword-container">
-        <h2 className="resetPassword-title">Update Password</h2>
-        <input
-          id="oldPassword"
-          name="oldPassword"
-          placeholder="Old Password"
-          type="password"
-          className="resetPassword-input"
-          value={this.state.oldPassword}
-          onChange={this.handleChange}
-        />
-        {this.state.errors.oldPassword && (
-          <label htmlFor="oldPassword" className="resetPassword-errors">
-            {this.state.errors.oldPassword}
-          </label>
-        )}
-        <input
-          id="password"
-          name="password"
-          placeholder="Password"
-          type="password"
-          className="resetPassword-input"
-          value={this.state.password}
-          onChange={this.handleChange}
-        />
-        {!this.state.errors.password && (
-          <label htmlFor="password" className="resetPassword-label-mini">
-            Password should be within 6-20 characters and consist of at least 1
-            numeric digit, 1 lowercase letter, and 1 upercase letter.
-          </label>
-        )}
-        {this.state.errors.password && (
-          <label htmlFor="password" className="resetPassword-errors-long">
-            {this.state.errors.password}
-          </label>
-        )}
-        <input
-          id="confirmPassword"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          type="password"
-          className="resetPassword-input"
-          value={this.state.confirmPassword}
-          onChange={this.handleChange}
-        />
-        {this.state.errors.confirmPassword && (
-          <label htmlFor="confirmPassword" className="resetPassword-errors">
-            {this.state.errors.confirmPassword}
-          </label>
-        )}
-        {updateUserButton}
-        <Link to="/manageAccount" className="resetPassword-cancel-button">
-          Cancel
-        </Link>
+      <div className="updatePassword-main-container">
+        <div className="updatePassword-card-container">
+          <div className="updatePassword-container">
+            <h2 className="updatePassword-title">Update Password</h2>
+            <input
+              id="oldPassword"
+              name="oldPassword"
+              placeholder="Old Password"
+              type="password"
+              className="updatePassword-input"
+              value={this.state.oldPassword}
+              onChange={this.handleChange}
+            />
+            {this.state.errors.oldPassword && (
+              <label htmlFor="oldPassword" className="updatePassword-errors">
+                {this.state.errors.oldPassword}
+              </label>
+            )}
+            <input
+              id="password"
+              name="password"
+              placeholder="Password"
+              type="password"
+              className="updatePassword-input"
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+            {!this.state.errors.password && (
+              <label htmlFor="password" className="updatePassword-label-mini">
+                Password should be within 6-20 characters and consist of at
+                least 1 numeric digit, 1 lowercase letter, and 1 upercase
+                letter.
+              </label>
+            )}
+            {this.state.errors.password && (
+              <label htmlFor="password" className="updatePassword-errors-long">
+                {this.state.errors.password}
+              </label>
+            )}
+            <input
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              type="password"
+              className="updatePassword-input"
+              value={this.state.confirmPassword}
+              onChange={this.handleChange}
+            />
+            {this.state.errors.confirmPassword && (
+              <label
+                htmlFor="confirmPassword"
+                className="updatePassword-errors"
+              >
+                {this.state.errors.confirmPassword}
+              </label>
+            )}
+            {updateUserButton}
+            <Link to="/manage-account" className="updatePassword-cancel-button">
+              Cancel
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }

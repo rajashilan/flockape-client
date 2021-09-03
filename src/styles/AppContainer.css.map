@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAIE,MAAM,MAAM,MAAM,MAAM,SAAS,EAAE,OAAO;EACvC,AAAD,mBAAgB,CAAC;IACf,OAAO,EAAE,IAAI;GACd",
+    "sources": [
+        "AppContainer.scss",
+        "../scssVariables/variables.scss"
+    ],
+    "names": [],
+    "file": "AppContainer.css"
+}

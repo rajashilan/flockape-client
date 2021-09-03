@@ -60,7 +60,7 @@ class AnotherProfile extends Component {
             <h3 className="profile-username">@{username}</h3>
             <div className="profile-albums-details-container">
               <p className="profile-album-details">
-                {abbrNum(albums, 1)} albums
+                {abbrNum(albums, 1)} Books
               </p>
               <p className="profile-album-details">
                 {abbrNum(likes, 1)} follows

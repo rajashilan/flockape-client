@@ -124,19 +124,21 @@ export class anotherUser extends Component {
     );
 
     return (
-      <div>
-        {userData}
-        <div className="search-container">
-          <input
-            className="search-bar"
-            type="text"
-            placeholder="Search for albums"
-            value={this.state.searchText}
-            onChange={this.handleSearch}
-          />
-          {searchBarIcon}
+      <div className="profile-main-container">
+        <div className="profile-card-container">
+          {userData}
+          <div className="search-container">
+            <input
+              className="search-bar"
+              type="text"
+              placeholder="Search for Books"
+              value={this.state.searchText}
+              onChange={this.handleSearch}
+            />
+            {searchBarIcon}
+          </div>
+          <div className="album-container">{albumData}</div>
         </div>
-        <div className="album-container">{albumData}</div>
       </div>
     );
   }

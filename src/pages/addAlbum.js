@@ -94,56 +94,60 @@ class addAlbum extends Component {
       </div>
     ) : (
       <button type="submit" className="addAlbum-primary-button">
-        Add Album
+        Create
       </button>
     );
 
     return (
-      <div className="addAlbum-container">
-        <h3 className="addAlbum-title">Add an Album</h3>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            placeholder="Album name"
-            type="text"
-            className="addAlbum-input"
-            value={this.state.albumName}
-            onChange={this.handleAlbumName}
-          />
-          {errors.albumTitle && (
-            <label className="addAlbum-errors">{errors.albumTitle}</label>
-          )}
-          <div className="addAlbum-security-container">
-            <label className="addAlbum-security-checkbox-container">
+      <div className="addAlbum-main-overall-container">
+        <div className="addAlbum-card-container">
+          <div className="addAlbum-container">
+            <h3 className="addAlbum-title">Create a Book</h3>
+            <form onSubmit={this.handleSubmit}>
               <input
-                type="checkbox"
-                onChange={this.handlePublicCheckBox}
-                checked={this.state.publicAlbum}
+                placeholder="Book Title"
+                type="text"
+                className="addAlbum-input"
+                value={this.state.albumName}
+                onChange={this.handleAlbumName}
               />
-              <span className="addAlbum-checkmark"></span>
-            </label>
-            <p className="addAlbum-security-label">Public</p>
-            <label className="addAlbum-security-checkbox-container">
-              <input
-                type="checkbox"
-                onChange={this.handlePrivateCheckBox}
-                checked={this.state.privateAlbum}
-              />
-              <span className="addAlbum-checkmark"></span>
-            </label>
-            <p className="addAlbum-security-label">Private</p>
+              {errors.albumTitle && (
+                <label className="addAlbum-errors">{errors.albumTitle}</label>
+              )}
+              <div className="addAlbum-security-container">
+                <label className="addAlbum-security-checkbox-container">
+                  <input
+                    type="checkbox"
+                    onChange={this.handlePublicCheckBox}
+                    checked={this.state.publicAlbum}
+                  />
+                  <span className="addAlbum-checkmark"></span>
+                </label>
+                <p className="addAlbum-security-label">Public</p>
+                <label className="addAlbum-security-checkbox-container">
+                  <input
+                    type="checkbox"
+                    onChange={this.handlePrivateCheckBox}
+                    checked={this.state.privateAlbum}
+                  />
+                  <span className="addAlbum-checkmark"></span>
+                </label>
+                <p className="addAlbum-security-label">Private</p>
+              </div>
+              <div className="addAlbum-button-container">
+                {errors.general && (
+                  <label className="addAlbum-errors-general">
+                    {errors.general}
+                  </label>
+                )}
+                {addAlbumButton}
+                <Link to="/books" className="addAlbum-cancel-button">
+                  Cancel
+                </Link>
+              </div>
+            </form>
           </div>
-          <div className="addAlbum-button-container">
-            {errors.general && (
-              <label className="addAlbum-errors-general">
-                {errors.general}
-              </label>
-            )}
-            {addAlbumButton}
-            <Link to="/albums" className="addAlbum-cancel-button">
-              Cancel
-            </Link>
-          </div>
-        </form>
+        </div>
       </div>
     );
   }

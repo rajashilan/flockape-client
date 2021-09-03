@@ -66,7 +66,7 @@ export class Album extends Component {
           onClick={this.handleDeleteButton}
           className="album-more-secondary-button"
         >
-          Delete Album
+          Delete Book
         </button>
         <h3
           onClick={this.handleMoreButton}
@@ -83,7 +83,7 @@ export class Album extends Component {
       <div className="album-more-container">
         <div className="album-more-delete-text-container">
           <h4 className="album-more-delete-text">
-            Are you sure to delete this album?
+            Are you sure to delete this Book?
           </h4>
         </div>
         <button onClick={this.deleteAlbum} className="album-more-delete-button">
@@ -166,7 +166,7 @@ export class Album extends Component {
       ) : null;
 
     const toAlbumDetails = {
-      pathname: `/@${username}/album/${albumID}`,
+      pathname: `/${username}/book/${albumID}`,
       state: { history: window.location.pathname },
     };
 

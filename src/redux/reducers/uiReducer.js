@@ -1,5 +1,7 @@
 import {
   SET_ERRORS,
+  SET_LINK_ERROR,
+  CLEAR_LINK_ERROR,
   CLEAR_ERRORS,
   LOADING_UI,
   STOP_LOADING_UI,
@@ -17,6 +19,7 @@ const initialState = {
   loadingLikeAlbum: [],
   loadingLikeLink: [],
   isAlbum: false,
+  linkError: false,
 };
 
 export default function (state = initialState, action) {
@@ -90,6 +93,24 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isAlbum: false,
+      };
+    case SET_LINK_ERROR:
+      if (!state.linkError) {
+        return {
+          ...state,
+          loading: false,
+          linkError: true,
+        };
+      } else {
+        return {
+          ...state,
+          loading: false,
+        };
+      }
+    case CLEAR_LINK_ERROR:
+      return {
+        ...state,
+        linkError: false,
       };
     default:
       return state;

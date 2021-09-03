@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
 import Notifications from "../components/Notifications";
 
@@ -43,7 +42,13 @@ export class notifications extends Component {
     );
 
     return (
-      <div className="notifications-main-container">{notificationDisplay}</div>
+      <div className="notifications-main-overall-container">
+        <div className="notifications-card-container">
+          <div className="notifications-main-container">
+            {notificationDisplay}
+          </div>
+        </div>
+      </div>
     );
   }
 }

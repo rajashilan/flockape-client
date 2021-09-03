@@ -23,7 +23,6 @@ class albumDetails extends Component {
 
   componentDidMount() {
     this.props.getAlbum(this.props.match.params.albumID);
-    console.log("mounted album details");
   }
 
   handleSearch = (event) => {
@@ -41,7 +40,7 @@ class albumDetails extends Component {
   render() {
     setTimeout(() => {
       if (!this.props.album.albumID) {
-        this.props.history.push("/albums");
+        this.props.history.push("/books");
       }
     }, 4000);
 
@@ -94,6 +93,7 @@ class albumDetails extends Component {
                 link={link}
                 options={true}
                 albumID={albumID}
+                propsHistory={this.props.history}
               />
             ))
           ) : (
@@ -103,6 +103,7 @@ class albumDetails extends Component {
                 link={link}
                 options={true}
                 albumID={albumID}
+                propsHistory={this.props.history}
               />
             ))
           )
@@ -125,8 +126,8 @@ class albumDetails extends Component {
     let addLinkButton =
       !loading && authenticated && credentials.username === username ? (
         <div className="albumDetails-button-container">
-          <Link to="/addLink" className="albumDetails-primary-button">
-            Add a Link
+          <Link to="/add-page" className="albumDetails-primary-button">
+            Add a Page
           </Link>
         </div>
       ) : null;
@@ -134,7 +135,7 @@ class albumDetails extends Component {
     let toHistory;
     this.props.location.state && this.props.location.state.history
       ? (toHistory = this.props.location.state.history)
-      : (toHistory = "/albums");
+      : (toHistory = "/books");
 
     let searchBarIcon = this.state.searchText ? (
       <img
@@ -147,35 +148,37 @@ class albumDetails extends Component {
     );
 
     return (
-      <div>
-        <div className="albumDetails-main-container">
-          {userDisplay}
-          <AlbumDetails
-            key={albumID}
-            albumTitle={albumTitle}
-            albumImg={albumImg}
-            likeCount={likeCount}
-            viewCount={viewCount}
-            albumID={albumID}
-            security={security}
-            linkCount={linkCount}
-            username={username}
-            options={true}
-            history={toHistory}
-          />
+      <div className="albumDetails-main-overall-container">
+        <div className="albumDetails-card-container">
+          <div className="albumDetails-main-container">
+            {userDisplay}
+            <AlbumDetails
+              key={albumID}
+              albumTitle={albumTitle}
+              albumImg={albumImg}
+              likeCount={likeCount}
+              viewCount={viewCount}
+              albumID={albumID}
+              security={security}
+              linkCount={linkCount}
+              username={username}
+              options={true}
+              history={toHistory}
+            />
+          </div>
+          <div className="search-container">
+            <input
+              className="search-bar"
+              type="text"
+              placeholder="Search for pages"
+              value={this.state.searchText}
+              onChange={this.handleSearch}
+            />
+            {searchBarIcon}
+          </div>
+          <div className="link-main-container">{linksDisplay}</div>
+          {addLinkButton}
         </div>
-        <div className="search-container">
-          <input
-            className="search-bar"
-            type="text"
-            placeholder="Search for links"
-            value={this.state.searchText}
-            onChange={this.handleSearch}
-          />
-          {searchBarIcon}
-        </div>
-        <div className="link-main-container">{linksDisplay}</div>
-        {addLinkButton}
       </div>
     );
   }

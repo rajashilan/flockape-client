@@ -10,23 +10,23 @@ export class HomeNavigation extends Component {
         <NavLink
           activeClassName="home-navigation-items-active"
           className="home-navigation-items"
-          to="/albums"
+          to="/books"
         >
-          Albums
+          Books
         </NavLink>
         <NavLink
           activeClassName="home-navigation-items-active"
           className="home-navigation-items"
-          to="/likedAlbums"
+          to="/followed-books"
         >
           Follows
         </NavLink>
         <NavLink
           activeClassName="home-navigation-items-active"
           className="home-navigation-items"
-          to="/likedLinks"
+          to="/liked-pages"
         >
-          Liked Links
+          Likes
         </NavLink>
       </div>
     );

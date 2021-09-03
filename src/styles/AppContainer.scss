@@ -1,0 +1,10 @@
+@import "../scssVariables/variables.scss";
+
+.app {
+  //980PX SCREEN SIZE (DESKTOP SMALL)
+  @media only screen and (min-width: 61.25em) {
+    &-main-container {
+      display: flex;
+    }
+  }
+}

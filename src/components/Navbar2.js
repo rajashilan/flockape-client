@@ -136,9 +136,9 @@ export class Navbar2 extends Component {
       <Link
         onClick={this.showMenu}
         className="primary-button-medium-margin"
-        to="/editAlbum"
+        to="/edit-book"
       >
-        Edit Album
+        Edit Book
       </Link>
     ) : null;
 
@@ -147,9 +147,9 @@ export class Navbar2 extends Component {
         <Link
           onClick={this.showMenu}
           className="primary-button-medium-margin"
-          to="/addAlbum"
+          to="/create-book"
         >
-          Add an Album
+          Create a Book
         </Link>
       ) : (
         <button
@@ -157,16 +157,16 @@ export class Navbar2 extends Component {
           onClick={this.showMenu}
           className="secondary-button-medium-margin"
         >
-          Add an Album
+          Create a Book
         </button>
       )
     ) : isVerified ? (
       <Link
         onClick={this.showMenu}
         className="primary-button-medium-margin"
-        to="/addLink"
+        to="/add-page"
       >
-        Add a Link
+        Add a page
       </Link>
     ) : (
       <button
@@ -174,12 +174,12 @@ export class Navbar2 extends Component {
         className="secondary-button-medium-margin"
         type="button"
       >
-        Add a Link
+        Add a page
       </button>
     );
 
     const toManageAccount = {
-      pathname: "/manageAccount",
+      pathname: "/manage-account",
       state: { history: window.location.pathname },
     };
 
@@ -233,7 +233,7 @@ export class Navbar2 extends Component {
               <Link
                 onClick={this.showMenu}
                 className="menuItems-Priority"
-                to="/albums"
+                to="/"
               >
                 Home
               </Link>
@@ -309,6 +309,16 @@ export class Navbar2 extends Component {
       <p></p>
     );
 
+    let topBarButton = this.props.UI.isAlbum ? (
+      <Link className="navbar-topbar-button" to="/add-page">
+        Add a Page
+      </Link>
+    ) : (
+      <Link className="navbar-topbar-button" to="/create-book">
+        Create a Book
+      </Link>
+    );
+
     let notificationDisplay = notificationIcon;
     if (notifications && notifications.length > 0) {
       notifications.filter((notification) => notification.read === false)
@@ -320,12 +330,13 @@ export class Navbar2 extends Component {
     return (
       <div className="navbar">
         {!this.state.showSearchButton && (
-          <Link to="/albums" className="navbar-controlled-link">
+          <Link to="/books" className="navbar-controlled-link">
             <img className="navbar-logo" src={logo} alt="flockape" />
           </Link>
         )}
 
-        {this.state.showSearchButton && (
+        {/* search button stuff */}
+        {/* {this.state.showSearchButton && (
           <input
             type="text"
             placeholder="Search for a user"
@@ -346,12 +357,6 @@ export class Navbar2 extends Component {
           </div>
         )}
 
-        {authenticated && !this.state.showSearchButton && (
-          <Link to="/profile" className="navbar-profile-image-container">
-            <img src={profileImg} className={userImageClassName} />
-          </Link>
-        )}
-
         {!this.state.showSearchButton && (
           <div onClick={this.showSearchBar} className={searchIconClassName}>
             <img
@@ -360,6 +365,15 @@ export class Navbar2 extends Component {
               className="navbar-search-button"
             />
           </div>
+        )} */}
+        {/* end of search button stuff */}
+
+        {authenticated && !this.state.showSearchButton && topBarButton}
+
+        {authenticated && !this.state.showSearchButton && (
+          <Link to="/profile" className="navbar-profile-image-container">
+            <img src={profileImg} className={userImageClassName} />
+          </Link>
         )}
 
         {!authenticated && !this.state.showSearchButton && (

@@ -58,7 +58,7 @@ export class resetPassword extends Component {
         onClick={this.handleSubmit}
         className="resetPassword-primary-button"
       >
-        Reset Password
+        Reset
       </button>
     );
 
@@ -85,19 +85,23 @@ export class resetPassword extends Component {
     );
 
     return (
-      <div className="resetPassword-container">
-        <h2 className="resetPassword-title">Reset Password</h2>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={this.state.email}
-          onChange={this.handleChange}
-          className="resetPassword-input"
-        />
-        {emailLabel}
-        {resetPasswordButton}
-        {cancelButton}
+      <div className="resetPassword-main-container">
+        <div className="resetPassword-card-container">
+          <div className="resetPassword-container">
+            <h2 className="resetPassword-title">Reset Password</h2>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={this.state.email}
+              onChange={this.handleChange}
+              className="resetPassword-input"
+            />
+            {emailLabel}
+            {resetPasswordButton}
+            {cancelButton}
+          </div>
+        </div>
       </div>
     );
   }

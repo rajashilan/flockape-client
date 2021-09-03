@@ -53,7 +53,7 @@ export class albums extends Component {
       return (
         <p className="label-verification">
           A verification link has been sent to your email. Please click the link
-          and complete your registration process to start creating albums. Thank
+          and complete your registration process to start creating Books. Thank
           you!
         </p>
       );
@@ -63,7 +63,7 @@ export class albums extends Component {
   render() {
     const { albums, loading } = this.props.data;
 
-    const { credentials } = this.props.user;
+    const { authenticated, credentials } = this.props.user;
 
     //searching functionalities
     let searches = [];
@@ -97,23 +97,25 @@ export class albums extends Component {
       <p>Loading...</p>
     );
 
-    let addAnAlbumButton = credentials.isVerified ? (
-      <Link to="/addAlbum" className="album-primary-button">
-        Add an Album
-      </Link>
-    ) : (
-      <button
-        type="button"
-        onClick={this.handleButtonNotVerified}
-        className="album-secondary-button"
-      >
-        Add an Album
-      </button>
-    );
+    let addAnAlbumButton = authenticated ? (
+      credentials.isVerified ? (
+        <Link to="/create-book" className="album-primary-button">
+          Create a Book
+        </Link>
+      ) : (
+        <button
+          type="button"
+          onClick={this.handleButtonNotVerified}
+          className="album-secondary-button"
+        >
+          Create a Book
+        </button>
+      )
+    ) : null;
 
     let verificationErrorLabel = this.state.showNotVerifiedText ? (
       <p className="album-label-error">
-        Please verify your email to create an album
+        Please verify your email to create a Book
       </p>
     ) : null;
 
@@ -127,23 +129,25 @@ export class albums extends Component {
       <img className="search-icon" src={searchIcon} />
     );
     return (
-      <div>
-        <this.Verification />
-        <HomeNavigation />
-        <div className="search-container">
-          <input
-            className="search-bar"
-            type="text"
-            placeholder="Search for your albums"
-            value={this.state.searchText}
-            onChange={this.handleSearch}
-          />
-          {searchBarIcon}
-        </div>
-        <div className="album-container">{albumData}</div>
-        <div className="album-button-container">
-          {addAnAlbumButton}
-          {verificationErrorLabel}
+      <div className="album-main-container">
+        <div className="album-card-container">
+          <this.Verification />
+          <HomeNavigation />
+          <div className="search-container">
+            <input
+              className="search-bar"
+              type="text"
+              placeholder="Search your Books"
+              value={this.state.searchText}
+              onChange={this.handleSearch}
+            />
+            {searchBarIcon}
+          </div>
+          <div className="album-container">{albumData}</div>
+          <div className="album-button-container">
+            {addAnAlbumButton}
+            {verificationErrorLabel}
+          </div>
         </div>
       </div>
     );

@@ -32,10 +32,10 @@ export class Notifications extends Component {
     let notificationTitle;
     let albumDetailsDisplay;
     if (type === "album") {
-      notificationTitle = `@${sender} started following your album
+      notificationTitle = `@${sender} started following your Book
         "${contentName}."`;
       albumDetailsDisplay = (
-        <Link to={`/@${recipient}/album/${contentID}`}>
+        <Link to={`/${recipient}/book/${contentID}`}>
           <div className="notifications-details-container">
             <h3 className="notifications-details-action">
               {notificationTitle}
@@ -45,7 +45,7 @@ export class Notifications extends Component {
         </Link>
       );
     } else if (type === "link") {
-      notificationTitle = `@${sender} liked your link
+      notificationTitle = `@${sender} liked your page
         "${contentName}."`;
       albumDetailsDisplay = (
         <div className="notifications-details-container">

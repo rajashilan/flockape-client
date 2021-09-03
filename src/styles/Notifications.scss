@@ -83,4 +83,70 @@
     object-fit: cover;
     margin: 0 0 0 1rem;
   }
+
+  //480PX SCREEN SIZE
+  @media only screen and (min-width: 30em) {
+    &-container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 1rem;
+      width: 100%;
+      height: auto;
+    }
+
+    &-details-container {
+      display: block;
+      margin: 0.125rem 0 0 auto;
+      padding: 0 1rem 0 0;
+      width: 100%;
+    }
+
+    &-contentImg {
+      border-radius: 0.3125rem;
+      height: 3.4375rem;
+      min-height: 3.4375rem;
+      max-height: 3.4375rem;
+      width: 3.4375rem;
+      min-width: 3.4375rem;
+      max-width: 3.4375rem;
+      object-fit: cover;
+      margin: 0 0 0 auto;
+    }
+  }
+
+  //620PX SCREEN SIZE (LARGER TABLET)
+  @media only screen and (min-width: 38.75em) {
+    &-main-overall-container {
+      padding: 1.5rem 4rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    &-card-container {
+      background-color: $bgColorDiv;
+      border: none;
+      border-radius: 0.3125rem;
+      padding: 1rem 1rem;
+      width: 38rem;
+    }
+  }
+
+  //980PX SCREEN SIZE (DESKTOP SMALL)
+  @media only screen and (min-width: 61.25em) {
+    &-main-overall-container {
+      padding: 1.5rem 1rem;
+      display: flex;
+      justify-content: center;
+      margin: 0 0 0 auto;
+    }
+
+    &-card-container {
+      background-color: $bgColorDiv;
+      border: none;
+      border-radius: 0.3125rem;
+      padding: 1rem 1rem;
+      width: 38rem;
+    }
+  }
 }

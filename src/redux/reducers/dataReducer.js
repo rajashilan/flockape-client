@@ -3,6 +3,9 @@ import {
   SET_ALBUMS,
   SET_ALBUM,
   SET_LINK,
+  SET_FAILED_LINKS,
+  CLEAR_FAILED_LINKS,
+  REMOVE_ONE_FAILED_LINK,
   LIKE_ALBUM,
   LIKE_LINK,
   DELETE_ALBUM,
@@ -20,6 +23,7 @@ const initialState = {
   album: {},
   likedAlbums: [],
   likedLinks: [],
+  failedLinks: [],
   anotherUserProfile: {},
   loading: false,
 };
@@ -88,6 +92,9 @@ export default function (state = initialState, action) {
         );
         state.likedAlbums.splice(likedAlbumIndex, 1);
       }
+      if (state.album && state.album.albumID === action.payload) {
+        state.album = {};
+      }
       state.albums.splice(index, 1);
       return {
         ...state,
@@ -141,6 +148,23 @@ export default function (state = initialState, action) {
         ...state,
         anotherUserProfile: action.payload,
         loading: false,
+      };
+    case SET_FAILED_LINKS:
+      return {
+        ...state,
+        failedLinks: [action.payload, ...state.failedLinks],
+      };
+    case CLEAR_FAILED_LINKS:
+      return {
+        ...state,
+        failedLinks: [],
+      };
+    case REMOVE_ONE_FAILED_LINK:
+      if (state.failedLinks.length > 0) {
+        state.failedLinks.splice(0, 1);
+      }
+      return {
+        ...state,
       };
     default:
       return state;

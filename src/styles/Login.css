@@ -4,19 +4,28 @@
   padding: 0 1.5rem;
 }
 
+.login-main-container {
+  margin: 0;
+}
+
+.login-card-container {
+  margin: 0;
+}
+
 .login-header {
   margin: 0;
   color: #f2f2f2;
   font-weight: 700;
-  font-size: 2.5rem;
+  font-size: 2.125rem;
 }
 
 .login-paragraph {
   margin-top: 0.625rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
   color: #d3d3d3;
   font-weight: 500;
-  font-size: 1.3125rem;
+  font-size: 1.375rem;
+  max-width: 20rem;
 }
 
 .login-form {
@@ -48,7 +57,7 @@
 .login-links-container {
   display: block;
   text-align: center;
-  margin: 1.125rem auto;
+  margin: 1.125rem auto 2rem auto;
   padding: 0 1rem;
 }
 
@@ -112,6 +121,59 @@
   color: #e2924e;
   font-weight: 300;
   font-size: 0.75rem;
+}
+
+@media only screen and (min-width: 30em) {
+  .login-main-container {
+    padding: 0 2rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .login-card-container {
+    margin: 0;
+  }
+  .login-paragraph {
+    margin-top: 0.625rem;
+    margin-bottom: 1.5rem;
+    color: #d3d3d3;
+    font-weight: 500;
+    font-size: 1.375rem;
+    max-width: 21rem;
+  }
+}
+
+@media only screen and (min-width: 38.75em) {
+  .login-main-container {
+    padding: 1.5rem 4rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .login-card-container {
+    background-color: #1e1e2b;
+    border: none;
+    border-radius: 0.3125rem;
+    padding: 1.75rem 5rem;
+    width: 38rem;
+  }
+  .login-text-container {
+    display: block;
+    margin: 0 auto 1rem auto;
+    padding: 0 1.5rem;
+  }
+  .login-links-container {
+    display: block;
+    text-align: center;
+    margin: 1.125rem auto 0 auto;
+    padding: 0 1rem;
+  }
 }
 
 .register-text {

@@ -118,4 +118,91 @@
       margin: 0.125rem 0 0 0;
     }
   }
+
+  // 350PX SCREEN SIZE
+  @media only screen and (max-width: 21.875em) {
+    &-img {
+      border-radius: 50%;
+      height: 3.4375rem;
+      width: 3.4375rem;
+      object-fit: cover;
+      margin: 0 1rem 0 0;
+
+      &-loading {
+        border-radius: 50%;
+        min-height: 2.375rem;
+        min-width: 2.375rem;
+        margin: 0 0.375rem 0 0;
+        background-color: $tertiaryText;
+      }
+    }
+    &-album-details {
+      color: $secondaryText;
+      font-weight: 300;
+      font-size: 0.75rem;
+      margin: 0 1rem 0 0;
+      text-align: center;
+
+      &-loading {
+        height: 1.1875rem;
+        width: 12.5rem;
+        background-color: $tertiaryText;
+        margin: 0.2rem 1rem 0 0;
+      }
+    }
+  }
+
+  //400PX SCREEN SIZE
+  @media only screen and (min-width: 25em) {
+    &-img {
+      border-radius: 50%;
+      height: 3.4375rem;
+      width: 3.4375rem;
+      object-fit: cover;
+      margin: 0 1.75rem 0 0;
+
+      &-loading {
+        border-radius: 50%;
+        min-height: 2.375rem;
+        min-width: 2.375rem;
+        margin: 0 0.375rem 0 0;
+        background-color: $tertiaryText;
+      }
+    }
+  }
+
+  //620PX SCREEN SIZE (LARGER TABLET)
+  @media only screen and (min-width: 38.75em) {
+    &-main-container {
+      padding: 1.5rem 4rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    &-card-container {
+      background-color: $bgColorDiv;
+      border: none;
+      border-radius: 0.3125rem;
+      padding: 1rem 1rem;
+      width: 38rem;
+    }
+  }
+
+  //980PX SCREEN SIZE (DESKTOP SMALL)
+  @media only screen and (min-width: 61.25em) {
+    &-main-container {
+      padding: 1.5rem 1rem;
+      display: flex;
+      justify-content: center;
+      margin: 0 0 0 auto;
+    }
+
+    &-card-container {
+      background-color: $bgColorDiv;
+      border: none;
+      border-radius: 0.3125rem;
+      padding: 1rem 1rem;
+      width: 38rem;
+    }
+  }
 }

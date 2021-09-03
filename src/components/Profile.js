@@ -19,6 +19,8 @@ class Profile extends Component {
       },
     } = this.props;
 
+    const domain = "https://sharesite-test.web.app/";
+
     function abbrNum(number, decPlaces) {
       // 2 decimal places => 100, 3 => 1000, etc
       decPlaces = Math.pow(10, decPlaces);
@@ -62,7 +64,7 @@ class Profile extends Component {
             <h3 className="profile-username">@{username}</h3>
             <div className="profile-albums-details-container">
               <p className="profile-album-details">
-                {abbrNum(albums, 1)} albums
+                {abbrNum(albums, 1)} Books
               </p>
               <p className="profile-album-details">
                 {abbrNum(likes, 1)} follows
@@ -85,6 +87,9 @@ class Profile extends Component {
               {website}
             </a>
           )}
+          <h4 className="profile-other-details">
+            url: {domain}@{username}
+          </h4>
         </div>
       </div>
     ) : (

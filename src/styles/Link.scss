@@ -7,6 +7,12 @@
     padding: 0 1rem;
   }
 
+  &-likes-container {
+    margin: 1.875rem auto 2rem auto;
+    display: block;
+    padding: 0 1rem;
+  }
+
   &-container {
     margin: 0 auto;
     display: flex;
@@ -108,7 +114,6 @@
   &-hr-div {
     display: flex;
     justify-content: flex-end;
-    padding-left: 4.375rem;
   }
 
   &-hr {
@@ -207,5 +212,84 @@
     font-size: 1rem;
     font-weight: 300;
     margin: 0;
+  }
+
+  // 350PX SCREEN SIZE
+  @media only screen and (max-width: 21.875em) {
+    &-details-container {
+      width: 11.625rem;
+      height: auto;
+      display: block;
+      // margin-right:
+      padding-top: 0.3125rem;
+    }
+  }
+
+  // 420PX SCREEN SIZE
+  @media only screen and (min-width: 26.25em) {
+    &-details-container {
+      width: 17.5rem;
+      height: auto;
+      display: block;
+      // margin-right:
+      padding-top: 0.3125rem;
+    }
+  }
+
+  // 500PX SCREEN SIZE
+  @media only screen and (min-width: 31.25em) {
+    &-details-container {
+      width: 20.625rem;
+      height: auto;
+      display: block;
+      // margin-right:
+      padding-top: 0.3125rem;
+    }
+  }
+
+  //620PX SCREEN SIZE (LARGER TABLET)
+  @media only screen and (min-width: 38.75em) {
+    &-main-overall-container {
+      padding: 1.5rem 4rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    &-card-container {
+      background-color: $bgColorDiv;
+      border: none;
+      border-radius: 0.3125rem;
+      padding: 1rem 1rem;
+      width: 38rem;
+    }
+  }
+
+  // 720PX SCREEN SIZE
+  @media only screen and (min-width: 45em) {
+    &-details-container {
+      width: 23.125rem;
+      height: auto;
+      display: block;
+      // margin-right:
+      padding-top: 0.3125rem;
+    }
+  }
+
+  //980PX SCREEN SIZE (LARGER TABLET)
+  @media only screen and (min-width: 61.25em) {
+    &-main-overall-container {
+      padding: 1.5rem 1rem;
+      display: flex;
+      justify-content: center;
+      margin: 0 0 0 auto;
+    }
+
+    &-card-container {
+      background-color: $bgColorDiv;
+      border: none;
+      border-radius: 0.3125rem;
+      padding: 1rem 1rem;
+      width: 38rem;
+    }
   }
 }

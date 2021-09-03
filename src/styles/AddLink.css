@@ -23,6 +23,20 @@
   color: #f2f2f2;
   font-weight: 500;
   font-size: 1.625rem;
+  margin: 0 0.3125rem 0.125rem 0.3125rem;
+}
+
+.addLink-prompt-bottom-margin {
+  color: #f2f2f2;
+  font-weight: 500;
+  font-size: 1.625rem;
+  margin: 0 0.3125rem 0.625rem 0.3125rem;
+}
+
+.addLink-action-label {
+  color: #f2f2f2;
+  font-weight: 300;
+  font-size: 0.875rem;
   margin: 0 0.3125rem 0.875rem 0.3125rem;
 }
 
@@ -40,6 +54,21 @@
   margin-bottom: 1.25rem;
 }
 
+.addLink-input-textarea {
+  background-color: #4a4a64;
+  border-radius: 0.3125rem;
+  color: #f2f2f2;
+  font-weight: 300;
+  font-size: 1rem;
+  width: 100%;
+  padding: 0.75rem 0.625rem;
+  border: none;
+  border-color: transparent;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  resize: vertical;
+}
+
 .addLink-input:focus {
   border: none;
   border-color: transparent;
@@ -53,11 +82,41 @@
   margin: -0.625rem 0.3125rem 1.25rem 0.3125rem;
 }
 
+.addLink-label-success {
+  color: #4ee28c;
+  font-weight: 300;
+  font-size: 0.75rem;
+  margin: 0 0.3125rem 1.25rem 0.3125rem;
+  text-align: center;
+}
+
+.addLink-label-prompt-add-manually {
+  color: #d3d3d3;
+  font-weight: 300;
+  font-size: 0.75rem;
+  margin: 1rem 0.3125rem 1rem 0.3125rem;
+}
+
+.addLink-label-center {
+  color: #d3d3d3;
+  font-weight: 300;
+  font-size: 0.75rem;
+  margin: -0.625rem 0.3125rem 1.25rem 0.3125rem;
+  text-align: center;
+}
+
 .addLink-label-error {
   color: #e2924e;
   font-weight: 300;
   font-size: 0.75rem;
   margin: -0.625rem 0.3125rem 1.25rem 0.3125rem;
+}
+
+.addLink-label-error-links {
+  color: #e2924e;
+  font-weight: 400;
+  font-size: 0.75rem;
+  margin: -0.375rem 0.3125rem 0.75rem 0.3125rem;
 }
 
 .addLink-label-error-display-block {
@@ -76,6 +135,15 @@
   text-decoration: underline;
 }
 
+.addLink-label-url-failedLinks {
+  display: block;
+  color: #538fff;
+  font-weight: 400;
+  font-size: 1rem;
+  margin: 0 0 1.25rem 0;
+  text-decoration: underline;
+}
+
 .addLink-primary-button {
   display: block;
   background-color: #f22b3e;
@@ -87,6 +155,45 @@
   border: none;
   border-radius: 0.3125rem;
   margin: 0 0 0.375rem 0;
+}
+
+.addLink-secondary-button {
+  display: block;
+  background-color: #282840;
+  color: #f2f2f2;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.625rem 1rem;
+  width: 100% !important;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 0.625rem 0 0 0;
+}
+
+.addLink-clear-button {
+  display: block;
+  background-color: #282840;
+  color: #f2f2f2;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.625rem 1rem;
+  width: 100% !important;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 1rem 0 2rem 0;
+}
+
+.addLink-clear-button-small-margin {
+  display: block;
+  background-color: #282840;
+  color: #f2f2f2;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.625rem 1rem;
+  width: 100% !important;
+  border: none;
+  border-radius: 0.3125rem;
+  margin: 0.625rem 0 0.875rem 0;
 }
 
 .addLink-cancel-button {
@@ -115,11 +222,64 @@
   margin: 0 0.3125rem 0 0.3125rem;
 }
 
+.addLink-addLinkManually-label-failedLinks-prompt {
+  color: #d3d3d3;
+  font-weight: 300;
+  font-size: 0.875rem;
+  margin: 0.625rem 0.3125rem 0.5rem 0.3125rem;
+}
+
+.addLink-addLinkManually-label-failedLinks {
+  color: #f2f2f2;
+  font-weight: 300;
+  font-size: 0.875rem;
+  margin: 0 0.3125rem 0.3125rem 0.3125rem;
+}
+
 .addLink-addLinkManually-label-url {
   color: #538fff;
   font-weight: 400;
   font-size: 0.875rem;
   margin: 0 0.3125rem 0 0.3125rem;
   text-decoration: underline;
+}
+
+@media only screen and (min-width: 38.75em) {
+  .addLink-main-overall-container {
+    padding: 1.5rem 4rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .addLink-card-container {
+    background-color: #1e1e2b;
+    border: none;
+    border-radius: 0.3125rem;
+    padding: 1rem 1rem;
+    width: 38rem;
+  }
+}
+
+@media only screen and (min-width: 61.25em) {
+  .addLink-main-overall-container {
+    padding: 1.5rem 1rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    margin: 0 0 0 auto;
+  }
+  .addLink-card-container {
+    background-color: #1e1e2b;
+    border: none;
+    border-radius: 0.3125rem;
+    padding: 1rem 1rem;
+    width: 38rem;
+  }
 }
 /*# sourceMappingURL=AddLink.css.map */

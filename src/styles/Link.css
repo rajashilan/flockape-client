@@ -4,6 +4,12 @@
   padding: 0 1rem;
 }
 
+.link-likes-container {
+  margin: 1.875rem auto 2rem auto;
+  display: block;
+  padding: 0 1rem;
+}
+
 .link-container {
   margin: 0 auto;
   display: -webkit-box;
@@ -119,7 +125,6 @@
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
-  padding-left: 4.375rem;
 }
 
 .link-hr {
@@ -129,7 +134,7 @@
   max-height: 0.125rem;
   width: 100%;
   margin: 0.5rem 0.3125rem 0.75rem 0;
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .link-more-container {
@@ -228,5 +233,80 @@
   font-size: 1rem;
   font-weight: 300;
   margin: 0;
+}
+
+@media only screen and (max-width: 21.875em) {
+  .link-details-container {
+    width: 11.625rem;
+    height: auto;
+    display: block;
+    padding-top: 0.3125rem;
+  }
+}
+
+@media only screen and (min-width: 26.25em) {
+  .link-details-container {
+    width: 17.5rem;
+    height: auto;
+    display: block;
+    padding-top: 0.3125rem;
+  }
+}
+
+@media only screen and (min-width: 31.25em) {
+  .link-details-container {
+    width: 20.625rem;
+    height: auto;
+    display: block;
+    padding-top: 0.3125rem;
+  }
+}
+
+@media only screen and (min-width: 38.75em) {
+  .link-main-overall-container {
+    padding: 1.5rem 4rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .link-card-container {
+    background-color: #1e1e2b;
+    border: none;
+    border-radius: 0.3125rem;
+    padding: 1rem 1rem;
+    width: 38rem;
+  }
+}
+
+@media only screen and (min-width: 45em) {
+  .link-details-container {
+    width: 23.125rem;
+    height: auto;
+    display: block;
+    padding-top: 0.3125rem;
+  }
+}
+
+@media only screen and (min-width: 61.25em) {
+  .link-main-overall-container {
+    padding: 1.5rem 1rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    margin: 0 0 0 auto;
+  }
+  .link-card-container {
+    background-color: #1e1e2b;
+    border: none;
+    border-radius: 0.3125rem;
+    padding: 1rem 1rem;
+    width: 38rem;
+  }
 }
 /*# sourceMappingURL=Link.css.map */

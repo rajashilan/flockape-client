@@ -118,7 +118,7 @@ export class editAlbum extends Component {
 
     // handle redirect on refresh
     if (!albumImg) {
-      this.props.history.push("/albums");
+      this.props.history.push("/books");
     }
 
     let uploadAlbumImageButton = loading ? (
@@ -130,7 +130,7 @@ export class editAlbum extends Component {
         onClick={this.handleUploadImage}
         className="addAlbum-change-img-button"
       >
-        Change Album Picture
+        Change Book Cover
       </h3>
     );
 
@@ -140,68 +140,72 @@ export class editAlbum extends Component {
       </div>
     ) : (
       <button type="submit" className="addAlbum-primary-button">
-        Edit Album
+        Edit
       </button>
     );
     return (
-      <div className="addAlbum-container">
-        <h3 className="addAlbum-title">Edit your Album</h3>
-        <img src={albumImg} className="addAlbum-img" />
-        {uploadAlbumImageButton}
-        <input
-          type="file"
-          id="imageInput"
-          accept="image/*"
-          onChange={this.handleImageChange}
-          hidden="hidden"
-        />
-        <div className="addAlbum-editAlbum-container">
-          <form onSubmit={this.handleSubmit}>
+      <div className="addAlbum-main-overall-container">
+        <div className="addAlbum-card-container">
+          <div className="addAlbum-container">
+            <h3 className="addAlbum-title">Edit your Book</h3>
+            <img src={albumImg} className="addAlbum-img" />
+            {uploadAlbumImageButton}
             <input
-              placeholder="Album name"
-              type="text"
-              className="addAlbum-input"
-              value={this.state.albumName}
-              onChange={this.handleAlbumName}
+              type="file"
+              id="imageInput"
+              accept="image/*"
+              onChange={this.handleImageChange}
+              hidden="hidden"
             />
-            {errors.albumTitle && (
-              <label className="addAlbum-errors">{errors.albumTitle}</label>
-            )}
-            <div className="addAlbum-security-container">
-              <label className="addAlbum-security-checkbox-container">
+            <div className="addAlbum-editAlbum-container">
+              <form onSubmit={this.handleSubmit}>
                 <input
-                  type="checkbox"
-                  onChange={this.handlePublicCheckBox}
-                  checked={this.state.publicAlbum}
+                  placeholder="Book title"
+                  type="text"
+                  className="addAlbum-input"
+                  value={this.state.albumName}
+                  onChange={this.handleAlbumName}
                 />
-                <span className="addAlbum-checkmark"></span>
-              </label>
-              <p className="addAlbum-security-label">Public</p>
-              <label className="addAlbum-security-checkbox-container">
-                <input
-                  type="checkbox"
-                  onChange={this.handlePrivateCheckBox}
-                  checked={this.state.privateAlbum}
-                />
-                <span className="addAlbum-checkmark"></span>
-              </label>
-              <p className="addAlbum-security-label">Private</p>
+                {errors.albumTitle && (
+                  <label className="addAlbum-errors">{errors.albumTitle}</label>
+                )}
+                <div className="addAlbum-security-container">
+                  <label className="addAlbum-security-checkbox-container">
+                    <input
+                      type="checkbox"
+                      onChange={this.handlePublicCheckBox}
+                      checked={this.state.publicAlbum}
+                    />
+                    <span className="addAlbum-checkmark"></span>
+                  </label>
+                  <p className="addAlbum-security-label">Public</p>
+                  <label className="addAlbum-security-checkbox-container">
+                    <input
+                      type="checkbox"
+                      onChange={this.handlePrivateCheckBox}
+                      checked={this.state.privateAlbum}
+                    />
+                    <span className="addAlbum-checkmark"></span>
+                  </label>
+                  <p className="addAlbum-security-label">Private</p>
+                </div>
+                <div className="addAlbum-button-container">
+                  {errors.general && (
+                    <label className="addAlbum-errors-general">
+                      {errors.general}
+                    </label>
+                  )}
+                  {editAlbumButton}
+                  <Link
+                    to={`/${username}/book/${this.props.album.albumID}`}
+                    className="addAlbum-cancel-button"
+                  >
+                    Cancel
+                  </Link>
+                </div>
+              </form>
             </div>
-            <div className="addAlbum-button-container">
-              {errors.general && (
-                <label className="addAlbum-errors-general">
-                  {errors.general}
-                </label>
-              )}
-              {editAlbumButton}
-              <Link
-                to={`/@${username}/album/${this.props.album.albumID}`}
-                className="addAlbum-cancel-button"
-              >
-                Cancel
-              </Link>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     );

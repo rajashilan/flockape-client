@@ -48,7 +48,7 @@ export class signupAddDetails extends Component {
 
   handleFinishAction = () => {
     this.props.history.push({
-      pathname: "/albums",
+      pathname: "/",
       state: { verification: "verified" },
     });
   };
@@ -69,48 +69,55 @@ export class signupAddDetails extends Component {
     );
 
     return (
-      <div className="signup-add-details-container">
-        <h2 className="signup-add-details-header">Add aditional details</h2>
-        <p className="signup-add-details-text">
-          You can update your details later in settings.
-        </p>
-        <form onSubmit={this.handleSubmit} className="signup-add-details-form">
-          <textarea
-            type="text"
-            name="bio"
-            id="bio"
-            rows="3"
-            value={this.state.bio}
-            onChange={this.handleChange}
-            placeholder="A short bio about yourself"
-            className="signup-add-details-input-textarea"
-          />
-          <input
-            type="text"
-            name="location"
-            id="location"
-            value={this.state.location}
-            onChange={this.handleChange}
-            placeholder="Your location"
-            className="signup-add-details-input"
-          />
-          <input
-            type="text"
-            name="website"
-            id="website"
-            value={this.state.website}
-            onChange={this.handleChange}
-            placeholder="Your personal website/link"
-            className="signup-add-details-input"
-          />
-          {addDetailButton}
-        </form>
-        <button
-          onClick={this.handleFinishAction}
-          className="signup-add-details-primary-button"
-        >
-          Finish
-        </button>
+      <div className="signup-add-details-main-container">
+        <div className="signup-add-details-card-container">
+          <div className="signup-add-details-container">
+            <h2 className="signup-add-details-header">Add aditional details</h2>
+            <p className="signup-add-details-text">
+              You can update your details later in settings.
+            </p>
+            <form
+              onSubmit={this.handleSubmit}
+              className="signup-add-details-form"
+            >
+              <textarea
+                type="text"
+                name="bio"
+                id="bio"
+                rows="3"
+                value={this.state.bio}
+                onChange={this.handleChange}
+                placeholder="A short bio about yourself"
+                className="signup-add-details-input-textarea"
+              />
+              <input
+                type="text"
+                name="location"
+                id="location"
+                value={this.state.location}
+                onChange={this.handleChange}
+                placeholder="Your location"
+                className="signup-add-details-input"
+              />
+              <input
+                type="text"
+                name="website"
+                id="website"
+                value={this.state.website}
+                onChange={this.handleChange}
+                placeholder="Your personal website/link"
+                className="signup-add-details-input"
+              />
+              {addDetailButton}
+            </form>
+            <button
+              onClick={this.handleFinishAction}
+              className="signup-add-details-primary-button"
+            >
+              Finish
+            </button>
+          </div>
+        </div>
       </div>
     );
   }

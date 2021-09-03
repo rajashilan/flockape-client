@@ -18,7 +18,7 @@ export const loginUser = (userData, history) => (dispatch) => {
       setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
       dispatch({ type: CLEAR_ERRORS });
-      history.push("/albums");
+      history.push("/books");
     })
     .catch((error) => {
       dispatch({
@@ -131,7 +131,7 @@ export const updateUserPassword = (passwords, history) => (dispatch) => {
     .then(() => {
       dispatch({ type: STOP_LOADING_UI });
       dispatch({ type: CLEAR_ERRORS });
-      history.push("/manageAccount");
+      history.push("/manage-account");
     })
     .catch((error) => {
       console.log(error);

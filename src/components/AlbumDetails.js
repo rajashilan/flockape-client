@@ -75,21 +75,20 @@ export class AlbumDetails extends Component {
     this.setState({
       showMoreButton: !this.state.showMoreButton,
     });
-    this.props.history.push("/albums");
   };
 
   MoreContainer = () => {
     return (
       <div className="albumDetails-more-container">
         <div className="albumDetails-more-button-container">
-          <Link to="/editAlbum" className="albumDetails-more-primary-button">
-            Edit Album
+          <Link to="/edit-book" className="albumDetails-more-primary-button">
+            Edit Book
           </Link>
           <button
             onClick={this.handleDeleteButton}
             className="albumDetails-more-secondary-button"
           >
-            Delete Album
+            Delete Book
           </button>
         </div>
         <h3
@@ -107,7 +106,7 @@ export class AlbumDetails extends Component {
       <div className="albumDetails-more-container">
         <div className="albumDetails-more-delete-text-container">
           <h4 className="albumDetails-more-delete-text">
-            Are you sure to delete this album?
+            Are you sure to delete this Book?
           </h4>
         </div>
         <div className="albumDetails-more-delete-button-container">
@@ -198,6 +197,12 @@ export class AlbumDetails extends Component {
       state: { from: "component" },
     };
 
+    let backButton = authenticated ? (
+      <BackButton to={backToUrl} />
+    ) : (
+      <BackButton to={`/@${username}`} />
+    );
+
     const loadingAlbumDetails = !loading ? (
       this.state.showMoreButton ? (
         this.state.showDeleteDialog ? (
@@ -214,13 +219,13 @@ export class AlbumDetails extends Component {
         >
           <div className="albumDetails-opacity-container">
             <div className="albumDetails-inner-container">
-              {authenticated && <BackButton to={backToUrl} />}
+              {backButton}
               <div className="albumDetails-details-container">
                 <h3 className="albumDetails-title">{albumTitle}</h3>
                 <div className="albumDetails-details-inner-container">
-                  <p className="albumDetails-details">{likeCount} likes</p>
+                  <p className="albumDetails-details">{likeCount} follows</p>
                   <p className="albumDetails-details">{viewCount} views</p>
-                  <p className="albumDetails-details">{linkCount} links</p>
+                  <p className="albumDetails-details">{linkCount} pages</p>
                 </div>
               </div>
               <div className="albumDetails-icon-container">

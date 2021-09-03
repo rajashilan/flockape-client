@@ -22,7 +22,7 @@
   width: 100%;
   height: 7.375rem;
   padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.8);
   border: none;
   border-radius: 0.3125rem;
 }
@@ -151,7 +151,7 @@
 }
 
 .albumDetails-button-container {
-  margin: 0 auto;
+  margin: 0 auto 2rem auto;
   padding: 0 1rem;
 }
 
@@ -277,5 +277,53 @@
   font-size: 1rem;
   font-weight: 300;
   margin: 0;
+}
+
+@media only screen and (max-width: 21.875em) {
+  .albumDetails-details {
+    color: #d3d3d3;
+    font-weight: 300;
+    font-size: 0.75rem;
+    margin: 0 0.5rem 0 0;
+  }
+}
+
+@media only screen and (min-width: 38.75em) {
+  .albumDetails-main-overall-container {
+    padding: 1.5rem 4rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .albumDetails-card-container {
+    background-color: #1e1e2b;
+    border: none;
+    border-radius: 0.3125rem;
+    padding: 1rem 1rem;
+    width: 38rem;
+  }
+}
+
+@media only screen and (min-width: 61.25em) {
+  .albumDetails-main-overall-container {
+    padding: 1.5rem 1rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    margin: 0 0 0 auto;
+  }
+  .albumDetails-card-container {
+    background-color: #1e1e2b;
+    border: none;
+    border-radius: 0.3125rem;
+    padding: 1rem 1rem;
+    width: 38rem;
+  }
 }
 /*# sourceMappingURL=AlbumDetails.css.map */

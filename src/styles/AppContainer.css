@@ -1,0 +1,8 @@
+@media only screen and (min-width: 61.25em) {
+  .app-main-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+/*# sourceMappingURL=AppContainer.css.map */

@@ -81,7 +81,7 @@ export class manageAccount extends Component {
 
   render() {
     if (!this.props.user.credentials.username) {
-      this.props.history.push("/albums");
+      this.props.history.push("/books");
     }
 
     const {
@@ -117,82 +117,89 @@ export class manageAccount extends Component {
     );
 
     let cancelText = this.state.back
-      ? (cancelText = "back")
-      : (cancelText = "cancel");
+      ? (cancelText = "Back")
+      : (cancelText = "Cancel");
 
     let toHistory;
     this.props.location.state && this.props.location.state.history
       ? (toHistory = this.props.location.state.history)
-      : (toHistory = "/albums");
+      : (toHistory = "/books");
 
     return (
-      <div className="manageAccount-container">
-        <h2 className="manageAccount-title">Manage your Account</h2>
-        <div className="manageAccount-profileImg-container">
-          <img src={profileImg} className="manageAccount-profileImg" />
-          {errors.image && (
-            <p className="manageAccount-errors-alt">{errors.image}</p>
-          )}
-          {changeProfilePictureButton}
-          <input
-            type="file"
-            id="imageInput"
-            accept="image/*"
-            onChange={this.handleImageChange}
-            hidden="hidden"
-          />
+      <div className="manageAccount-main-overall-container">
+        <div className="manageAccount-card-container">
+          <div className="manageAccount-container">
+            <h2 className="manageAccount-title">Manage your Account</h2>
+            <div className="manageAccount-profileImg-container">
+              <img src={profileImg} className="manageAccount-profileImg" />
+              {errors.image && (
+                <p className="manageAccount-errors-alt">{errors.image}</p>
+              )}
+              {changeProfilePictureButton}
+              <input
+                type="file"
+                id="imageInput"
+                accept="image/*"
+                onChange={this.handleImageChange}
+                hidden="hidden"
+              />
+            </div>
+            <form onSubmit={this.handleSubmit} className="manageAccount-form">
+              <input
+                type="text"
+                name="fullName"
+                id="fullName"
+                value={this.state.fullName}
+                onChange={this.handleChange}
+                placeholder="Your full name"
+                className="manageAccount-input"
+              />
+              {errors.fullName && (
+                <label htmlFor="fullName" className="manageAccount-errors">
+                  {errors.fullName}
+                </label>
+              )}
+              <textarea
+                type="text"
+                name="bio"
+                id="bio"
+                rows="3"
+                value={this.state.bio}
+                onChange={this.handleChange}
+                placeholder="A short bio about yourself"
+                className="manageAccount-input-textarea"
+              />
+              <input
+                type="text"
+                name="location"
+                id="location"
+                value={this.state.location}
+                onChange={this.handleChange}
+                placeholder="Your location"
+                className="manageAccount-input"
+              />
+              <input
+                type="text"
+                name="website"
+                id="website"
+                value={this.state.website}
+                onChange={this.handleChange}
+                placeholder="Your personal website/link"
+                className="manageAccount-input"
+              />
+              {addDetailButton}
+            </form>
+            <Link
+              to="/update-password"
+              className="manageAccount-secondary-button"
+            >
+              Change Password
+            </Link>
+            <Link to={toHistory} className="manageAccount-cancel-button">
+              {cancelText}
+            </Link>
+          </div>
         </div>
-        <form onSubmit={this.handleSubmit} className="manageAccount-form">
-          <input
-            type="text"
-            name="fullName"
-            id="fullName"
-            value={this.state.fullName}
-            onChange={this.handleChange}
-            placeholder="Your full name"
-            className="manageAccount-input"
-          />
-          {errors.fullName && (
-            <label htmlFor="fullName" className="manageAccount-errors">
-              {errors.fullName}
-            </label>
-          )}
-          <textarea
-            type="text"
-            name="bio"
-            id="bio"
-            rows="3"
-            value={this.state.bio}
-            onChange={this.handleChange}
-            placeholder="A short bio about yourself"
-            className="manageAccount-input-textarea"
-          />
-          <input
-            type="text"
-            name="location"
-            id="location"
-            value={this.state.location}
-            onChange={this.handleChange}
-            placeholder="Your location"
-            className="manageAccount-input"
-          />
-          <input
-            type="text"
-            name="website"
-            id="website"
-            value={this.state.website}
-            onChange={this.handleChange}
-            placeholder="Your personal website/link"
-            className="manageAccount-input"
-          />
-          {addDetailButton}
-        </form>
-        <Link to="/updatePassword" className="manageAccount-secondary-button">
-          Change Password
-        </Link>
-        <Link to={toHistory} className="manageAccount-cancel-button">
-          {cancelText}
-        </Link>
       </div>
     );
   }

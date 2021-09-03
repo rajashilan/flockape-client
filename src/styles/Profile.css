@@ -128,4 +128,92 @@
   background-color: #538fff;
   margin: 0.125rem 0 0 0;
 }
+
+@media only screen and (max-width: 21.875em) {
+  .profile-img {
+    border-radius: 50%;
+    height: 3.4375rem;
+    width: 3.4375rem;
+    -o-object-fit: cover;
+       object-fit: cover;
+    margin: 0 1rem 0 0;
+  }
+  .profile-img-loading {
+    border-radius: 50%;
+    min-height: 2.375rem;
+    min-width: 2.375rem;
+    margin: 0 0.375rem 0 0;
+    background-color: #989898;
+  }
+  .profile-album-details {
+    color: #d3d3d3;
+    font-weight: 300;
+    font-size: 0.75rem;
+    margin: 0 1rem 0 0;
+    text-align: center;
+  }
+  .profile-album-details-loading {
+    height: 1.1875rem;
+    width: 12.5rem;
+    background-color: #989898;
+    margin: 0.2rem 1rem 0 0;
+  }
+}
+
+@media only screen and (min-width: 25em) {
+  .profile-img {
+    border-radius: 50%;
+    height: 3.4375rem;
+    width: 3.4375rem;
+    -o-object-fit: cover;
+       object-fit: cover;
+    margin: 0 1.75rem 0 0;
+  }
+  .profile-img-loading {
+    border-radius: 50%;
+    min-height: 2.375rem;
+    min-width: 2.375rem;
+    margin: 0 0.375rem 0 0;
+    background-color: #989898;
+  }
+}
+
+@media only screen and (min-width: 38.75em) {
+  .profile-main-container {
+    padding: 1.5rem 4rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .profile-card-container {
+    background-color: #1e1e2b;
+    border: none;
+    border-radius: 0.3125rem;
+    padding: 1rem 1rem;
+    width: 38rem;
+  }
+}
+
+@media only screen and (min-width: 61.25em) {
+  .profile-main-container {
+    padding: 1.5rem 1rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    margin: 0 0 0 auto;
+  }
+  .profile-card-container {
+    background-color: #1e1e2b;
+    border: none;
+    border-radius: 0.3125rem;
+    padding: 1rem 1rem;
+    width: 38rem;
+  }
+}
 /*# sourceMappingURL=Profile.css.map */

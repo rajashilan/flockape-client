@@ -1,0 +1,81 @@
+.profileCardMain-main-container {
+  display: none;
+}
+
+@media only screen and (min-width: 61.25em) {
+  .profileCardMain-main-container {
+    position: -webkit-sticky;
+    /* Safari */
+    position: sticky;
+    top: 4.5rem;
+    z-index: -1;
+    max-height: 37.5rem;
+    display: block;
+    border-radius: 0.3125rem;
+    padding: 1.5rem 1rem;
+    margin: 0 auto 0 0;
+  }
+  .profileCardMain-top-container {
+    background-color: #373753;
+    display: block;
+    padding: 2rem 1rem;
+    text-align: center;
+    border-radius: 0.3125rem 0.3125rem 0 0;
+  }
+  .profileCardMain-img {
+    border-radius: 50%;
+    height: 6.25rem;
+    width: 6.25rem;
+    -o-object-fit: cover;
+       object-fit: cover;
+    margin: 0 0 1rem 0;
+  }
+  .profileCardMain-username {
+    color: #f2f2f2;
+    font-weight: 400;
+    font-size: 1rem;
+    margin: 0 0 0.312rem 0;
+  }
+  .profileCardMain-details-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .profileCardMain-details {
+    color: #d3d3d3;
+    font-weight: 300;
+    font-size: 0.875rem;
+    margin: 0 1rem 0 0;
+  }
+  .profileCardMain-bottom-container {
+    background-color: #1e1e2b;
+    display: block;
+    padding: 2rem 1rem;
+    border-radius: 0 0 0.3125rem 0.3125rem;
+  }
+  .profileCardMain-name {
+    color: #f2f2f2;
+    font-weight: 400;
+    font-size: 1rem;
+    margin: 0 0 0.1875rem 0;
+  }
+  .profileCardMain-other-details {
+    margin: 0.125rem;
+    color: #989898;
+    font-weight: 300;
+    font-size: 0.875rem;
+  }
+  .profileCardMain-website-link {
+    margin: 0.125rem 0 0 0;
+    color: #538fff;
+    font-weight: 300;
+    font-size: 0.875rem;
+  }
+}
+/*# sourceMappingURL=ProfileCardMain.css.map */

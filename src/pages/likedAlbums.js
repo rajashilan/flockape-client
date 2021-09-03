@@ -87,19 +87,21 @@ export class likedAlbums extends Component {
     );
 
     return (
-      <div>
-        <HomeNavigation />
-        <div className="search-container">
-          <input
-            className="search-bar"
-            type="text"
-            placeholder="Search for your liked albums"
-            value={this.state.searchText}
-            onChange={this.handleSearch}
-          />
-          {searchBarIcon}
+      <div className="album-main-container">
+        <div className="album-card-container">
+          <HomeNavigation />
+          <div className="search-container">
+            <input
+              className="search-bar"
+              type="text"
+              placeholder="Search the Books you follow"
+              value={this.state.searchText}
+              onChange={this.handleSearch}
+            />
+            {searchBarIcon}
+          </div>
+          <div className="album-likes-container">{albumData}</div>
         </div>
-        <div className="album-container">{albumData}</div>
       </div>
     );
   }

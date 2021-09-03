@@ -83,3 +83,25 @@
   border-radius: 0.3125rem;
   margin: 0.75rem 0;
 }
+
+// 350PX SCREEN SIZE
+@media only screen and (max-width: 21.875em) {
+  .primary-button-medium-margin {
+    display: block;
+    background-color: $bgColorPrimaryButton;
+    color: $primaryText;
+    font-size: 0.875rem;
+    font-weight: 400;
+    padding: 0.625rem 3rem;
+    width: 100% !important;
+    border: none;
+    border-radius: 0.3125rem;
+    margin: 0.625rem 0;
+
+    &-text {
+      color: $primaryText;
+      font-size: 0.875rem;
+      font-weight: 400;
+    }
+  }
+}

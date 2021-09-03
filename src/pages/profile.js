@@ -97,24 +97,26 @@ export class profile extends Component {
     }
 
     return (
-      <div>
-        <Profile
-          albums={albumCount.albums}
-          views={albumCount.views}
-          likes={albumCount.likes}
-          user={user}
-        />
-        <div className="search-container">
-          <input
-            className="search-bar"
-            type="text"
-            placeholder="Search for albums"
-            value={this.state.searchText}
-            onChange={this.handleSearch}
+      <div className="profile-main-container">
+        <div className="profile-card-container">
+          <Profile
+            albums={albumCount.albums}
+            views={albumCount.views}
+            likes={albumCount.likes}
+            user={user}
           />
-          {searchBarIcon}
+          <div className="search-container">
+            <input
+              className="search-bar"
+              type="text"
+              placeholder="Search your Books"
+              value={this.state.searchText}
+              onChange={this.handleSearch}
+            />
+            {searchBarIcon}
+          </div>
+          <div className="album-likes-container">{albumData}</div>
         </div>
-        <div className="album-container">{albumData}</div>
       </div>
     );
   }

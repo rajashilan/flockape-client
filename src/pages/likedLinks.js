@@ -87,19 +87,21 @@ export class likedLinks extends Component {
     );
 
     return (
-      <div>
-        <HomeNavigation />
-        <div className="search-container">
-          <input
-            className="search-bar"
-            type="text"
-            placeholder="Search for your liked links"
-            value={this.state.searchText}
-            onChange={this.handleSearch}
-          />
-          {searchBarIcon}
+      <div className="link-main-overall-container">
+        <div className="link-card-container">
+          <HomeNavigation />
+          <div className="search-container">
+            <input
+              className="search-bar"
+              type="text"
+              placeholder="Search your liked pages"
+              value={this.state.searchText}
+              onChange={this.handleSearch}
+            />
+            {searchBarIcon}
+          </div>
+          <div className="link-likes-container">{linkData}</div>
         </div>
-        <div className="link-main-container">{linkData}</div>
       </div>
     );
   }

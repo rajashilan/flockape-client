@@ -55,7 +55,12 @@ export class LinkComponent extends Component {
   };
 
   deleteLink = () => {
-    this.props.deleteLink(this.props.link.linkID);
+    this.props.deleteLink(
+      this.props.link.linkID,
+      this.props.album.albumID,
+      this.props.link.username,
+      this.props.propsHistory
+    );
     this.setState({
       showMoreButton: !this.state.showMoreButton,
     });
@@ -88,7 +93,7 @@ export class LinkComponent extends Component {
       <div className="link-delete-main-container">
         <div className="link-more-delete-text-container">
           <h4 className="link-more-delete-text">
-            Are you sure to delete this link?
+            Are you sure to delete this page?
           </h4>
         </div>
         <div className="link-more-delete-button-container">
