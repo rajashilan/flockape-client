@@ -1,4 +1,3 @@
-import likedLinks from "../../pages/likedLinks";
 import {
   SET_ALBUMS,
   SET_ALBUM,
@@ -6,6 +5,8 @@ import {
   SET_FAILED_LINKS,
   CLEAR_FAILED_LINKS,
   REMOVE_ONE_FAILED_LINK,
+  TRACK_LINKS,
+  CLEAR_TRACKED_LINKS,
   LIKE_ALBUM,
   LIKE_LINK,
   DELETE_ALBUM,
@@ -24,6 +25,7 @@ const initialState = {
   likedAlbums: [],
   likedLinks: [],
   failedLinks: [],
+  numOfLinksUploaded: 0,
   anotherUserProfile: {},
   loading: false,
 };
@@ -165,6 +167,16 @@ export default function (state = initialState, action) {
       }
       return {
         ...state,
+      };
+    case TRACK_LINKS:
+      return {
+        ...state,
+        numOfLinksUploaded: state.numOfLinksUploaded + 1,
+      };
+    case CLEAR_TRACKED_LINKS:
+      return {
+        ...state,
+        numOfLinksUploaded: 0,
       };
     default:
       return state;

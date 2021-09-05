@@ -7,7 +7,7 @@ import {
   addNewLinkManually,
   clearFailedLinks,
 } from "../redux/actions/dataActions";
-import { clearLinkError } from "../redux/actions/uiActions";
+import { clearLinkError, clearErrors } from "../redux/actions/uiActions";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -31,12 +31,9 @@ export class addLinkManually extends Component {
         failedLinksCount: this.props.failedLinks.length,
       });
     }
-    console.log("mounted");
   }
 
   componentDidUpdate() {
-    console.log("State", this.state.failedLinksCount);
-    console.log("props", this.props.failedLinks.length);
     if (this.state.failedLinksCount > this.props.failedLinks.length) {
       this.setState({
         title: "",
@@ -105,6 +102,7 @@ export class addLinkManually extends Component {
     });
     this.props.clearFailedLinks();
     this.props.clearLinkError();
+    this.props.clearErrors();
   };
 
   render() {
@@ -286,6 +284,7 @@ const mapActionToProps = {
   addNewLinkManually,
   clearFailedLinks,
   clearLinkError,
+  clearErrors,
 };
 
 addLinkManually.propTypes = {
@@ -294,6 +293,7 @@ addLinkManually.propTypes = {
   addNewLinkManually: PropTypes.func.isRequired,
   clearFailedLinks: PropTypes.func.isRequired,
   clearLinkError: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   album: PropTypes.object.isRequired,
   failedLinks: PropTypes.array,
 };

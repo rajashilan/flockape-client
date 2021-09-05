@@ -4,8 +4,12 @@ import { Link } from "react-router-dom";
 import "../styles/AddLink.css";
 import "../styles/ProgressSpinner.css";
 
-import { addNewLink, clearFailedLinks } from "../redux/actions/dataActions";
-import { clearLinkError } from "../redux/actions/uiActions";
+import {
+  addNewLink,
+  clearFailedLinks,
+  clearTrackedLinks,
+} from "../redux/actions/dataActions";
+import { clearLinkError, stopLoadingUI } from "../redux/actions/uiActions";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -18,10 +22,10 @@ export class addLink extends Component {
   state = {
     link: "",
     submitted: false,
+    numOfLinks: 0,
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log("State", this.state.submitted);
     if (
       this.state.submitted &&
       !nextProps.UI.loading &&
@@ -32,6 +36,15 @@ export class addLink extends Component {
       this.props.history.push(
         `/${this.props.album.username}/book/${this.props.album.albumID}`
       );
+
+    if (
+      nextProps.numOfLinksUploaded === this.state.numOfLinks &&
+      nextProps.numOfLinksUploaded !== 0
+    ) {
+      this.props.stopLoadingUI();
+      this.props.clearTrackedLinks();
+      console.log("ui stopped");
+    }
   }
 
   handleChange = (event) => {
@@ -42,6 +55,7 @@ export class addLink extends Component {
 
   handleBack = () => {
     this.props.UI.errors = null;
+    this.props.clearTrackedLinks();
     // this.props.history.push({
     //   pathname: `/album/${this.props.album.albumID}`,
     //   state: { albumID: this.props.album.albumID },
@@ -53,14 +67,23 @@ export class addLink extends Component {
 
   handleForward = () => {
     this.props.UI.errors = null;
+    this.props.clearTrackedLinks();
     this.props.history.push("/add-page-manually");
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
+    let newLink = this.state.link.replace(/(\r\n|\n|\r)/gm, "");
+    let newLinkSplit = newLink.trim().split(",").filter(Boolean);
+    let newLinkLength = 0;
+    if (newLinkSplit.length === 0) newLinkLength = 1;
+    else newLinkLength = newLinkSplit.length;
+
     this.setState({
       submitted: true,
+      numOfLinks: newLinkLength,
     });
+
     this.props.addNewLink(
       this.state.link,
       this.props.album.albumID,
@@ -76,6 +99,7 @@ export class addLink extends Component {
         submitted: false,
       },
       () => {
+        this.props.clearTrackedLinks();
         this.props.clearFailedLinks();
         this.props.clearLinkError();
       }
@@ -253,15 +277,17 @@ export class addLink extends Component {
       )
     ) : null;
 
+    let subtitleText = !loading
+      ? "Separate links with a comma “,” to add multiple pages."
+      : "Please do not leave while pages are being uploaded.";
+
     return (
       <div className="addLink-main-overall-container">
         <div className="addLink-card-container">
           <div className="addLink-container">
             <h3 className="addLink-title">{albumTitle}</h3>
             <h4 className="addLink-prompt">Add a Page</h4>
-            <h4 className="addLink-action-label">
-              Separate links with a comma “,” to add multiple pages.
-            </h4>
+            <h4 className="addLink-action-label">{subtitleText}</h4>
             <form onSubmit={this.handleSubmit}>
               <textarea
                 placeholder="Paste your link here..."
@@ -290,21 +316,26 @@ const mapStateToProps = (state) => ({
   user: state.user,
   UI: state.UI,
   failedLinks: state.data.failedLinks,
+  numOfLinksUploaded: state.data.numOfLinksUploaded,
 });
 
 const mapActionToProps = {
   addNewLink,
   clearFailedLinks,
   clearLinkError,
+  clearTrackedLinks,
+  stopLoadingUI,
 };
 
 addLink.propTypes = {
   user: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired,
   album: PropTypes.object.isRequired,
+  numOfLinksUploaded: PropTypes.object.isRequired,
   addNewLink: PropTypes.func.isRequired,
   clearFailedLinks: PropTypes.func.isRequired,
   clearLinkError: PropTypes.func.isRequired,
+  clearTrackedLinks: PropTypes.func.isRequired,
   failedLinks: PropTypes.array,
 };
 

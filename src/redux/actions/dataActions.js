@@ -13,12 +13,16 @@ import {
   UPDATE_ONE_ALBUM,
   ADD_ALBUM,
   SET_ERRORS,
+  SET_ERRORS_WITHOUT_LOAD,
   SET_LINK_ERROR,
   CLEAR_LINK_ERROR,
   REMOVE_ONE_FAILED_LINK,
+  TRACK_LINKS,
+  CLEAR_TRACKED_LINKS,
   SET_FAILED_LINKS,
   CLEAR_FAILED_LINKS,
   CLEAR_ERRORS,
+  CLEAR_ERRORS_WITHOUT_LOAD,
   STOP_LOADING_UI,
   LOADING_UI_LIKE_ALBUM,
   STOP_LOADING_UI_LIKE_ALBUM,
@@ -349,6 +353,8 @@ export const editAlbumDetails =
 
 export const addNewLink =
   (newLink, albumID, username, history) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+
     newLink = newLink.replace(/(\r\n|\n|\r)/gm, "");
     let newLinkSplit = newLink.trim().split(",").filter(Boolean);
     if (newLinkSplit.length === 0) newLinkSplit = [""];
@@ -358,13 +364,12 @@ export const addNewLink =
     if (newLinkSplit.length > 1) isMultiple = true;
     console.log("len", newLinkSplit.length);
 
+    dispatch({ type: CLEAR_TRACKED_LINKS });
     dispatch({ type: CLEAR_FAILED_LINKS });
     dispatch({ type: CLEAR_LINK_ERROR });
-    dispatch({ type: CLEAR_ERRORS });
+    dispatch({ type: CLEAR_ERRORS_WITHOUT_LOAD });
 
     newLinkSplit.forEach((newLink) => {
-      dispatch({ type: LOADING_UI });
-
       const sendLink = {
         linkUrl: newLink,
         linkTitle: "",
@@ -390,7 +395,7 @@ export const addNewLink =
           let imageUrl = thumbnail;
 
           //start of if
-          if (details.domain === "tiktok.com") {
+          if (details.alt) {
             imageUrl = thumbnail;
 
             console.log("URL used to fetch blob: ", imageUrl);
@@ -437,8 +442,9 @@ export const addNewLink =
                       });
                       // dispatch({ type: STOP_LOADING_UI });
                       dispatch({
-                        type: CLEAR_ERRORS,
+                        type: CLEAR_ERRORS_WITHOUT_LOAD,
                       });
+                      dispatch({ type: TRACK_LINKS });
                       // history.push(`/${username}/book/${albumID}`);
                       console.log(res.data);
                     })
@@ -470,8 +476,9 @@ export const addNewLink =
                           });
                           // dispatch({ type: STOP_LOADING_UI });
                           dispatch({
-                            type: CLEAR_ERRORS,
+                            type: CLEAR_ERRORS_WITHOUT_LOAD,
                           });
+                          dispatch({ type: TRACK_LINKS });
                           // history.push(`/${username}/book/${albumID}`);
                           console.log(res.data);
                         });
@@ -481,17 +488,18 @@ export const addNewLink =
               .catch((error) => {
                 console.log(error);
                 if (error === "TypeError: Failed to fetch") {
-                  dispatch({ type: SET_ERRORS, payload: error });
+                  dispatch({ type: SET_ERRORS_WITHOUT_LOAD, payload: error });
                   console.log("first", error);
                 } else {
                   dispatch({
-                    type: SET_ERRORS,
+                    type: SET_ERRORS_WITHOUT_LOAD,
                     payload: error.response.data,
                   });
                   console.log("second", error.response.data);
                 }
                 dispatch({ type: SET_LINK_ERROR });
                 dispatch({ type: SET_FAILED_LINKS, payload: newLink });
+                dispatch({ type: TRACK_LINKS });
               });
           } // end of if
           else {
@@ -507,8 +515,9 @@ export const addNewLink =
                 });
                 // dispatch({ type: STOP_LOADING_UI });
                 dispatch({
-                  type: CLEAR_ERRORS,
+                  type: CLEAR_ERRORS_WITHOUT_LOAD,
                 });
+                dispatch({ type: TRACK_LINKS });
                 // history.push(`/${username}/book/${albumID}`);
                 console.log(res.data);
               })
@@ -522,19 +531,27 @@ export const addNewLink =
           console.log(isMultiple);
           if (error.response && error.response.data) {
             if (!isMultiple)
-              dispatch({ type: SET_ERRORS, payload: error.response.data });
+              dispatch({
+                type: SET_ERRORS_WITHOUT_LOAD,
+                payload: error.response.data,
+              });
             console.log("last", error.response.data);
           } else
             dispatch({
-              type: SET_ERRORS,
+              type: SET_ERRORS_WITHOUT_LOAD,
               payload: { error: "Unable to extract link's details." },
             });
           dispatch({ type: SET_LINK_ERROR });
           dispatch({ type: SET_FAILED_LINKS, payload: newLink });
+          dispatch({ type: TRACK_LINKS });
           dispatch(handleUnauthorised(error));
         });
     });
   };
+
+export const clearTrackedLinks = () => (dispatch) => {
+  dispatch({ type: CLEAR_TRACKED_LINKS });
+};
 
 // export const addNewLinkManually =
 //   (newLink, albumID, username, history) => (dispatch) => {

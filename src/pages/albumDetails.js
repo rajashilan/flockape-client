@@ -13,6 +13,8 @@ import AlbumDetails from "../components/AlbumDetails";
 
 import { getAlbum } from "../redux/actions/dataActions";
 
+import { setIsAlbumTrue, setIsAlbumFalse } from "../redux/actions/uiActions";
+
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -22,7 +24,36 @@ class albumDetails extends Component {
   };
 
   componentDidMount() {
+    console.log("mounted");
     this.props.getAlbum(this.props.match.params.albumID);
+    if (this.props.user.loading || !this.props.album.username) {
+      this.userLoadTimeOut = setTimeout(() => {
+        if (
+          this.props.user.authenticated &&
+          this.props.user.credentials.username === this.props.album.username
+        ) {
+          this.props.setIsAlbumTrue();
+        } else {
+          this.props.setIsAlbumFalse();
+        }
+      }, 4000);
+    } else {
+      if (
+        this.props.user.authenticated &&
+        this.props.user.credentials.username === this.props.album.username
+      ) {
+        this.props.setIsAlbumTrue();
+      } else {
+        this.props.setIsAlbumFalse();
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.userLoadTimeOut) {
+      clearTimeout(this.userLoadTimeOut);
+    }
+    this.props.setIsAlbumFalse();
   }
 
   handleSearch = (event) => {
@@ -192,12 +223,16 @@ const mapStateToProps = (state) => ({
 
 const mapActionToProps = {
   getAlbum,
+  setIsAlbumTrue,
+  setIsAlbumFalse,
 };
 
 albumDetails.propTypes = {
   user: PropTypes.object.isRequired,
   album: PropTypes.object.isRequired,
   getAlbum: PropTypes.func.isRequired,
+  setIsAlbumTrue: PropTypes.func.isRequired,
+  setIsAlbumFalse: PropTypes.func.isRequired,
   UI: PropTypes.object.isRequired,
 };
 

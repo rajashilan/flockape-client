@@ -3,6 +3,8 @@ import {
   SET_LINK_ERROR,
   CLEAR_LINK_ERROR,
   CLEAR_ERRORS,
+  CLEAR_ERRORS_WITHOUT_LOAD,
+  SET_ERRORS_WITHOUT_LOAD,
   LOADING_UI,
   STOP_LOADING_UI,
   LOADING_UI_LIKE_ALBUM,
@@ -34,6 +36,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false,
+        errors: null,
+      };
+    case SET_ERRORS_WITHOUT_LOAD:
+      return {
+        ...state,
+        errors: action.payload,
+      };
+    case CLEAR_ERRORS_WITHOUT_LOAD:
+      return {
+        ...state,
         errors: null,
       };
     case LOADING_UI:
@@ -98,13 +110,11 @@ export default function (state = initialState, action) {
       if (!state.linkError) {
         return {
           ...state,
-          loading: false,
           linkError: true,
         };
       } else {
         return {
           ...state,
-          loading: false,
         };
       }
     case CLEAR_LINK_ERROR:
