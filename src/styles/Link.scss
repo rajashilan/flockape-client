@@ -84,6 +84,7 @@
     width: 2.375rem;
     margin: auto;
     text-align: center;
+    cursor: pointer;
   }
 
   &-like-icon-div {
@@ -92,6 +93,7 @@
     width: 2.375rem;
     margin: auto;
     text-align: center;
+    cursor: pointer;
   }
 
   &-moreButton {
@@ -149,6 +151,7 @@
       border: none;
       border-radius: 0.3125rem;
       margin: 0;
+      cursor: pointer;
     }
 
     &-delete-button {
@@ -162,6 +165,7 @@
       border: none;
       border-radius: 0.3125rem;
       margin: 0;
+      cursor: pointer;
     }
 
     &-cancel-button {
@@ -170,6 +174,7 @@
       font-weight: 300;
       font-size: 1rem;
       margin: 0 1rem;
+      cursor: pointer;
     }
 
     &-delete-text-container {
@@ -178,6 +183,7 @@
       width: 100% !important;
       border: none;
       margin: 0;
+      cursor: pointer;
     }
 
     &-delete-text {

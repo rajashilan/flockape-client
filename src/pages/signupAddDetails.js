@@ -56,11 +56,16 @@ export class signupAddDetails extends Component {
   render() {
     const {
       user: { loading },
+      UI: { navActive },
     } = this.props;
+
+    let loadingClass = !navActive
+      ? "pure-material-progress-circular"
+      : "hidden";
 
     let addDetailButton = loading ? (
       <div className="spinner-container-larger-margin-top">
-        <progress className="pure-material-progress-circular" />
+        <progress className={loadingClass} />
       </div>
     ) : (
       <button type="submit" className="signup-add-details-secondary-button">
@@ -125,11 +130,13 @@ export class signupAddDetails extends Component {
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  UI: state.UI,
 });
 
 signupAddDetails.propTypes = {
   editUserDetails: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps, { editUserDetails })(signupAddDetails);

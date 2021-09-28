@@ -1,6 +1,8 @@
 import {
   SET_ALBUMS,
+  CLEAR_ALBUMS,
   SET_ALBUM,
+  CLEAR_ALBUM,
   SET_LINK,
   SET_FAILED_LINKS,
   CLEAR_FAILED_LINKS,
@@ -12,11 +14,16 @@ import {
   DELETE_ALBUM,
   DELETE_LINK,
   LOADING_DATA,
+  LOADING_DATA_PAGINATION,
   SET_LIKED_ALBUMS,
+  CLEAR_LIKED_ALBUMS,
   SET_LIKED_LINKS,
+  CLEAR_LIKED_LINKS,
   ADD_ALBUM,
   UPDATE_ONE_ALBUM,
   SET_ANOTHER_USER_PROFILE,
+  REMOVE_SCROLL_LISTENER,
+  RESET_SCROLL_LISTENER,
 } from "../types";
 
 const initialState = {
@@ -28,6 +35,8 @@ const initialState = {
   numOfLinksUploaded: 0,
   anotherUserProfile: {},
   loading: false,
+  loadingPagination: false,
+  scrollListener: true,
 };
 
 export default function (state = initialState, action) {
@@ -38,28 +47,83 @@ export default function (state = initialState, action) {
         ...state,
         loading: true,
       };
-    case SET_ALBUMS:
+    case LOADING_DATA_PAGINATION:
       return {
         ...state,
-        albums: action.payload,
-        loading: false,
+        loadingPagination: true,
+      };
+    case SET_ALBUMS:
+      if (state.albums.length > 0) {
+        return {
+          ...state,
+          albums: [...state.albums, ...action.payload],
+          loading: false,
+          loadingPagination: false,
+        };
+      } else {
+        return {
+          ...state,
+          albums: action.payload,
+          loading: false,
+          loadingPagination: false,
+        };
+      }
+    case CLEAR_ALBUMS:
+      return {
+        ...state,
+        albums: [],
       };
     case SET_ALBUM:
       return {
         ...state,
         album: action.payload,
       };
-    case SET_LIKED_ALBUMS:
+    case CLEAR_ALBUM:
       return {
         ...state,
-        likedAlbums: action.payload,
-        loading: false,
+        album: {},
       };
+    case SET_LIKED_ALBUMS:
+      if (state.likedAlbums.length > 0) {
+        return {
+          ...state,
+          likedAlbums: [...state.likedAlbums, ...action.payload],
+          loading: false,
+          loadingPagination: false,
+        };
+      } else {
+        return {
+          ...state,
+          likedAlbums: action.payload,
+          loading: false,
+          loadingPagination: false,
+        };
+      }
     case SET_LIKED_LINKS:
+      if (state.likedLinks.length > 0) {
+        return {
+          ...state,
+          likedLinks: [...state.likedLinks, ...action.payload],
+          loading: false,
+          loadingPagination: false,
+        };
+      } else {
+        return {
+          ...state,
+          likedLinks: action.payload,
+          loading: false,
+          loadingPagination: false,
+        };
+      }
+    case CLEAR_LIKED_LINKS:
       return {
         ...state,
-        likedLinks: action.payload,
-        loading: false,
+        likedLinks: [],
+      };
+    case CLEAR_LIKED_ALBUMS:
+      return {
+        ...state,
+        likedAlbums: [],
       };
     case LIKE_ALBUM:
       //update only the album that is liked in the array index in redux
@@ -76,10 +140,12 @@ export default function (state = initialState, action) {
     case LIKE_LINK:
       //update only the link that is liked in the array index in redux
       //the array will be inside of album in state.data
-      index = state.album.links.findIndex(
-        (link) => link.linkID === action.payload.linkID
-      );
-      state.album.links[index] = action.payload;
+      if (state.album.links) {
+        index = state.album.links.findIndex(
+          (link) => link.linkID === action.payload.linkID
+        );
+        state.album.links[index] = action.payload;
+      }
       return {
         ...state,
       };
@@ -177,6 +243,18 @@ export default function (state = initialState, action) {
       return {
         ...state,
         numOfLinksUploaded: 0,
+      };
+    case REMOVE_SCROLL_LISTENER:
+      return {
+        ...state,
+        scrollListener: false,
+        loading: false,
+        loadingPagination: false,
+      };
+    case RESET_SCROLL_LISTENER:
+      return {
+        ...state,
+        scrollListener: true,
       };
     default:
       return state;

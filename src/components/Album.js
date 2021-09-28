@@ -16,12 +16,15 @@ import privateDisplayIcon from "./images/privateDisplayIcon@2x.png";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+import { PopUp } from "./PopUp";
+
 import { likeAlbum, deleteAlbum } from "../redux/actions/dataActions";
 
 export class Album extends Component {
   state = {
     showMoreButton: false,
     showDeleteDialog: false,
+    showPopUp: false,
   };
 
   likedAlbum = () => {
@@ -59,14 +62,42 @@ export class Album extends Component {
     });
   };
 
+  copyBook = async () => {
+    await navigator.clipboard.writeText(
+      `https://sharesite-test.web.app/${this.props.user.credentials.username}/book/${this.props.album.albumID}`
+    );
+
+    this.setState(
+      {
+        showPopUp: true,
+        showMoreButton: false,
+        showDeleteDialog: false,
+      },
+      () => {
+        if (this.state.showPopUp) this.setPopUpTimer();
+      }
+    );
+  };
+
+  setPopUpTimer = () => {
+    setTimeout(() => {
+      this.setState({
+        showPopUp: false,
+      });
+    }, 2000);
+  };
+
   MoreContainer = () => {
     return (
       <div className="album-more-container">
+        <button onClick={this.copyBook} className="album-more-primary-button">
+          Share
+        </button>
         <button
           onClick={this.handleDeleteButton}
           className="album-more-secondary-button"
         >
-          Delete Book
+          Delete
         </button>
         <h3
           onClick={this.handleMoreButton}
@@ -113,17 +144,30 @@ export class Album extends Component {
         security,
       },
       options,
+      UI: { loadingLikeAlbum, navActive },
     } = this.props;
+
+    const popup = this.state.showPopUp ? (
+      <PopUp text="Book URL copied successfully" />
+    ) : null;
 
     let isLikeLoading = false;
     let findIndexLike = -1;
-    findIndexLike = this.props.UI.loadingLikeAlbum.find(
+    findIndexLike = loadingLikeAlbum.find(
       (like) => like.albumID === this.props.album.albumID
     );
 
     if (findIndexLike) {
       isLikeLoading = true;
     }
+
+    let loadingClassFollow = !navActive
+      ? "pure-material-progress-circular-follow-button"
+      : "hidden";
+
+    let loadingClassUnfollow = !navActive
+      ? "pure-material-progress-circular-unfollow-button"
+      : "hidden";
 
     const likeButton = !authenticated ? (
       <Link to="/login">
@@ -134,7 +178,7 @@ export class Album extends Component {
     ) : this.likedAlbum() ? (
       isLikeLoading ? (
         <div className="album-icon-div">
-          <progress className="pure-material-progress-circular-unfollow-button" />
+          <progress className={loadingClassUnfollow} />
         </div>
       ) : (
         <div onClick={this.likeAlbum} className="album-icon-div">
@@ -143,7 +187,7 @@ export class Album extends Component {
       )
     ) : isLikeLoading ? (
       <div className="album-icon-div">
-        <progress className="pure-material-progress-circular-follow-button" />
+        <progress className={loadingClassFollow} />
       </div>
     ) : (
       <div onClick={this.likeAlbum} className="album-icon-div">
@@ -222,6 +266,7 @@ export class Album extends Component {
             </div>
           </div>
         </div>
+        {popup}
       </div>
     );
   }

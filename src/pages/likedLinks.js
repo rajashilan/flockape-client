@@ -10,7 +10,12 @@ import closeIcon from "../components/images/closeIcon@2x.png";
 
 import LinkComponent from "../components/LinkComponent";
 
-import { getLikedLinks } from "../redux/actions/dataActions";
+import {
+  getLikedLinks,
+  getLikedLinksPagination,
+  clearLikedLinks,
+  resetScrollListener,
+} from "../redux/actions/dataActions";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -21,8 +26,42 @@ export class likedLinks extends Component {
   };
 
   componentDidMount() {
-    this.props.getLikedLinks();
+    const linkDetail = {
+      limit: null,
+    };
+
+    this.props.getLikedLinks(linkDetail);
+
+    window.addEventListener("scroll", this.handleScroll);
   }
+
+  componentWillUnmount() {
+    this.props.resetScrollListener();
+    this.props.clearLikedLinks();
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+
+  handleScroll = () => {
+    let difference = document.documentElement.scrollHeight - window.innerHeight;
+    var scrollposition = document.documentElement.scrollTop;
+
+    if (
+      difference - scrollposition <= 250 &&
+      !this.props.data.loadingPagination &&
+      this.props.data.scrollListener
+    ) {
+      if (this.props.data.likedLinks.length > 0) {
+        const linkDetail = {
+          limit:
+            this.props.data.likedLinks[this.props.data.likedLinks.length - 1],
+        };
+
+        console.log("linkdetail:  ", linkDetail);
+
+        this.props.getLikedLinksPagination(linkDetail);
+      }
+    }
+  };
 
   handleSearch = (event) => {
     this.setState({
@@ -38,7 +77,7 @@ export class likedLinks extends Component {
 
   render() {
     const {
-      data: { likedLinks, loading },
+      data: { likedLinks, loading, loadingPagination },
     } = this.props;
 
     //searching functionalities
@@ -60,6 +99,10 @@ export class likedLinks extends Component {
       }
     }
     //end of searching functionalities
+
+    let loadingPaginationText = loadingPagination ? (
+      <p>Loading pagination</p>
+    ) : null;
 
     let linkData =
       !loading && likedLinks ? (
@@ -101,6 +144,7 @@ export class likedLinks extends Component {
             {searchBarIcon}
           </div>
           <div className="link-likes-container">{linkData}</div>
+          {loadingPaginationText}
         </div>
       </div>
     );
@@ -111,9 +155,19 @@ const mapStateToProps = (state) => ({
   data: state.data,
 });
 
+const mapActionToProps = {
+  getLikedLinks,
+  getLikedLinksPagination,
+  clearLikedLinks,
+  resetScrollListener,
+};
+
 likedLinks.propTypes = {
   data: PropTypes.object.isRequired,
   getLikedLinks: PropTypes.func.isRequired,
+  getLikedLinksPagination: PropTypes.func.isRequired,
+  clearLikedLinks: PropTypes.func.isRequired,
+  resetScrollListener: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { getLikedLinks })(likedLinks);
+export default connect(mapStateToProps, mapActionToProps)(likedLinks);

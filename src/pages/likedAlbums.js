@@ -10,7 +10,12 @@ import closeIcon from "../components/images/closeIcon@2x.png";
 
 import Album from "../components/Album";
 
-import { getLikedAlbums } from "../redux/actions/dataActions";
+import {
+  getLikedAlbums,
+  getLikedAlbumsPagination,
+  clearLikedAlbums,
+  resetScrollListener,
+} from "../redux/actions/dataActions";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -21,8 +26,42 @@ export class likedAlbums extends Component {
   };
 
   componentDidMount() {
-    this.props.getLikedAlbums();
+    const albumDetail = {
+      limit: null,
+    };
+
+    this.props.getLikedAlbums(albumDetail);
+
+    window.addEventListener("scroll", this.handleScroll);
   }
+
+  componentWillUnmount() {
+    this.props.resetScrollListener();
+    this.props.clearLikedAlbums();
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+
+  handleScroll = () => {
+    let difference = document.documentElement.scrollHeight - window.innerHeight;
+    var scrollposition = document.documentElement.scrollTop;
+
+    if (
+      difference - scrollposition <= 250 &&
+      !this.props.data.loadingPagination &&
+      this.props.data.scrollListener
+    ) {
+      if (this.props.data.likedAlbums.length > 0) {
+        const albumDetail = {
+          limit:
+            this.props.data.likedAlbums[this.props.data.likedAlbums.length - 1],
+        };
+
+        console.log("albumDetail:  ", albumDetail);
+
+        this.props.getLikedAlbumsPagination(albumDetail);
+      }
+    }
+  };
 
   handleSearch = (event) => {
     this.setState({
@@ -38,7 +77,7 @@ export class likedAlbums extends Component {
 
   render() {
     const {
-      data: { likedAlbums, loading },
+      data: { likedAlbums, loading, loadingPagination },
     } = this.props;
 
     //searching functionalities
@@ -76,6 +115,10 @@ export class likedAlbums extends Component {
         <p>Loading...</p>
       );
 
+    let loadingPaginationText = loadingPagination ? (
+      <p>Loading pagination</p>
+    ) : null;
+
     let searchBarIcon = this.state.searchText ? (
       <img
         onClick={this.handleSearchReset}
@@ -101,6 +144,7 @@ export class likedAlbums extends Component {
             {searchBarIcon}
           </div>
           <div className="album-likes-container">{albumData}</div>
+          {loadingPaginationText}
         </div>
       </div>
     );
@@ -111,9 +155,19 @@ const mapStateToProps = (state) => ({
   data: state.data,
 });
 
+const mapActionToProps = {
+  getLikedAlbums,
+  getLikedAlbumsPagination,
+  clearLikedAlbums,
+  resetScrollListener,
+};
+
 likedAlbums.propTypes = {
   data: PropTypes.object.isRequired,
   getLikedAlbums: PropTypes.func.isRequired,
+  getLikedAlbumsPagination: PropTypes.func.isRequired,
+  clearLikedAlbums: PropTypes.func.isRequired,
+  resetScrollListener: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { getLikedAlbums })(likedAlbums);
+export default connect(mapStateToProps, mapActionToProps)(likedAlbums);

@@ -40,6 +40,11 @@
   margin-top: 4.625rem;
 }
 
+.displayItemsUnauthenticated {
+  display: block;
+  margin-top: 4.625rem;
+}
+
 .noBullets {
   list-style-type: none;
   margin: 0;
@@ -57,6 +62,7 @@
   font-weight: 300;
   font-size: 1rem;
   margin-bottom: 1.875rem !important;
+  cursor: pointer;
 
   &-Priority {
     display: block;
@@ -65,6 +71,7 @@
     font-weight: 400;
     font-size: 1rem;
     margin-bottom: 1.875rem !important;
+    cursor: pointer;
   }
 }
 
@@ -122,5 +129,33 @@
     display: block;
     z-index: 50;
     text-align: center;
+  }
+}
+
+//1010PX SCREEN SIZE (DESKTOP small)
+@media only screen and (min-width: 63.125em) {
+  .mobileMenu {
+    background-color: $bgColor;
+    position: absolute;
+    padding: 1.5rem;
+    top: 0;
+    right: 0;
+    width: 50vw;
+    height: 100vh;
+    display: block;
+    z-index: 50;
+    text-align: center;
+  }
+
+  .displayItemsUnauthenticated {
+    display: block;
+    margin-top: 4.625rem;
+    width: 16.625rem;
+  }
+
+  .displayItems {
+    display: block;
+    margin-top: 4.625rem;
+    width: 27.375rem;
   }
 }

@@ -11,7 +11,12 @@ import "../styles/SearchBar.css";
 import searchIcon from "../components/images/searchIcon@2x.png";
 import closeIcon from "../components/images/closeIcon@2x.png";
 
-import { getAlbums } from "../redux/actions/dataActions";
+import {
+  getAlbums,
+  getAlbumsPagination,
+  clearAlbums,
+  resetScrollListener,
+} from "../redux/actions/dataActions";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -23,8 +28,39 @@ export class albums extends Component {
   };
 
   componentDidMount() {
-    this.props.getAlbums(this.props.history);
+    const albumDetail = {
+      limit: null,
+    };
+
+    this.props.getAlbums(albumDetail);
+
+    window.addEventListener("scroll", this.handleScroll);
   }
+
+  componentWillUnmount() {
+    this.props.resetScrollListener();
+    this.props.clearAlbums();
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+
+  handleScroll = () => {
+    let difference = document.documentElement.scrollHeight - window.innerHeight;
+    var scrollposition = document.documentElement.scrollTop;
+
+    if (
+      difference - scrollposition <= 250 &&
+      !this.props.data.loadingPagination &&
+      this.props.data.scrollListener
+    ) {
+      if (this.props.data.albums.length > 0) {
+        const albumDetail = {
+          limit: this.props.data.albums[this.props.data.albums.length - 1],
+        };
+
+        this.props.getAlbumsPagination(albumDetail);
+      }
+    }
+  };
 
   handleSearch = (event) => {
     this.setState({
@@ -61,7 +97,7 @@ export class albums extends Component {
   };
 
   render() {
-    const { albums, loading } = this.props.data;
+    const { albums, loading, loadingPagination } = this.props.data;
 
     const { authenticated, credentials } = this.props.user;
 
@@ -119,6 +155,10 @@ export class albums extends Component {
       </p>
     ) : null;
 
+    let loadingPaginationText = loadingPagination ? (
+      <p>Loading pagination</p>
+    ) : null;
+
     let searchBarIcon = this.state.searchText ? (
       <img
         onClick={this.handleSearchReset}
@@ -148,6 +188,7 @@ export class albums extends Component {
             {addAnAlbumButton}
             {verificationErrorLabel}
           </div>
+          {loadingPaginationText}
         </div>
       </div>
     );
@@ -159,10 +200,20 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
+const mapActionToProps = {
+  getAlbums,
+  getAlbumsPagination,
+  clearAlbums,
+  resetScrollListener,
+};
+
 albums.propTypes = {
   data: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   getAlbums: PropTypes.func.isRequired,
+  getAlbumsPagination: PropTypes.func.isRequired,
+  clearAlbums: PropTypes.func.isRequired,
+  resetScrollListener: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { getAlbums })(albums);
+export default connect(mapStateToProps, mapActionToProps)(albums);

@@ -5,9 +5,38 @@ import "../styles/Profile.css";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+import { PopUp } from "./PopUp";
+
 //proper albums count, likes count, and views count
 
 class Profile extends Component {
+  state = {
+    showPopUp: false,
+  };
+
+  copyProfile = async () => {
+    await navigator.clipboard.writeText(
+      `https://sharesite-test.web.app/@${this.props.user.credentials.username}`
+    );
+
+    this.setState(
+      {
+        showPopUp: true,
+      },
+      () => {
+        if (this.state.showPopUp) this.setPopUpTimer();
+      }
+    );
+  };
+
+  setPopUpTimer = () => {
+    setTimeout(() => {
+      this.setState({
+        showPopUp: false,
+      });
+    }, 2000);
+  };
+
   render() {
     const {
       albums,
@@ -18,6 +47,10 @@ class Profile extends Component {
         loading,
       },
     } = this.props;
+
+    const popup = this.state.showPopUp ? (
+      <PopUp text="Profile URL copied successfully" />
+    ) : null;
 
     const domain = "https://sharesite-test.web.app/";
 
@@ -87,9 +120,14 @@ class Profile extends Component {
               {website}
             </a>
           )}
-          <h4 className="profile-other-details">
-            url: {domain}@{username}
-          </h4>
+          <button
+            type="button"
+            onClick={this.copyProfile}
+            className="profile-share-button"
+          >
+            Share Profile
+          </button>
+          {popup}
         </div>
       </div>
     ) : (

@@ -89,13 +89,22 @@ export class manageAccount extends Component {
         loading,
         credentials: { profileImg },
       },
+      UI: { navActive },
     } = this.props;
 
     const { errors } = this.state;
 
+    let loadingClass = !navActive
+      ? "pure-material-progress-circular"
+      : "hidden";
+
+    let loadingClassNoBg = !navActive
+      ? "pure-material-progress-circular-nobg"
+      : "hidden";
+
     let addDetailButton = loading ? (
       <div className="spinner-container-larger-margin-top">
-        <progress className="pure-material-progress-circular" />
+        <progress className={loadingClass} />
       </div>
     ) : (
       <button type="submit" className="manageAccount-primary-button">
@@ -105,7 +114,7 @@ export class manageAccount extends Component {
 
     let changeProfilePictureButton = loading ? (
       <div className="spinner-container-nobg">
-        <progress className="pure-material-progress-circular-nobg" />
+        <progress className={loadingClassNoBg} />
       </div>
     ) : (
       <h3

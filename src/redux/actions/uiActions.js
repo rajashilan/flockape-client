@@ -4,6 +4,8 @@ import {
   CLEAR_ERRORS,
   CLEAR_LINK_ERROR,
   STOP_LOADING_UI,
+  SET_NAV_ACTIVE,
+  CLEAR_NAV_ACTIVE,
 } from "../types";
 
 export const setIsAlbumTrue = () => (dispatch) => {
@@ -24,4 +26,12 @@ export const stopLoadingUI = () => (dispatch) => {
 
 export const clearErrors = () => (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
+};
+
+export const setNav = () => (dispatch) => {
+  dispatch({ type: SET_NAV_ACTIVE });
+};
+
+export const clearNav = () => (dispatch) => {
+  dispatch({ type: CLEAR_NAV_ACTIVE });
 };

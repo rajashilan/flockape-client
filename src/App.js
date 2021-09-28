@@ -40,7 +40,7 @@ import updatePassword from "./pages/updatePassword";
 import notifications from "./pages/notifications";
 
 axios.defaults.baseURL =
-  "https://asia-southeast1-sharesite-test.cloudfunctions.net/api";
+  "http://localhost:5500/sharesite-test/asia-southeast1/api";
 
 const token = localStorage.FBIdToken;
 if (token) {

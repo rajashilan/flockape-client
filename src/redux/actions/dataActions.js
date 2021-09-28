@@ -1,15 +1,20 @@
 import {
   SET_ALBUMS,
+  CLEAR_ALBUMS,
   SET_ALBUM,
+  CLEAR_ALBUM,
   SET_LINK,
   LOADING_DATA,
+  LOADING_DATA_PAGINATION,
   LIKE_ALBUM,
   LIKE_LINK,
   LOADING_UI,
   DELETE_ALBUM,
   DELETE_LINK,
   SET_LIKED_ALBUMS,
+  CLEAR_LIKED_ALBUMS,
   SET_LIKED_LINKS,
+  CLEAR_LIKED_LINKS,
   UPDATE_ONE_ALBUM,
   ADD_ALBUM,
   SET_ERRORS,
@@ -29,16 +34,18 @@ import {
   LOADING_UI_LIKE_LINK,
   STOP_LOADING_UI_LIKE_LINK,
   SET_ANOTHER_USER_PROFILE,
+  REMOVE_SCROLL_LISTENER,
+  RESET_SCROLL_LISTENER,
 } from "../types";
 import axios from "axios";
 import firebase from "../../firebase/firebase";
 
 import { logoutUser } from "./userActions";
 
-export const getAlbums = (history) => (dispatch) => {
+export const getAlbums = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
   axios
-    .get("/albums")
+    .post("/albums")
     .then((res) => {
       dispatch({
         type: SET_ALBUMS,
@@ -52,6 +59,35 @@ export const getAlbums = (history) => (dispatch) => {
       });
       dispatch(handleUnauthorised(error));
     });
+};
+
+export const getAlbumsPagination = (sendAlbum) => (dispatch) => {
+  dispatch({ type: LOADING_DATA_PAGINATION });
+  axios
+    .post("/albums", sendAlbum)
+    .then((res) => {
+      dispatch({
+        type: SET_ALBUMS,
+        payload: res.data,
+      });
+    })
+    .catch((error) => {
+      if (error && error.response.status === 404) {
+        dispatch({
+          type: REMOVE_SCROLL_LISTENER,
+        });
+      } else {
+        dispatch({
+          type: SET_ALBUMS,
+          payload: [],
+        });
+      }
+      dispatch(handleUnauthorised(error));
+    });
+};
+
+export const clearAlbums = () => (dispatch) => {
+  dispatch({ type: CLEAR_ALBUMS });
 };
 
 export const getAlbumOnly = (albumID) => (dispatch) => {
@@ -94,7 +130,7 @@ export const getAlbum = (albumID) => (dispatch) => {
 export const getLikedAlbums = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
   axios
-    .get("/getLikedAlbums")
+    .post("/getLikedAlbums")
     .then((res) => {
       dispatch({ type: SET_LIKED_ALBUMS, payload: res.data });
       console.log(res.data);
@@ -108,21 +144,81 @@ export const getLikedAlbums = () => (dispatch) => {
     });
 };
 
-export const getLikedLinks = () => (dispatch) => {
+export const getLikedAlbumsPagination = (sendAlbum) => (dispatch) => {
+  dispatch({ type: LOADING_DATA_PAGINATION });
+  axios
+    .post("/getLikedAlbums", sendAlbum)
+    .then((res) => {
+      dispatch({ type: SET_LIKED_ALBUMS, payload: res.data });
+      console.log(res.data);
+    })
+    .catch((error) => {
+      if (error && error.response.status === 404) {
+        dispatch({
+          type: REMOVE_SCROLL_LISTENER,
+        });
+      } else {
+        dispatch({
+          type: SET_LIKED_ALBUMS,
+          payload: [],
+        });
+      }
+      dispatch(handleUnauthorised(error));
+    });
+};
+
+export const clearLikedAlbums = () => (dispatch) => {
+  dispatch({ type: CLEAR_LIKED_ALBUMS });
+};
+
+export const getLikedLinks = (sendLink) => (dispatch) => {
   dispatch({ type: LOADING_DATA });
   axios
-    .get("/getLikedLinks")
+    .post("/getLikedLinks", sendLink)
     .then((res) => {
       dispatch({ type: SET_LIKED_LINKS, payload: res.data });
       console.log(res.data);
     })
     .catch((error) => {
-      dispatch({
-        type: SET_LIKED_LINKS,
-        payload: [],
-      });
+      if (error && error.response.status === 404) {
+        dispatch({
+          type: REMOVE_SCROLL_LISTENER,
+        });
+      } else {
+        dispatch({
+          type: SET_LIKED_LINKS,
+          payload: [],
+        });
+      }
       dispatch(handleUnauthorised(error));
     });
+};
+
+export const getLikedLinksPagination = (sendLink) => (dispatch) => {
+  dispatch({ type: LOADING_DATA_PAGINATION });
+  axios
+    .post("/getLikedLinks", sendLink)
+    .then((res) => {
+      dispatch({ type: SET_LIKED_LINKS, payload: res.data });
+      console.log(res.data);
+    })
+    .catch((error) => {
+      if (error && error.response.status === 404) {
+        dispatch({
+          type: REMOVE_SCROLL_LISTENER,
+        });
+      } else {
+        dispatch({
+          type: SET_LIKED_LINKS,
+          payload: [],
+        });
+      }
+      dispatch(handleUnauthorised(error));
+    });
+};
+
+export const clearLikedLinks = () => (dispatch) => {
+  dispatch({ type: CLEAR_LIKED_LINKS });
 };
 
 export const likeAlbum = (albumID) => (dispatch) => {
@@ -651,6 +747,10 @@ export const clearFailedLinks = () => (dispatch) => {
   dispatch({ type: CLEAR_FAILED_LINKS });
 };
 
+export const clearAlbum = () => (dispatch) => {
+  dispatch({ type: CLEAR_ALBUM });
+};
+
 export const likeLink = (linkID) => (dispatch) => {
   dispatch({ type: LOADING_UI_LIKE_LINK, payload: linkID });
   axios
@@ -727,6 +827,14 @@ export const deleteLink =
       });
   };
 
+export const resetScrollListener = () => (dispatch) => {
+  dispatch({ type: RESET_SCROLL_LISTENER });
+};
+
+export const removeScrollListener = () => (dispatch) => {
+  dispatch({ type: REMOVE_SCROLL_LISTENER });
+};
+
 export const handleUnauthorised = (error) => (dispatch) => {
   if (
     error.response &&
@@ -743,7 +851,7 @@ export const handleUnauthorisedPrivateAlbum = (error) => (dispatch) => {
     error.response.status &&
     error.response.status === 403
   ) {
-    window.location.href = "/albums";
+    window.location.href = "/books";
   }
 };
 

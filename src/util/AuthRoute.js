@@ -8,7 +8,7 @@ const AuthRoute = ({ component: Component, authenticated, ...rest }) => (
     {...rest}
     render={(props) =>
       authenticated === true ? (
-        <Redirect to="/albums" />
+        <Redirect to="/books" />
       ) : (
         <Component {...props} />
       )

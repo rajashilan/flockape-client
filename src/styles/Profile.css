@@ -129,6 +129,21 @@
   margin: 0.125rem 0 0 0;
 }
 
+.profile-share-button {
+  display: block;
+  font-weight: 300;
+  font-size: 0.875rem;
+  color: #d3d3d3;
+  background-color: #373753;
+  padding: 0.625rem 1.625rem;
+  text-align: center;
+  border: none;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
+}
+
 @media only screen and (max-width: 21.875em) {
   .profile-img {
     border-radius: 50%;

@@ -13,11 +13,13 @@ import notificationAlertIcon from "./images/notificationAlertIcon@2x.png";
 //components
 import SearchedUserCard from "./SearchedUserCard";
 import LoadingSearchedUserCard from "./LoadingSearchedUserCard";
+import { PopUp } from "./PopUp";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { logoutUser } from "../redux/actions/userActions";
+import { setNav, clearNav } from "../redux/actions/uiActions";
 
 //VIEW PROFILE AND SHARE PROFILE ONLY VISIBLE WHEN USER LOGGED IN
 
@@ -29,12 +31,59 @@ export class Navbar2 extends Component {
     searchedUsers: null,
     username: "", //for searching user
     userNotFound: false,
+    showPopUp: false,
   };
 
   showMenu = () => {
-    this.setState({
-      showMobileMenu: !this.state.showMobileMenu,
-    });
+    this.setState(
+      {
+        showMobileMenu: !this.state.showMobileMenu,
+      },
+      () => {
+        if (this.state.showMobileMenu) this.props.setNav();
+        else this.props.clearNav();
+      }
+    );
+  };
+
+  copyProfile = async () => {
+    await navigator.clipboard.writeText(
+      `https://sharesite-test.web.app/@${this.props.user.credentials.username}`
+    );
+
+    this.setState(
+      {
+        showPopUp: true,
+      },
+      () => {
+        if (this.state.showPopUp) this.setPopUpTimer();
+        this.showMenu();
+      }
+    );
+  };
+
+  copyBook = async () => {
+    await navigator.clipboard.writeText(
+      `https://sharesite-test.web.app/${this.props.user.credentials.username}/book/${this.props.data.album.albumID}`
+    );
+
+    this.setState(
+      {
+        showPopUp: true,
+      },
+      () => {
+        if (this.state.showPopUp) this.setPopUpTimer();
+        this.showMenu();
+      }
+    );
+  };
+
+  setPopUpTimer = () => {
+    setTimeout(() => {
+      this.setState({
+        showPopUp: false,
+      });
+    }, 2000);
   };
 
   showSearchBar = () => {
@@ -178,13 +227,39 @@ export class Navbar2 extends Component {
       </button>
     );
 
+    let shareUrlButton = this.props.UI.isAlbum ? (
+      <p onClick={this.copyBook} className="menuItems-Priority">
+        Share this Book
+      </p>
+    ) : (
+      <p onClick={this.copyProfile} className="menuItems-Priority">
+        Share your Profile
+      </p>
+    );
+
+    const popup = this.state.showPopUp ? (
+      this.props.UI.isAlbum ? (
+        <PopUp text="Book URL copied successfully" />
+      ) : (
+        <PopUp text="Profile URL copied successfully" />
+      )
+    ) : null;
+
     const toManageAccount = {
       pathname: "/manage-account",
       state: { history: window.location.pathname },
     };
 
+    let mobileMenuClass = authenticated
+      ? "mobileMenu"
+      : "mobileMenuUnauthenticated";
+
+    let hamburgerContainerClass = authenticated
+      ? "navbar-hamburger-container"
+      : "navbar-hamburger-container-unauthenticated";
+
     let mobileMenuContainer = !authenticated ? (
-      <div className="displayItems">
+      <div className="displayItemsUnauthenticated">
         <Link
           onClick={this.showMenu}
           className="primary-button-medium-margin"
@@ -256,15 +331,7 @@ export class Navbar2 extends Component {
                 Manage Account
               </Link>
             </li>
-            <li>
-              <Link
-                onClick={this.showMenu}
-                className="menuItems-Priority"
-                to="/profile"
-              >
-                Share your Profile
-              </Link>
-            </li>
+            <li>{shareUrlButton}</li>
             <li>
               <Link
                 onClick={this.showMenu}
@@ -377,7 +444,7 @@ export class Navbar2 extends Component {
         )}
 
         {!authenticated && !this.state.showSearchButton && (
-          <Link className="navbar-button" to="/signup">
+          <Link className="navbar-signup-button" to="/signup">
             Sign Up
           </Link>
         )}
@@ -434,6 +501,7 @@ export class Navbar2 extends Component {
             <div className="mobileMenu">{mobileMenuContainer}</div>
           </div>
         )}
+        {popup}
       </div>
     );
   }
@@ -442,17 +510,24 @@ export class Navbar2 extends Component {
 const mapStateToProps = (state) => ({
   user: state.user,
   UI: state.UI,
+  data: state.data,
   notifications: state.user.notifications,
 });
 
 const mapActionToProps = {
   logoutUser,
+  setNav,
+  clearNav,
 };
 
 Navbar2.propTypes = {
   user: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
   notifications: PropTypes.array.isRequired,
+  logoutUser: PropTypes.func.isRequired,
+  setNav: PropTypes.func.isRequired,
+  clearNav: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapActionToProps)(Navbar2);

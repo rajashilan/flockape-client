@@ -50,6 +50,7 @@
       font-size: 1rem;
       margin: 0;
       width: auto;
+      cursor: pointer;
     }
   }
 
@@ -130,6 +131,7 @@
     border-radius: 0.3125rem;
     margin: 0.75rem 0;
     text-align: center;
+    cursor: pointer;
   }
 
   &-secondary-button {
@@ -144,6 +146,7 @@
     border-radius: 0.3125rem;
     margin: 0.75rem 0 0 0;
     text-align: center;
+    cursor: pointer;
   }
 
   &-disabled-button {
@@ -167,6 +170,7 @@
     color: $primaryText;
     font-weight: 400;
     font-size: 1rem;
+    cursor: pointer;
   }
 
   //620PX SCREEN SIZE (LARGER TABLET)

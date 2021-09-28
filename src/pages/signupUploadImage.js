@@ -41,13 +41,18 @@ class signupUploadImage extends Component {
         loading,
         credentials: { profileImg },
       },
+      UI: { navActive },
     } = this.props;
 
     const { errors } = this.state;
 
+    let loadingClass = !navActive
+      ? "pure-material-progress-circular"
+      : "hidden";
+
     let sendImageButton = loading ? (
       <div className="spinner-container-larger-margin">
-        <progress className="pure-material-progress-circular" />
+        <progress className={loadingClass} />
       </div>
     ) : (
       <button

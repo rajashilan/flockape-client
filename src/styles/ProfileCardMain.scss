@@ -13,9 +13,21 @@
       top: 4.5rem;
       z-index: -1;
       max-height: 37.5rem;
+      width: 22rem;
       display: block;
       border-radius: 0.3125rem;
       padding: 1.5rem 1rem;
+      margin: 0 auto 0 0;
+    }
+
+    &-main-container-auto-width {
+      position: -webkit-sticky; /* Safari */
+      position: sticky;
+      top: 4.5rem;
+      z-index: -1;
+      max-height: 37.5rem;
+      display: block;
+      border-radius: 0.3125rem;
       margin: 0 auto 0 0;
     }
 

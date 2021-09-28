@@ -119,6 +119,21 @@
     }
   }
 
+  &-share-button {
+    display: block;
+    font-weight: 300;
+    font-size: 0.875rem;
+    color: $secondaryText;
+    background-color: $bgColor2;
+    padding: 0.625rem 1.625rem;
+    text-align: center;
+    border: none;
+    border-radius: 0.3125rem;
+    cursor: pointer;
+    margin-top: 0.625rem;
+    margin-bottom: 0.625rem;
+  }
+
   // 350PX SCREEN SIZE
   @media only screen and (max-width: 21.875em) {
     &-img {

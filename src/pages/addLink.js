@@ -108,7 +108,7 @@ export class addLink extends Component {
 
   render() {
     const {
-      UI: { loading, errors, linkError },
+      UI: { loading, errors, linkError, navActive },
       user: { credentials, authenticated },
       album: { albumID, albumTitle, username },
       failedLinks,
@@ -150,9 +150,13 @@ export class addLink extends Component {
     let failedLinkText;
     failedLinkText = `${failedLinkCount} links couldn't be retrieved:`;
 
+    let loadingClass = !navActive
+      ? "pure-material-progress-circular"
+      : "hidden";
+
     let addLinkButton = loading ? (
       <div className="spinner-container">
-        <progress className="pure-material-progress-circular" />
+        <progress className={loadingClass} />
       </div>
     ) : !errors ? (
       failedLinks.length > 0 ? (
@@ -277,9 +281,15 @@ export class addLink extends Component {
       )
     ) : null;
 
-    let subtitleText = !loading
-      ? "Separate links with a comma “,” to add multiple pages."
-      : "Please do not leave while pages are being uploaded.";
+    let subtitleText = !loading ? (
+      <h4 className="addLink-action-label">
+        Separate links with a comma “,” to add multiple pages.
+      </h4>
+    ) : (
+      <h4 className="addLink-action-label-warning">
+        Please do not leave while pages are being uploaded.
+      </h4>
+    );
 
     return (
       <div className="addLink-main-overall-container">
@@ -287,7 +297,7 @@ export class addLink extends Component {
           <div className="addLink-container">
             <h3 className="addLink-title">{albumTitle}</h3>
             <h4 className="addLink-prompt">Add a Page</h4>
-            <h4 className="addLink-action-label">{subtitleText}</h4>
+            {subtitleText}
             <form onSubmit={this.handleSubmit}>
               <textarea
                 placeholder="Paste your link here..."

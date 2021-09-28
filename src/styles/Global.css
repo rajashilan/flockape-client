@@ -96,4 +96,48 @@ a {
   font-size: 1rem;
   line-height: 1.8;
 }
+
+.popup {
+  display: inline-block;
+  border-radius: 0.3125rem;
+  background-color: #989898;
+  position: fixed;
+  z-index: 1;
+  padding: 0.3125rem 0.625rem;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-animation: fadeIn 0.5s;
+  animation: fadeIn 0.5s;
+}
+
+.popup-text {
+  font-weight: 300;
+  font-size: 0.75rem;
+  color: white;
+  text-align: center;
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.hidden {
+  display: none;
+}
 /*# sourceMappingURL=Global.css.map */

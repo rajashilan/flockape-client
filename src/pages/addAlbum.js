@@ -85,12 +85,16 @@ class addAlbum extends Component {
   render() {
     const { errors } = this.state;
     const {
-      UI: { loading },
+      UI: { loading, navActive },
     } = this.props;
+
+    let loadingClass = !navActive
+      ? "pure-material-progress-circular"
+      : "hidden";
 
     let addAlbumButton = loading ? (
       <div className="spinner-container">
-        <progress className="pure-material-progress-circular" />
+        <progress className={loadingClass} />
       </div>
     ) : (
       <button type="submit" className="addAlbum-primary-button">

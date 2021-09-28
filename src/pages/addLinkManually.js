@@ -107,7 +107,7 @@ export class addLinkManually extends Component {
 
   render() {
     const {
-      UI: { loading, errors, linkError },
+      UI: { loading, errors, linkError, navActive },
       user: { credentials, authenticated },
       album: { albumID, albumTitle, username },
       failedLinks,
@@ -155,9 +155,13 @@ export class addLinkManually extends Component {
     cancelText =
       this.state.hasFailedLinks && failedLinks.length === 0 ? "Back" : "Cancel";
 
+    let loadingClass = !navActive
+      ? "pure-material-progress-circular"
+      : "hidden";
+
     let addLinkButton = loading ? (
       <div className="spinner-container">
-        <progress className="pure-material-progress-circular" />
+        <progress className={loadingClass} />
       </div>
     ) : (
       <button type="submit" className="addLink-primary-button">

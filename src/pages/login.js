@@ -46,13 +46,17 @@ class login extends Component {
 
   render() {
     const {
-      UI: { loading },
+      UI: { loading, navActive },
     } = this.props;
     const { errors } = this.state;
 
+    let loadingClass = !navActive
+      ? "pure-material-progress-circular"
+      : "hidden";
+
     let logInButton = loading ? (
       <div className="spinner-container">
-        <progress className="pure-material-progress-circular" />
+        <progress className={loadingClass} />
       </div>
     ) : (
       <button

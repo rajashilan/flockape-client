@@ -82,6 +82,7 @@
     width: 2.375rem;
     margin: auto;
     text-align: center;
+    cursor: pointer;
   }
 
   &-moreButton {
@@ -176,9 +177,11 @@
       padding: 0.625rem 1rem;
       width: 100% !important;
       border: none;
+      max-height: 2.375rem;
       border-radius: 0.3125rem;
-      margin: 0 0.375rem 0 0;
+      margin: 0 0.625rem 0 0;
       text-align: center;
+      cursor: pointer;
     }
 
     &-secondary-button {
@@ -187,12 +190,14 @@
       color: $secondaryText;
       font-size: 1rem;
       font-weight: 400;
+      max-height: 2.375rem;
       padding: 0.625rem 1rem;
       width: 100% !important;
       border: none;
       border-radius: 0.3125rem;
-      margin: 0 0 0 0.375rem;
+      margin: 0;
       text-align: center;
+      cursor: pointer;
     }
 
     &-delete-button {
@@ -207,6 +212,7 @@
       border-radius: 0.3125rem;
       margin: 0.375rem 0 0 0;
       text-align: center;
+      cursor: pointer;
     }
 
     &-cancel-button {
@@ -216,6 +222,7 @@
       font-weight: 300;
       font-size: 1rem;
       text-align: center;
+      cursor: pointer;
     }
 
     &-cancel-delete-button {
@@ -226,6 +233,7 @@
       font-size: 1rem;
       text-align: center;
       width: 40% !important;
+      cursor: pointer;
     }
     &-delete-text-container {
       display: block;

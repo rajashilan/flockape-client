@@ -13,6 +13,8 @@ import {
   STOP_LOADING_UI_LIKE_LINK,
   IS_ALBUM,
   IS_NOT_ALBUM,
+  SET_NAV_ACTIVE,
+  CLEAR_NAV_ACTIVE,
 } from "../types";
 
 const initialState = {
@@ -22,6 +24,7 @@ const initialState = {
   loadingLikeLink: [],
   isAlbum: false,
   linkError: false,
+  navActive: false,
 };
 
 export default function (state = initialState, action) {
@@ -121,6 +124,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         linkError: false,
+      };
+    case SET_NAV_ACTIVE:
+      return {
+        ...state,
+        navActive: true,
+      };
+    case CLEAR_NAV_ACTIVE:
+      return {
+        ...state,
+        navActive: false,
       };
     default:
       return state;

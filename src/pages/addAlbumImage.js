@@ -59,15 +59,20 @@ class addAlbumImage extends Component {
 
   render() {
     const { loading } = this.props.data;
+    const { navActive } = this.props.UI;
 
     //handle redirect on refresh
     if (this.props.data.albums.length === 0) {
       this.props.history.push("/books");
     }
 
+    let loadingClass = !navActive
+      ? "pure-material-progress-circular"
+      : "hidden";
+
     let sendImageButton = loading ? (
       <div className="spinner-container-larger-margin">
-        <progress className="pure-material-progress-circular" />
+        <progress className={loadingClass} />
       </div>
     ) : (
       <button

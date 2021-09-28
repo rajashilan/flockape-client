@@ -116,6 +116,7 @@ export class LinkComponent extends Component {
       user: { authenticated, credentials },
       link: { linkUrl, linkTitle, linkImg, linkDesc, likeCount, username },
       options,
+      UI: { loadingLikeLink, navActive },
     } = this.props;
 
     function LinkData() {
@@ -137,13 +138,21 @@ export class LinkComponent extends Component {
 
     let isLikeLoading = false;
     let findIndexLike = -1;
-    findIndexLike = this.props.UI.loadingLikeLink.find(
+    findIndexLike = loadingLikeLink.find(
       (like) => like.linkID === this.props.link.linkID
     );
 
     if (findIndexLike) {
       isLikeLoading = true;
     }
+
+    let loadingClassLike = !navActive
+      ? "pure-material-progress-circular-like-button"
+      : "hidden";
+
+    let loadingClassUnlike = !navActive
+      ? "pure-material-progress-circular-unlike-button"
+      : "hidden";
 
     const likeButton = !authenticated ? (
       <Link to="/login">
@@ -155,7 +164,7 @@ export class LinkComponent extends Component {
     ) : this.likedLink() ? (
       isLikeLoading ? (
         <div className="link-like-icon-div">
-          <progress className="pure-material-progress-circular-unlike-button" />
+          <progress className={loadingClassUnlike} />
         </div>
       ) : (
         <div onClick={this.likeLink} className="link-like-icon-div">
@@ -165,7 +174,7 @@ export class LinkComponent extends Component {
       )
     ) : isLikeLoading ? (
       <div className="link-like-icon-div">
-        <progress className="pure-material-progress-circular-like-button" />
+        <progress className={loadingClassLike} />
       </div>
     ) : (
       <div onClick={this.likeLink} className="link-like-icon-div">

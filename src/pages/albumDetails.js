@@ -11,7 +11,7 @@ import closeIcon from "../components/images/closeIcon@2x.png";
 import LinkComponent from "../components/LinkComponent";
 import AlbumDetails from "../components/AlbumDetails";
 
-import { getAlbum } from "../redux/actions/dataActions";
+import { getAlbum, clearAlbum } from "../redux/actions/dataActions";
 
 import { setIsAlbumTrue, setIsAlbumFalse } from "../redux/actions/uiActions";
 
@@ -24,20 +24,8 @@ class albumDetails extends Component {
   };
 
   componentDidMount() {
-    console.log("mounted");
     this.props.getAlbum(this.props.match.params.albumID);
-    if (this.props.user.loading || !this.props.album.username) {
-      this.userLoadTimeOut = setTimeout(() => {
-        if (
-          this.props.user.authenticated &&
-          this.props.user.credentials.username === this.props.album.username
-        ) {
-          this.props.setIsAlbumTrue();
-        } else {
-          this.props.setIsAlbumFalse();
-        }
-      }, 4000);
-    } else {
+    this.userLoadTimeOut = setTimeout(() => {
       if (
         this.props.user.authenticated &&
         this.props.user.credentials.username === this.props.album.username
@@ -46,7 +34,7 @@ class albumDetails extends Component {
       } else {
         this.props.setIsAlbumFalse();
       }
-    }
+    }, 3000);
   }
 
   componentWillUnmount() {
@@ -223,6 +211,7 @@ const mapStateToProps = (state) => ({
 
 const mapActionToProps = {
   getAlbum,
+  clearAlbum,
   setIsAlbumTrue,
   setIsAlbumFalse,
 };
@@ -231,6 +220,7 @@ albumDetails.propTypes = {
   user: PropTypes.object.isRequired,
   album: PropTypes.object.isRequired,
   getAlbum: PropTypes.func.isRequired,
+  clearAlbum: PropTypes.func.isRequired,
   setIsAlbumTrue: PropTypes.func.isRequired,
   setIsAlbumFalse: PropTypes.func.isRequired,
   UI: PropTypes.object.isRequired,

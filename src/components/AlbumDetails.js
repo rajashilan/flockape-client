@@ -9,6 +9,7 @@ import followedButton from "./images/followedButton@2x.png";
 import privateDisplayIcon from "./images/privateDisplayIcon@2x.png";
 
 import BackButton from "./BackButton";
+import { PopUp } from "./PopUp";
 
 import "../styles/AlbumDetails.css";
 import "../styles/ProgressSpinnerLikeButton.css";
@@ -23,6 +24,7 @@ export class AlbumDetails extends Component {
   state = {
     showMoreButton: false,
     showDeleteDialog: false,
+    showPopUp: false,
   };
 
   likeAlbum = () => {
@@ -60,18 +62,49 @@ export class AlbumDetails extends Component {
     });
   };
 
+  copyBook = async () => {
+    await navigator.clipboard.writeText(
+      `https://sharesite-test.web.app/${this.props.user.credentials.username}/book/${this.props.albumID}`
+    );
+
+    this.setState(
+      {
+        showPopUp: true,
+        showMoreButton: false,
+        showDeleteDialog: false,
+      },
+      () => {
+        if (this.state.showPopUp) this.setPopUpTimer();
+      }
+    );
+  };
+
+  setPopUpTimer = () => {
+    setTimeout(() => {
+      this.setState({
+        showPopUp: false,
+      });
+    }, 2000);
+  };
+
   MoreContainer = () => {
     return (
       <div className="albumDetails-more-container">
         <div className="albumDetails-more-button-container">
           <Link to="/edit-book" className="albumDetails-more-primary-button">
-            Edit Book
+            Edit
           </Link>
+          <button
+            onClick={this.copyBook}
+            className="albumDetails-more-primary-button"
+          >
+            Share
+          </button>
           <button
             onClick={this.handleDeleteButton}
             className="albumDetails-more-secondary-button"
           >
-            Delete Book
+            Delete
           </button>
         </div>
         <h3
@@ -122,8 +155,12 @@ export class AlbumDetails extends Component {
       username,
       options,
       history,
-      UI: { loading },
+      UI: { loading, navActive },
     } = this.props;
+
+    const popup = this.state.showPopUp ? (
+      <PopUp text="Book URL copied successfully" />
+    ) : null;
 
     let isLikeLoading = false;
     let findIndexLike = -1;
@@ -135,6 +172,14 @@ export class AlbumDetails extends Component {
       isLikeLoading = true;
     }
 
+    let loadingClassFollow = !navActive
+      ? "pure-material-progress-circular-follow-button"
+      : "hidden";
+
+    let loadingClassUnfollow = !navActive
+      ? "pure-material-progress-circular-unfollow-button"
+      : "hidden";
+
     const likeButton = !authenticated ? (
       <Link to="/login">
         <div className="albumDetails-icon-div">
@@ -144,7 +189,7 @@ export class AlbumDetails extends Component {
     ) : this.likedAlbum() ? (
       isLikeLoading ? (
         <div className="albumDetails-icon-div">
-          <progress className="pure-material-progress-circular-unfollow-button" />
+          <progress className={loadingClassUnfollow} />
         </div>
       ) : (
         <div onClick={this.likeAlbum} className="albumDetails-icon-div">
@@ -153,7 +198,7 @@ export class AlbumDetails extends Component {
       )
     ) : isLikeLoading ? (
       <div className="albumDetails-icon-div">
-        <progress className="pure-material-progress-circular-follow-button" />
+        <progress className={loadingClassFollow} />
       </div>
     ) : (
       <div onClick={this.likeAlbum} className="albumDetails-icon-div">
@@ -224,7 +269,12 @@ export class AlbumDetails extends Component {
       <p>Loading...</p>
     );
 
-    return <div>{loadingAlbumDetails}</div>;
+    return (
+      <div>
+        {loadingAlbumDetails}
+        {popup}
+      </div>
+    );
   }
 }
 

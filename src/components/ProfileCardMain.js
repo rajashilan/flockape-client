@@ -11,6 +11,7 @@ class ProfileCardMain extends Component {
   render() {
     const {
       user: {
+        authenticated,
         credentials: { username, profileImg, fullName, bio, website, location },
         loading,
       },
@@ -67,8 +68,8 @@ class ProfileCardMain extends Component {
       return number;
     }
 
-    return (
-      <div className="profileCardMain-main-container">
+    let profileCardDisplay = authenticated ? (
+      <div>
         <div className="profileCardMain-top-container">
           <img src={profileImg} alt="" className="profileCardMain-img" />
           <h3 className="profileCardMain-username">@{username}</h3>
@@ -104,6 +105,16 @@ class ProfileCardMain extends Component {
             url: {domain}@{username}
           </h4>
         </div>
+      </div>
+    ) : null;
+
+    let profileCardMainContainerClassName = authenticated
+      ? "profileCardMain-main-container"
+      : "profileCardMain-main-container-auto-width";
+
+    return (
+      <div className={profileCardMainContainerClassName}>
+        {profileCardDisplay}
       </div>
     );
   }

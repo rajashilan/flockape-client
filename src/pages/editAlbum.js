@@ -115,15 +115,24 @@ export class editAlbum extends Component {
     const { loading } = this.props.data;
     const { albumImg, username } = this.props.album;
     const { errors } = this.state;
+    const { navActive } = this.props.UI;
 
     // handle redirect on refresh
     if (!albumImg) {
       this.props.history.push("/books");
     }
 
+    let loadingClass = !navActive
+      ? "pure-material-progress-circular"
+      : "hidden";
+
+    let loadingClassNoBg = !navActive
+      ? "pure-material-progress-circular-nobg"
+      : "hidden";
+
     let uploadAlbumImageButton = loading ? (
       <div className="spinner-container-nobg">
-        <progress className="pure-material-progress-circular-nobg" />
+        <progress className={loadingClassNoBg} />
       </div>
     ) : (
       <h3
@@ -136,7 +145,7 @@ export class editAlbum extends Component {
 
     let editAlbumButton = this.props.UI.loading ? (
       <div className="spinner-container">
-        <progress className="pure-material-progress-circular" />
+        <progress className={loadingClass} />
       </div>
     ) : (
       <button type="submit" className="addAlbum-primary-button">

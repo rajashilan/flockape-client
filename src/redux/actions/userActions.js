@@ -39,10 +39,13 @@ export const signupUser = (newUserData, history) => (dispatch) => {
       history.push("/signup-upload-image");
     })
     .catch((error) => {
-      dispatch({
-        type: SET_ERRORS,
-        payload: error.response.data,
-      });
+      console.error(error);
+      if (error && error.response && error.response.data) {
+        dispatch({
+          type: SET_ERRORS,
+          payload: error.response.data,
+        });
+      }
     });
 };
 

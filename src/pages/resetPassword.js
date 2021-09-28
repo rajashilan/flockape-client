@@ -46,12 +46,16 @@ export class resetPassword extends Component {
   render() {
     const {
       user: { authenticated },
-      UI: { loading },
+      UI: { loading, navActive },
     } = this.props;
+
+    let loadingClass = !navActive
+      ? "pure-material-progress-circular"
+      : "hidden";
 
     let resetPasswordButton = loading ? (
       <div className="spinner-container">
-        <progress className="pure-material-progress-circular" />
+        <progress className={loadingClass} />
       </div>
     ) : (
       <button
