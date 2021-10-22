@@ -9,7 +9,14 @@ import "../styles/SearchBar.css";
 import searchIcon from "../components/images/searchIcon@2x.png";
 import closeIcon from "../components/images/closeIcon@2x.png";
 
-import { getAlbums } from "../redux/actions/dataActions";
+import {
+  getAlbums,
+  getAlbumsPagination,
+  clearAlbums,
+  resetScrollListener,
+} from "../redux/actions/dataActions";
+
+import { getCheckLikedUserAlbumsPagination } from "../redux/actions/userActions";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -20,8 +27,40 @@ export class profile extends Component {
   };
 
   componentDidMount() {
-    this.props.getAlbums(this.props.history);
+    const albumDetail = {
+      limit: null,
+    };
+
+    this.props.getAlbums(albumDetail);
+
+    window.addEventListener("scroll", this.handleScroll);
   }
+
+  componentWillUnmount() {
+    this.props.resetScrollListener();
+    this.props.clearAlbums();
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+
+  handleScroll = () => {
+    let difference = document.documentElement.scrollHeight - window.innerHeight;
+    var scrollposition = document.documentElement.scrollTop;
+
+    if (
+      difference - scrollposition <= 250 &&
+      !this.props.data.loadingPagination &&
+      this.props.data.scrollListener
+    ) {
+      if (this.props.data.albums.length > 0) {
+        const albumDetail = {
+          limit: this.props.data.albums[this.props.data.albums.length - 1],
+        };
+
+        this.props.getCheckLikedUserAlbumsPagination(albumDetail);
+        this.props.getAlbumsPagination(albumDetail);
+      }
+    }
+  };
 
   handleSearch = (event) => {
     this.setState({
@@ -38,7 +77,7 @@ export class profile extends Component {
   render() {
     const {
       user,
-      data: { albums, loading },
+      data: { albums, loading, loadingPagination },
     } = this.props;
 
     //searching functionalities
@@ -83,6 +122,10 @@ export class profile extends Component {
       <img className="search-icon" src={searchIcon} />
     );
 
+    let loadingPaginationText = loadingPagination ? (
+      <p>Loading pagination</p>
+    ) : null;
+
     let albumCount = {
       albums: albums.length,
       views: 0,
@@ -116,6 +159,7 @@ export class profile extends Component {
             {searchBarIcon}
           </div>
           <div className="album-likes-container">{albumData}</div>
+          {loadingPaginationText}
         </div>
       </div>
     );
@@ -127,10 +171,19 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
+const mapActionToProps = {
+  getAlbums,
+  getAlbumsPagination,
+  clearAlbums,
+  getCheckLikedUserAlbumsPagination,
+  resetScrollListener,
+};
+
 profile.propTypes = {
   data: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   getAlbums: PropTypes.func.isRequired,
+  getCheckLikedUserAlbumsPagination: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { getAlbums })(profile);
+export default connect(mapStateToProps, mapActionToProps)(profile);

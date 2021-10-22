@@ -1,6 +1,8 @@
 import {
   SET_ALBUMS,
+  SET_SEARCH_ALBUMS,
   CLEAR_ALBUMS,
+  CLEAR_SEARCH_ALBUMS,
   SET_ALBUM,
   CLEAR_ALBUM,
   SET_LINK,
@@ -22,6 +24,7 @@ import {
   ADD_ALBUM,
   UPDATE_ONE_ALBUM,
   SET_ANOTHER_USER_PROFILE,
+  CLEAR_ANOTHER_USER_PROFILE,
   REMOVE_SCROLL_LISTENER,
   RESET_SCROLL_LISTENER,
 } from "../types";
@@ -29,6 +32,7 @@ import {
 const initialState = {
   albums: [],
   album: {},
+  searchedAlbums: [],
   likedAlbums: [],
   likedLinks: [],
   failedLinks: [],
@@ -68,10 +72,31 @@ export default function (state = initialState, action) {
           loadingPagination: false,
         };
       }
+    case SET_SEARCH_ALBUMS:
+      if (state.searchedAlbums.length > 0) {
+        return {
+          ...state,
+          searchedAlbums: [...state.searchedAlbums, ...action.payload],
+          loading: false,
+          loadingPagination: false,
+        };
+      } else {
+        return {
+          ...state,
+          searchedAlbums: action.payload,
+          loading: false,
+          loadingPagination: false,
+        };
+      }
     case CLEAR_ALBUMS:
       return {
         ...state,
         albums: [],
+      };
+    case CLEAR_SEARCH_ALBUMS:
+      return {
+        ...state,
+        searchedAlbums: [],
       };
     case SET_ALBUM:
       return {
@@ -212,10 +237,31 @@ export default function (state = initialState, action) {
         loading: false,
       };
     case SET_ANOTHER_USER_PROFILE:
+      if (state.anotherUserProfile && state.anotherUserProfile.albums) {
+        return {
+          ...state,
+          anotherUserProfile: {
+            user: { ...state.anotherUserProfile.user },
+            albums: [
+              ...state.anotherUserProfile.albums,
+              ...action.payload.albums,
+            ],
+          },
+          loading: false,
+          loadingPagination: false,
+        };
+      } else {
+        return {
+          ...state,
+          anotherUserProfile: action.payload,
+          loading: false,
+          loadingPagination: false,
+        };
+      }
+    case CLEAR_ANOTHER_USER_PROFILE:
       return {
         ...state,
-        anotherUserProfile: action.payload,
-        loading: false,
+        anotherUserProfile: {},
       };
     case SET_FAILED_LINKS:
       return {

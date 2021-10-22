@@ -9,7 +9,15 @@ import "../styles/SearchBar.css";
 import searchIcon from "../components/images/searchIcon@2x.png";
 import closeIcon from "../components/images/closeIcon@2x.png";
 
-import { getAnotherUserProfile } from "../redux/actions/dataActions";
+import {
+  getAnotherUserProfile,
+  getAnotherUserProfilePagination,
+  clearAnotherUserProfile,
+  resetScrollListener,
+  removeScrollListener,
+} from "../redux/actions/dataActions";
+
+import { getCheckLikedUserAlbumsPagination } from "../redux/actions/userActions";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -21,6 +29,13 @@ export class anotherUser extends Component {
 
   componentDidMount() {
     this.props.getAnotherUserProfile(this.props.match.params.username);
+    window.addEventListener("scroll", this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    this.props.resetScrollListener();
+    this.props.clearAnotherUserProfile();
+    window.removeEventListener("scroll", this.handleScroll);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,6 +43,50 @@ export class anotherUser extends Component {
       this.props.getAnotherUserProfile(nextProps.match.params.username);
     }
   }
+
+  handleScroll = () => {
+    let difference = document.documentElement.scrollHeight - window.innerHeight;
+    var scrollposition = document.documentElement.scrollTop;
+
+    if (this.state.searchText.length === 0) {
+      if (
+        difference - scrollposition <= 250 &&
+        !this.props.data.loadingPagination &&
+        this.props.data.scrollListener
+      ) {
+        if (this.props.data.anotherUserProfile.albums.length > 0) {
+          const sendAlbumPagination = {
+            username: this.props.match.params.username,
+            limit:
+              this.props.data.anotherUserProfile.albums[
+                this.props.data.anotherUserProfile.albums.length - 1
+              ],
+          };
+          this.props.getCheckLikedUserAlbumsPagination(sendAlbumPagination);
+          this.props.getAnotherUserProfilePagination(sendAlbumPagination);
+        }
+      }
+    }
+    // else {
+    //   if (
+    //     difference - scrollposition <= 250 &&
+    //     !this.props.data.loadingPagination &&
+    //     this.props.data.scrollListener
+    //   ) {
+    //     if (this.props.data.searchedAlbums.length > 0) {
+    //       const searchedAlbumDetail = {
+    //         limit:
+    //           this.props.data.searchedAlbums[
+    //             this.props.data.searchedAlbums.length - 1
+    //           ],
+    //         search: this.state.searchText,
+    //       };
+    //       this.props.resetScrollListener();
+    //       this.props.getSearchedAlbumsPagination(searchedAlbumDetail);
+    //     }
+    //   }
+    // }
+  };
 
   handleSearch = (event) => {
     this.setState({
@@ -45,7 +104,12 @@ export class anotherUser extends Component {
     const {
       anotherUserProfile: { user, albums },
       loading,
+      loadingPagination,
     } = this.props.data;
+
+    let loadingPaginationText = loadingPagination ? (
+      <p>Loading pagination</p>
+    ) : null;
 
     //searching functionalities
     let searches = [];
@@ -138,6 +202,7 @@ export class anotherUser extends Component {
             {searchBarIcon}
           </div>
           <div className="album-container">{albumData}</div>
+          {loadingPaginationText}
         </div>
       </div>
     );
@@ -148,9 +213,23 @@ const mapStateToProps = (state) => ({
   data: state.data,
 });
 
+const mapActionToProps = {
+  getAnotherUserProfile,
+  getAnotherUserProfilePagination,
+  clearAnotherUserProfile,
+  getCheckLikedUserAlbumsPagination,
+  resetScrollListener,
+  removeScrollListener,
+};
+
 anotherUser.propTypes = {
   data: PropTypes.object.isRequired,
   getAnotherUserProfile: PropTypes.func.isRequired,
+  getAnotherUserProfilePagination: PropTypes.func.isRequired,
+  clearAnotherUserProfile: PropTypes.func.isRequired,
+  getCheckLikedUserAlbumsPagination: PropTypes.func.isRequired,
+  resetScrollListener: PropTypes.func.isRequired,
+  removeScrollListener: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { getAnotherUserProfile })(anotherUser);
+export default connect(mapStateToProps, mapActionToProps)(anotherUser);

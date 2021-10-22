@@ -1,6 +1,8 @@
 import {
   SET_ALBUMS,
+  SET_SEARCH_ALBUMS,
   CLEAR_ALBUMS,
+  CLEAR_SEARCH_ALBUMS,
   SET_ALBUM,
   CLEAR_ALBUM,
   SET_LINK,
@@ -34,6 +36,7 @@ import {
   LOADING_UI_LIKE_LINK,
   STOP_LOADING_UI_LIKE_LINK,
   SET_ANOTHER_USER_PROFILE,
+  CLEAR_ANOTHER_USER_PROFILE,
   REMOVE_SCROLL_LISTENER,
   RESET_SCROLL_LISTENER,
 } from "../types";
@@ -88,6 +91,55 @@ export const getAlbumsPagination = (sendAlbum) => (dispatch) => {
 
 export const clearAlbums = () => (dispatch) => {
   dispatch({ type: CLEAR_ALBUMS });
+};
+
+export const getSearchedAlbums = (searchQuery) => (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  axios
+    .post("/searchAlbums", searchQuery)
+    .then((res) => {
+      dispatch({ type: CLEAR_SEARCH_ALBUMS });
+      dispatch({
+        type: SET_SEARCH_ALBUMS,
+        payload: res.data,
+      });
+    })
+    .catch((error) => {
+      dispatch({
+        type: SET_SEARCH_ALBUMS,
+        payload: [],
+      });
+      dispatch(handleUnauthorised(error));
+    });
+};
+
+export const getSearchedAlbumsPagination = (searchQuery) => (dispatch) => {
+  dispatch({ type: LOADING_DATA_PAGINATION });
+  axios
+    .post("/searchAlbums", searchQuery)
+    .then((res) => {
+      dispatch({
+        type: SET_SEARCH_ALBUMS,
+        payload: res.data,
+      });
+    })
+    .catch((error) => {
+      if (error && error.response.status === 404) {
+        dispatch({
+          type: REMOVE_SCROLL_LISTENER,
+        });
+      } else {
+        dispatch({
+          type: SET_SEARCH_ALBUMS,
+          payload: [],
+        });
+      }
+      dispatch(handleUnauthorised(error));
+    });
+};
+
+export const clearSearchedAlbums = () => (dispatch) => {
+  dispatch({ type: CLEAR_SEARCH_ALBUMS });
 };
 
 export const getAlbumOnly = (albumID) => (dispatch) => {
@@ -787,9 +839,8 @@ export const uploadAlbumImage = (formData, albumID) => (dispatch) => {
 
 export const getAnotherUserProfile = (username) => (dispatch) => {
   dispatch({ type: LOADING_DATA });
-  console.log("leggo");
   axios
-    .get(`/user/${username}`)
+    .post(`/user/${username}`)
     .then((res) => {
       dispatch({
         type: SET_ANOTHER_USER_PROFILE,
@@ -797,8 +848,35 @@ export const getAnotherUserProfile = (username) => (dispatch) => {
       });
     })
     .catch((error) => {
-      console.log(error.response.data);
+      console.log(error);
     });
+};
+
+export const getAnotherUserProfilePagination =
+  (sendAlbumPagination) => (dispatch) => {
+    dispatch({ type: LOADING_DATA_PAGINATION });
+    axios
+      .post(`/user/${sendAlbumPagination.username}`, sendAlbumPagination)
+      .then((res) => {
+        dispatch({
+          type: SET_ANOTHER_USER_PROFILE,
+          payload: res.data,
+        });
+      })
+      .catch((error) => {
+        if (error && error.response.status === 404) {
+          dispatch({
+            type: REMOVE_SCROLL_LISTENER,
+          });
+        } else {
+          console.log(error);
+          dispatch(handleUnauthorised(error));
+        }
+      });
+  };
+
+export const clearAnotherUserProfile = () => (dispatch) => {
+  dispatch({ type: CLEAR_ANOTHER_USER_PROFILE });
 };
 
 export const deleteAlbum = (albumID) => (dispatch) => {

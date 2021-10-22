@@ -33,6 +33,5 @@
 .search-bar:focus {
   border: none;
   border-color: transparent;
-  outline-color: #f2f2f2 !important;
 }
 /*# sourceMappingURL=SearchBar.css.map */

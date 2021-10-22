@@ -47,21 +47,21 @@ a {
   text-decoration: none;
 }
 
-::placeholder {
-  /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: $tertiaryText;
-  opacity: 1; /* Firefox */
-}
+// ::placeholder {
+//   /* Chrome, Firefox, Opera, Safari 10.1+ */
+//   color: $tertiaryText;
+//   opacity: 1; /* Firefox */
+// }
 
-:-ms-input-placeholder {
-  /* Internet Explorer 10-11 */
-  color: $tertiaryText;
-}
+// :-ms-input-placeholder {
+//   /* Internet Explorer 10-11 */
+//   color: $tertiaryText;
+// }
 
-::-ms-input-placeholder {
-  /* Microsoft Edge */
-  color: $tertiaryText;
-}
+// ::-ms-input-placeholder {
+//   /* Microsoft Edge */
+//   color: $tertiaryText;
+// }
 
 .label-verification {
   background-color: $bgColor1;

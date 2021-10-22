@@ -17,6 +17,11 @@ import {
   resetScrollListener,
 } from "../redux/actions/dataActions";
 
+import {
+  getCheckLikedLinksPagination,
+  clearCheckLikedLinksPagination,
+} from "../redux/actions/userActions";
+
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -38,6 +43,7 @@ export class likedLinks extends Component {
   componentWillUnmount() {
     this.props.resetScrollListener();
     this.props.clearLikedLinks();
+    // this.props.clearCheckLikedLinksPagination();
     window.removeEventListener("scroll", this.handleScroll);
   }
 
@@ -58,6 +64,7 @@ export class likedLinks extends Component {
 
         console.log("linkdetail:  ", linkDetail);
 
+        this.props.getCheckLikedLinksPagination(linkDetail);
         this.props.getLikedLinksPagination(linkDetail);
       }
     }
@@ -158,6 +165,8 @@ const mapStateToProps = (state) => ({
 const mapActionToProps = {
   getLikedLinks,
   getLikedLinksPagination,
+  getCheckLikedLinksPagination,
+  clearCheckLikedLinksPagination,
   clearLikedLinks,
   resetScrollListener,
 };
@@ -167,6 +176,8 @@ likedLinks.propTypes = {
   getLikedLinks: PropTypes.func.isRequired,
   getLikedLinksPagination: PropTypes.func.isRequired,
   clearLikedLinks: PropTypes.func.isRequired,
+  getCheckLikedLinksPagination: PropTypes.func.isRequired,
+  clearCheckLikedLinksPagination: PropTypes.func.isRequired,
   resetScrollListener: PropTypes.func.isRequired,
 };
 

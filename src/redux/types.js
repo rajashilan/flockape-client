@@ -4,6 +4,10 @@ export const SET_UNAUTHENTICATED = "SET_UNAUTHENTICATED";
 export const SET_USER = "SET_USER";
 export const LOADING_USER = "LOADING_USER";
 export const MARK_NOTIFICATIONS_READ = "MARK_NOTIFICATIONS_READ";
+export const SET_NOTIFICATIONS = "SET_NOTIFICATIONS"; //for notifications pagination
+export const CLEAR_NOTIFICATIONS = "CLEAR_NOTIFICATIONS"; //clear the remaining notifications to avoid duplicate data
+export const LOADING_NOTIFICATIONS = "LOADING_NOTIFICATIONS"; //loading for notifications pagination
+export const STOP_LOADING_NOTIFICATIONS = "STOP_LOADING_NOTIFICATIONS"; //stop loading sign for when scroll listener is removed for notifications page
 
 //ui reducer types
 export const SET_ERRORS = "SET_ERRORS";
@@ -22,7 +26,9 @@ export const CLEAR_NAV_ACTIVE = "CLEAR_NAV_ACTIVE";
 
 //data reducer types
 export const SET_ALBUMS = "SET_ALBUMS";
+export const SET_SEARCH_ALBUMS = "SET_SEARCH_ALBUMS";
 export const CLEAR_ALBUMS = "CLEAR_ALBUMS";
+export const CLEAR_SEARCH_ALBUMS = "CLEAR_SEARCH_ALBUMS";
 export const SET_ALBUM = "SET_ALBUM";
 export const CLEAR_ALBUM = "CLEAR_ALBUM";
 export const LIKE_ALBUM = "LIKE_ALBUM";
@@ -41,6 +47,7 @@ export const STOP_LOADING_UI_LIKE_ALBUM = "STOP_LOADING_UI_LIKE_ALBUM";
 export const LOADING_UI_LIKE_LINK = "LOADING_UI_LIKE_LINK";
 export const STOP_LOADING_UI_LIKE_LINK = "STOP_LOADING_UI_LIKE_LINK";
 export const SET_ANOTHER_USER_PROFILE = "SET_ANOTHER_USER_PROFILE";
+export const CLEAR_ANOTHER_USER_PROFILE = "CLEAR_ANOTHER_USER_PROFILE";
 export const SET_FAILED_LINKS = "SET_FAILED_LINKS";
 export const CLEAR_FAILED_LINKS = "CLEAR_FAILED_LINKS";
 export const REMOVE_ONE_FAILED_LINK = "REMOVE_ONE_FAILED_LINK";
@@ -49,3 +56,7 @@ export const CLEAR_TRACKED_LINKS = "CLEAR_TRACKED_LINKS";
 export const REMOVE_SCROLL_LISTENER = "REMOVE_SCROLL_LISTENER";
 export const RESET_SCROLL_LISTENER = "RESET_SCROLL_LISTENER";
 export const LOADING_DATA_PAGINATION = "LOADING_DATA_PAGINATION";
+export const SET_CHECK_LIKED_ALBUMS = "SET_CHECK_LIKED_ALBUMS"; //albums pagination for the likes in get authenticated user function
+export const CLEAR_CHECK_LIKED_ALBUMS = "CLEAR_CHECK_LIKED_ALBUMS";
+export const SET_CHECK_LIKED_LINKS = "SET_CHECK_LIKED_LINKS"; //links pagination for the likes in get authenticated user function
+export const CLEAR_CHECK_LIKED_LINKS = "CLEAR_CHECK_LIKED_LINKS";

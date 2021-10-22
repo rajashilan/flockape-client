@@ -17,6 +17,11 @@ import {
   resetScrollListener,
 } from "../redux/actions/dataActions";
 
+import {
+  getCheckLikedAlbumsPagination,
+  clearCheckLikedAlbumsPagination,
+} from "../redux/actions/userActions";
+
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -38,6 +43,7 @@ export class likedAlbums extends Component {
   componentWillUnmount() {
     this.props.resetScrollListener();
     this.props.clearLikedAlbums();
+    // this.props.clearCheckLikedAlbumsPagination();
     window.removeEventListener("scroll", this.handleScroll);
   }
 
@@ -58,6 +64,7 @@ export class likedAlbums extends Component {
 
         console.log("albumDetail:  ", albumDetail);
 
+        this.props.getCheckLikedAlbumsPagination(albumDetail);
         this.props.getLikedAlbumsPagination(albumDetail);
       }
     }
@@ -158,6 +165,8 @@ const mapStateToProps = (state) => ({
 const mapActionToProps = {
   getLikedAlbums,
   getLikedAlbumsPagination,
+  getCheckLikedAlbumsPagination,
+  clearCheckLikedAlbumsPagination,
   clearLikedAlbums,
   resetScrollListener,
 };
@@ -167,6 +176,8 @@ likedAlbums.propTypes = {
   getLikedAlbums: PropTypes.func.isRequired,
   getLikedAlbumsPagination: PropTypes.func.isRequired,
   clearLikedAlbums: PropTypes.func.isRequired,
+  getCheckLikedAlbumsPagination: PropTypes.func.isRequired,
+  clearCheckLikedAlbumsPagination: PropTypes.func.isRequired,
   resetScrollListener: PropTypes.func.isRequired,
 };
 

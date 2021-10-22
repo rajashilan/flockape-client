@@ -14,9 +14,15 @@ import closeIcon from "../components/images/closeIcon@2x.png";
 import {
   getAlbums,
   getAlbumsPagination,
+  getSearchedAlbumsPagination,
+  getSearchedAlbums,
+  clearSearchedAlbums,
   clearAlbums,
   resetScrollListener,
+  removeScrollListener,
 } from "../redux/actions/dataActions";
+
+import { getCheckLikedUserAlbumsPagination } from "../redux/actions/userActions";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -33,13 +39,13 @@ export class albums extends Component {
     };
 
     this.props.getAlbums(albumDetail);
-
     window.addEventListener("scroll", this.handleScroll);
   }
 
   componentWillUnmount() {
     this.props.resetScrollListener();
     this.props.clearAlbums();
+    this.props.clearSearchedAlbums();
     window.removeEventListener("scroll", this.handleScroll);
   }
 
@@ -47,31 +53,71 @@ export class albums extends Component {
     let difference = document.documentElement.scrollHeight - window.innerHeight;
     var scrollposition = document.documentElement.scrollTop;
 
-    if (
-      difference - scrollposition <= 250 &&
-      !this.props.data.loadingPagination &&
-      this.props.data.scrollListener
-    ) {
-      if (this.props.data.albums.length > 0) {
-        const albumDetail = {
-          limit: this.props.data.albums[this.props.data.albums.length - 1],
-        };
-
-        this.props.getAlbumsPagination(albumDetail);
+    if (this.state.searchText.length === 0) {
+      if (
+        difference - scrollposition <= 250 &&
+        !this.props.data.loadingPagination &&
+        this.props.data.scrollListener
+      ) {
+        if (this.props.data.albums.length > 0) {
+          const albumDetail = {
+            limit: this.props.data.albums[this.props.data.albums.length - 1],
+          };
+          this.props.getCheckLikedUserAlbumsPagination(albumDetail);
+          this.props.getAlbumsPagination(albumDetail);
+        }
+      }
+    } else {
+      if (
+        difference - scrollposition <= 250 &&
+        !this.props.data.loadingPagination &&
+        this.props.data.scrollListener
+      ) {
+        if (this.props.data.searchedAlbums.length > 0) {
+          const searchedAlbumDetail = {
+            limit:
+              this.props.data.searchedAlbums[
+                this.props.data.searchedAlbums.length - 1
+              ],
+            search: this.state.searchText,
+          };
+          this.props.resetScrollListener();
+          this.props.getSearchedAlbumsPagination(searchedAlbumDetail);
+        }
       }
     }
   };
 
   handleSearch = (event) => {
-    this.setState({
-      searchText: event.target.value,
-    });
+    this.setState(
+      {
+        searchText: event.target.value,
+      },
+      () => {
+        if (this.state.searchText.length === 0) {
+          this.props.clearSearchedAlbums();
+        } else {
+          const searchQuery = {
+            limit: null,
+            search: this.state.searchText,
+          };
+          this.props.getSearchedAlbums(searchQuery);
+        }
+        this.props.resetScrollListener();
+      }
+    );
   };
 
   handleSearchReset = () => {
-    this.setState({
-      searchText: "",
-    });
+    this.setState(
+      {
+        searchText: "",
+      },
+      () => {
+        this.props.resetScrollListener();
+        this.props.clearSearchedAlbums();
+      }
+    );
   };
 
   handleButtonNotVerified = () => {
@@ -97,26 +143,32 @@ export class albums extends Component {
   };
 
   render() {
-    const { albums, loading, loadingPagination } = this.props.data;
+    const {
+      albums,
+      searchedAlbums,
+      loading,
+      loadingPagination,
+      scrollListener,
+    } = this.props.data;
 
     const { authenticated, credentials } = this.props.user;
 
     //searching functionalities
-    let searches = [];
+    // let searches = [];
 
-    if (this.state.searchText !== "") {
-      let searchText = this.state.searchText;
-      if (albums && albums.length > 0) {
-        albums.forEach((album) => {
-          if (
-            album.albumTitle.toLowerCase().substring(0, searchText.length) ===
-            searchText.toLowerCase()
-          ) {
-            searches.push(album);
-          }
-        });
-      }
-    }
+    // if (this.state.searchText !== "") {
+    //   let searchText = this.state.searchText;
+    //   if (albums && albums.length > 0) {
+    //     albums.forEach((album) => {
+    //       if (
+    //         album.albumTitle.toLowerCase().substring(0, searchText.length) ===
+    //         searchText.toLowerCase()
+    //       ) {
+    //         searches.push(album);
+    //       }
+    //     });
+    //   }
+    // }
     //end of searching functionalities
 
     let albumData = !loading ? (
@@ -125,7 +177,7 @@ export class albums extends Component {
           <Album key={album.albumID} album={album} options={true} />
         ))
       ) : (
-        searches.map((album) => (
+        searchedAlbums.map((album) => (
           <Album key={album.albumID} album={album} options={true} />
         ))
       )
@@ -203,8 +255,13 @@ const mapStateToProps = (state) => ({
 const mapActionToProps = {
   getAlbums,
   getAlbumsPagination,
+  getSearchedAlbumsPagination,
+  getCheckLikedUserAlbumsPagination,
+  getSearchedAlbums,
+  clearSearchedAlbums,
   clearAlbums,
   resetScrollListener,
+  removeScrollListener,
 };
 
 albums.propTypes = {
@@ -212,8 +269,13 @@ albums.propTypes = {
   user: PropTypes.object.isRequired,
   getAlbums: PropTypes.func.isRequired,
   getAlbumsPagination: PropTypes.func.isRequired,
+  getSearchedAlbumsPagination: PropTypes.func.isRequired,
+  getSearchedAlbums: PropTypes.func.isRequired,
   clearAlbums: PropTypes.func.isRequired,
+  clearSearchedAlbums: PropTypes.func.isRequired,
+  getCheckLikedUserAlbumsPagination: PropTypes.func.isRequired,
   resetScrollListener: PropTypes.func.isRequired,
+  removeScrollListener: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapActionToProps)(albums);
