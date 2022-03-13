@@ -99,10 +99,27 @@ export default function (state = initialState, action) {
         searchedAlbums: [],
       };
     case SET_ALBUM:
-      return {
-        ...state,
-        album: action.payload,
-      };
+      if (state.album.links) {
+        //this is to handle album detail link's pagination
+        //here if true, action.payload contains the paginated links data
+        if (state.album.links.length > 0) {
+          return {
+            ...state,
+            album: {
+              ...state.album,
+              links: [...state.album.links, ...action.payload],
+            },
+            loading: false,
+            loadingPagination: false,
+          };
+        }
+      } else {
+        //else, action.payload contains the album detail's data as a whole
+        return {
+          ...state,
+          album: action.payload,
+        };
+      }
     case CLEAR_ALBUM:
       return {
         ...state,

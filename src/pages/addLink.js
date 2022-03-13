@@ -115,14 +115,17 @@ export class addLink extends Component {
     } = this.props;
 
     if (!albumTitle || !albumID) {
+      console.log("1");
       this.props.history.push("/books");
     }
 
     if (!authenticated) {
+      console.log("2");
       this.props.history.push("/login");
     }
 
     if (credentials.username !== username) {
+      console.log("3");
       this.props.history.push("/books");
     }
 

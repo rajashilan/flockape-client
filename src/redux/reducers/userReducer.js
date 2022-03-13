@@ -16,6 +16,9 @@ import {
   MARK_NOTIFICATIONS_READ,
   SET_NOTIFICATIONS,
   CLEAR_NOTIFICATIONS,
+  LIKE_ALBUM_DETAILS_PAGINATION_CHECK,
+  SET_LAST_LIKED_ALBUM_DETAIL_LINK,
+  CLEAR_LAST_LIKED_ALBUM_DETAIL_LINK,
 } from "../types";
 
 const initialState = {
@@ -23,6 +26,7 @@ const initialState = {
   credentials: {},
   likesAlbum: [],
   likesLink: [],
+  lastLikedAlbumDetailLink: [],
   notifications: [],
   loadingNotifications: false,
   loading: false,
@@ -50,7 +54,13 @@ export default function (state = initialState, action) {
     case SET_USER:
       return {
         authenticated: true,
-        ...action.payload,
+        credentials: {
+          ...action.payload.credentials,
+        },
+        likesAlbum: [...state.likesAlbum, ...action.payload.likesAlbum],
+        likesLink: [...state.likesLink, ...action.payload.likesLink],
+        notifications: [...action.payload.notifications],
+        lastLikedAlbumDetailLink: [...state.lastLikedAlbumDetailLink],
         loadingNotifications: false,
         loading: false,
       };
@@ -82,6 +92,30 @@ export default function (state = initialState, action) {
           likesAlbum: state.likesAlbum.filter(
             (likesAlbum) => likesAlbum.albumID !== action.payload.albumID
           ),
+        };
+      } else {
+        //if no, add a new like (like request)
+        return {
+          ...state,
+          likesAlbum: [
+            ...state.likesAlbum,
+            {
+              username: state.credentials.username,
+              albumID: action.payload.albumID,
+            },
+          ],
+        };
+      }
+    case LIKE_ALBUM_DETAILS_PAGINATION_CHECK:
+      //check if likes album already has the payload's album id in it
+      const findLikeAlbumDetailsPagination = state.likesAlbum.find(
+        (like) => like.albumID === action.payload.albumID
+      );
+
+      //if yes, delete that like (unlike request)
+      if (findLikeAlbumDetailsPagination) {
+        return {
+          ...state,
         };
       } else {
         //if no, add a new like (like request)
@@ -163,6 +197,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         likesLink: state.likesLink,
+        lastLikedAlbumDetailLink: [],
       };
     case SET_NOTIFICATIONS:
       if (state.notifications.length > 0) {
@@ -185,6 +220,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         notifications: state.notifications,
+      };
+    case SET_LAST_LIKED_ALBUM_DETAIL_LINK:
+      return {
+        ...state,
+        lastLikedAlbumDetailLink: [action.payload],
       };
     default:
       return state;

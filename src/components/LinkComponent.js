@@ -31,7 +31,12 @@ export class LinkComponent extends Component {
   };
 
   likeLink = () => {
-    this.props.likeLink(this.props.link.linkID);
+    let linkData = {
+      albumID: this.props.albumID,
+      linkID: this.props.link.linkID,
+    };
+
+    this.props.likeLink(linkData);
   };
 
   handleMoreButton = () => {
@@ -116,6 +121,7 @@ export class LinkComponent extends Component {
       user: { authenticated, credentials },
       link: { linkUrl, linkTitle, linkImg, linkDesc, likeCount, username },
       options,
+      albumID,
       UI: { loadingLikeLink, navActive },
     } = this.props;
 

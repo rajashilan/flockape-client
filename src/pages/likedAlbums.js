@@ -14,6 +14,7 @@ import {
   getLikedAlbums,
   getLikedAlbumsPagination,
   clearLikedAlbums,
+  clearAlbum,
   resetScrollListener,
 } from "../redux/actions/dataActions";
 
@@ -36,7 +37,7 @@ export class likedAlbums extends Component {
     };
 
     this.props.getLikedAlbums(albumDetail);
-
+    this.props.clearAlbum();
     window.addEventListener("scroll", this.handleScroll);
   }
 
@@ -168,6 +169,7 @@ const mapActionToProps = {
   getCheckLikedAlbumsPagination,
   clearCheckLikedAlbumsPagination,
   clearLikedAlbums,
+  clearAlbum,
   resetScrollListener,
 };
 
@@ -176,6 +178,7 @@ likedAlbums.propTypes = {
   getLikedAlbums: PropTypes.func.isRequired,
   getLikedAlbumsPagination: PropTypes.func.isRequired,
   clearLikedAlbums: PropTypes.func.isRequired,
+  clearAlbum: PropTypes.func.isRequired,
   getCheckLikedAlbumsPagination: PropTypes.func.isRequired,
   clearCheckLikedAlbumsPagination: PropTypes.func.isRequired,
   resetScrollListener: PropTypes.func.isRequired,

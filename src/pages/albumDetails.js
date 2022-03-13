@@ -11,9 +11,17 @@ import closeIcon from "../components/images/closeIcon@2x.png";
 import LinkComponent from "../components/LinkComponent";
 import AlbumDetails from "../components/AlbumDetails";
 
-import { getAlbum, clearAlbum } from "../redux/actions/dataActions";
+import {
+  getAlbum,
+  clearAlbum,
+  resetScrollListener,
+  removeScrollListener,
+  getAlbumDetailLinksPagination,
+} from "../redux/actions/dataActions";
 
 import { setIsAlbumTrue, setIsAlbumFalse } from "../redux/actions/uiActions";
+
+import { clearCheckLikedLinksPagination } from "../redux/actions/userActions";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -24,6 +32,7 @@ class albumDetails extends Component {
   };
 
   componentDidMount() {
+    this.props.resetScrollListener();
     this.props.getAlbum(this.props.match.params.albumID);
     this.userLoadTimeOut = setTimeout(() => {
       if (
@@ -35,14 +44,53 @@ class albumDetails extends Component {
         this.props.setIsAlbumFalse();
       }
     }, 3000);
+    window.addEventListener("scroll", this.handleScroll);
   }
 
   componentWillUnmount() {
     if (this.userLoadTimeOut) {
       clearTimeout(this.userLoadTimeOut);
     }
+    this.props.resetScrollListener();
     this.props.setIsAlbumFalse();
+    this.props.clearCheckLikedLinksPagination();
+    //this.props.clearAlbum();
+    window.removeEventListener("scroll", this.handleScroll);
   }
+
+  handleScroll = () => {
+    let difference = document.documentElement.scrollHeight - window.innerHeight;
+    var scrollposition = document.documentElement.scrollTop;
+    if (
+      difference - scrollposition <= 250 &&
+      !this.props.data.loadingPagination &&
+      this.props.data.scrollListener
+    ) {
+      if (this.props.album.links && this.props.album.links.length > 0) {
+        let albumDetailLinks = {
+          limit:
+            this.props.data.album.links[this.props.data.album.links.length - 1],
+        };
+
+        //if there is data in the last liked album detail link under user state,
+        //use it to get the next 16 liked links data for the particular album
+        if (
+          this.props.user.lastLikedAlbumDetailLink &&
+          this.props.user.lastLikedAlbumDetailLink.length > 0
+        ) {
+          albumDetailLinks.limitLikedLinks =
+            this.props.user.lastLikedAlbumDetailLink[
+              this.props.user.lastLikedAlbumDetailLink.length - 1
+            ];
+        }
+        //this.props.getCheckLikedUserAlbumsPagination(albumDetailLinks);
+        this.props.getAlbumDetailLinksPagination(
+          this.props.match.params.albumID,
+          albumDetailLinks
+        );
+      }
+    }
+  };
 
   handleSearch = (event) => {
     this.setState({
@@ -57,11 +105,11 @@ class albumDetails extends Component {
   };
 
   render() {
-    setTimeout(() => {
-      if (!this.props.album.albumID) {
-        this.props.history.push("/books");
-      }
-    }, 4000);
+    // setTimeout(() => {
+    //   if (!this.props.album.albumID) {
+    //     this.props.history.push("/books");
+    //   }
+    // }, 4000);
 
     const {
       user: { authenticated, credentials },
@@ -207,6 +255,7 @@ const mapStateToProps = (state) => ({
   album: state.data.album,
   user: state.user,
   UI: state.UI,
+  data: state.data,
 });
 
 const mapActionToProps = {
@@ -214,16 +263,25 @@ const mapActionToProps = {
   clearAlbum,
   setIsAlbumTrue,
   setIsAlbumFalse,
+  getAlbumDetailLinksPagination,
+  resetScrollListener,
+  removeScrollListener,
+  clearCheckLikedLinksPagination,
 };
 
 albumDetails.propTypes = {
   user: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
   album: PropTypes.object.isRequired,
   getAlbum: PropTypes.func.isRequired,
   clearAlbum: PropTypes.func.isRequired,
   setIsAlbumTrue: PropTypes.func.isRequired,
   setIsAlbumFalse: PropTypes.func.isRequired,
+  getAlbumDetailLinksPagination: PropTypes.func.isRequired,
   UI: PropTypes.object.isRequired,
+  resetScrollListener: PropTypes.func.isRequired,
+  removeScrollListener: PropTypes.func.isRequired,
+  clearCheckLikedLinksPagination: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapActionToProps)(albumDetails);

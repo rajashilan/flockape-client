@@ -39,6 +39,9 @@ import {
   CLEAR_ANOTHER_USER_PROFILE,
   REMOVE_SCROLL_LISTENER,
   RESET_SCROLL_LISTENER,
+  SET_CHECK_LIKED_LINKS,
+  LIKE_ALBUM_DETAILS_PAGINATION_CHECK,
+  SET_LAST_LIKED_ALBUM_DETAIL_LINK,
 } from "../types";
 import axios from "axios";
 import firebase from "../../firebase/firebase";
@@ -166,11 +169,31 @@ export const getAlbum = (albumID) => (dispatch) => {
   axios
     .get(`/album/${albumID}`)
     .then((res) => {
+      //to check if the album in the current page is liked by the current user (helps with pagination)
+      if (res.data.isLiked) {
+        let albumLikedData = {
+          albumID: res.data.albumID,
+        };
+        dispatch({
+          type: LIKE_ALBUM_DETAILS_PAGINATION_CHECK,
+          payload: albumLikedData,
+        });
+      }
       dispatch({
         type: SET_ALBUM,
         payload: res.data,
       });
-      console.log(res.data);
+      //the back end will return the first 16 liked links for the particular album
+      dispatch({
+        type: SET_CHECK_LIKED_LINKS,
+        payload: res.data.likedLinks,
+      });
+      //to get the last liked link in album details and pass it to redux
+      //...to use in pagination for startAt()
+      dispatch({
+        type: SET_LAST_LIKED_ALBUM_DETAIL_LINK,
+        payload: res.data.likedLinks[res.data.likedLinks.length - 1],
+      });
       dispatch({ type: STOP_LOADING_UI });
     })
     .catch((error) => {
@@ -178,6 +201,42 @@ export const getAlbum = (albumID) => (dispatch) => {
       dispatch(handleUnauthorisedPrivateAlbum(error));
     });
 };
+
+export const getAlbumDetailLinksPagination =
+  (albumID, albumDetailLinks) => (dispatch) => {
+    console.log("album detail links: ", albumDetailLinks);
+    dispatch({ type: LOADING_DATA_PAGINATION });
+    axios
+      .post(`/albumDetailLinks/${albumID}`, albumDetailLinks) //till here
+      .then((res) => {
+        console.log("album detail links pagination data:", res.data);
+        dispatch({
+          type: SET_ALBUM,
+          payload: res.data.links,
+        });
+        //if there are liked links pagination for the album detail returned, dispatch that
+        if (res.data.likedLinks) {
+          dispatch({
+            type: SET_CHECK_LIKED_LINKS,
+            payload: res.data.likedLinks,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error && error.response.status === 404) {
+          dispatch({
+            type: REMOVE_SCROLL_LISTENER,
+          });
+        } else {
+          dispatch({
+            type: SET_ALBUMS,
+            payload: [],
+          });
+        }
+        dispatch(handleUnauthorised(error));
+      });
+  };
 
 export const getLikedAlbums = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
@@ -803,16 +862,16 @@ export const clearAlbum = () => (dispatch) => {
   dispatch({ type: CLEAR_ALBUM });
 };
 
-export const likeLink = (linkID) => (dispatch) => {
-  dispatch({ type: LOADING_UI_LIKE_LINK, payload: linkID });
+export const likeLink = (linkData) => (dispatch) => {
+  dispatch({ type: LOADING_UI_LIKE_LINK, payload: linkData.linkID });
   axios
-    .get(`/link/${linkID}/like`)
+    .post(`/link/${linkData.linkID}/like`, linkData)
     .then((res) => {
       dispatch({
         type: LIKE_LINK,
         payload: res.data,
       });
-      dispatch({ type: STOP_LOADING_UI_LIKE_LINK, payload: linkID });
+      dispatch({ type: STOP_LOADING_UI_LIKE_LINK, payload: linkData.linkID });
       console.log(res.data);
     })
     .catch((error) => {

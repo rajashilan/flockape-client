@@ -14,6 +14,7 @@ import {
   getAlbumsPagination,
   clearAlbums,
   resetScrollListener,
+  clearAlbum,
 } from "../redux/actions/dataActions";
 
 import { getCheckLikedUserAlbumsPagination } from "../redux/actions/userActions";
@@ -32,7 +33,7 @@ export class profile extends Component {
     };
 
     this.props.getAlbums(albumDetail);
-
+    this.props.clearAlbum();
     window.addEventListener("scroll", this.handleScroll);
   }
 
@@ -175,6 +176,7 @@ const mapActionToProps = {
   getAlbums,
   getAlbumsPagination,
   clearAlbums,
+  clearAlbum,
   getCheckLikedUserAlbumsPagination,
   resetScrollListener,
 };
@@ -183,6 +185,10 @@ profile.propTypes = {
   data: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   getAlbums: PropTypes.func.isRequired,
+  clearAlbums: PropTypes.func.isRequired,
+  clearAlbum: PropTypes.func.isRequired,
+  resetScrollListener: PropTypes.func.isRequired,
+  getAlbumsPagination: PropTypes.func.isRequired,
   getCheckLikedUserAlbumsPagination: PropTypes.func.isRequired,
 };
 

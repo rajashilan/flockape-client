@@ -17,6 +17,7 @@ import {
   resetScrollListener,
 } from "../redux/actions/dataActions";
 
+//getCheckLikedAlbumsPagination is basically the function to get the liked pagination for the user
 import {
   getCheckLikedLinksPagination,
   clearCheckLikedLinksPagination,
@@ -43,7 +44,7 @@ export class likedLinks extends Component {
   componentWillUnmount() {
     this.props.resetScrollListener();
     this.props.clearLikedLinks();
-    // this.props.clearCheckLikedLinksPagination();
+    this.props.clearCheckLikedLinksPagination();
     window.removeEventListener("scroll", this.handleScroll);
   }
 
@@ -115,11 +116,21 @@ export class likedLinks extends Component {
       !loading && likedLinks ? (
         this.state.searchText === "" ? (
           likedLinks.map((link) => (
-            <LinkComponent key={link.linkID} link={link} options={true} />
+            <LinkComponent
+              key={link.linkID}
+              link={link}
+              albumID={link.albumID}
+              options={true}
+            />
           ))
         ) : (
           searches.map((link) => (
-            <LinkComponent key={link.linkID} link={link} options={true} />
+            <LinkComponent
+              key={link.linkID}
+              link={link}
+              albumID={link.albumID}
+              options={true}
+            />
           ))
         )
       ) : (
