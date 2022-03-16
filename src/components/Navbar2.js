@@ -377,13 +377,19 @@ export class Navbar2 extends Component {
     );
 
     let topBarButton = this.props.UI.isAlbum ? (
-      <Link className="navbar-topbar-button" to="/add-page">
-        Add a Page
-      </Link>
-    ) : (
+      isVerified ? (
+        <Link className="navbar-topbar-button" to="/add-page">
+          Add a Page
+        </Link>
+      ) : (
+        <button className="navbar-topbar-secondary-button">Add a Page</button>
+      )
+    ) : isVerified ? (
       <Link className="navbar-topbar-button" to="/create-book">
         Create a Book
       </Link>
+    ) : (
+      <button className="navbar-topbar-secondary-button">Create a Book</button>
     );
 
     let notificationDisplay = notificationIcon;

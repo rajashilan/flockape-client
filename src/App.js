@@ -8,7 +8,7 @@ import "./styles/Global.css";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { SET_AUTHENTICATED } from "./redux/types";
-import { logoutUser, getUserData } from "./redux/actions/userActions";
+import { getUserData, tokenExpired } from "./redux/actions/userActions";
 
 //components
 // import Navbar from "./components/Navbar";
@@ -46,8 +46,9 @@ const token = localStorage.FBIdToken;
 if (token) {
   const decodedToken = jwtDecode(token);
   if (decodedToken.exp * 1000 < Date.now()) {
-    store.dispatch(logoutUser());
-    window.location.href = "/login";
+    console.log("this is triggered");
+    store.dispatch(tokenExpired());
+    //window.location.href = "/login";
   } else {
     store.dispatch({
       type: SET_AUTHENTICATED,

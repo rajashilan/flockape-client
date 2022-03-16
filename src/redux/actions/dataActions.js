@@ -46,7 +46,7 @@ import {
 import axios from "axios";
 import firebase from "../../firebase/firebase";
 
-import { logoutUser } from "./userActions";
+import { logoutUser, setAuthorizationHeader } from "./userActions";
 
 export const getAlbums = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
@@ -978,7 +978,68 @@ export const handleUnauthorised = (error) => (dispatch) => {
     error.response.status &&
     error.response.status === 403
   ) {
+    //first send a post request to firebase api to exchange refresh token for a new id token
+    //if successful, call another function that sets the new idtoken and refresh token in the local storage and axios header
+    //if there is no refresh token or there's any sort of error, dispatch logout as usual
+
+    console.log("handled unauthorized action");
     dispatch(logoutUser());
+  } else if (
+    error.response &&
+    error.response.status &&
+    error.response.status === 401
+  ) {
+    //if 401 status is recieved, get new id token using refresh token
+
+    let token = localStorage.FBRefreshToken;
+
+    if (!token) {
+      console.log("no token - data actions");
+      dispatch(logoutUser());
+    }
+
+    token = token.split("Bearer ")[1];
+    console.log("refresh token:", token);
+
+    fetch(
+      "https://securetoken.googleapis.com/v1/token?key=AIzaSyDAAUqJI3QIz-896W4MEVEeNIxM_4Xkkp8",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `grant_type=refresh_token&refresh_token=${token}`,
+      }
+    )
+      .then(async (response) => {
+        const data = await response.json();
+
+        if (!response.ok) {
+          console.log("response error", data.message);
+          console.log("Failed to get new id token");
+          dispatch(logoutUser());
+        }
+
+        console.log("response success", data);
+        return data;
+      })
+      .then((data) => {
+        let FBIdToken;
+        let FBRefreshToken;
+        if (data.id_token && data.refresh_token) {
+          FBIdToken = `Bearer ${data.id_token}`;
+          FBRefreshToken = `Bearer ${data.refresh_token}`;
+          localStorage.setItem("FBIdToken", FBIdToken);
+          localStorage.setItem("FBRefreshToken", FBRefreshToken);
+          axios.defaults.headers.common["Authorization"] = FBIdToken;
+          window.location.reload();
+        }
+      })
+      .catch(function (error) {
+        console.error("Failed: ", error);
+        console.log("Failed to get new id token2");
+        dispatch(logoutUser());
+      });
   }
 };
 
