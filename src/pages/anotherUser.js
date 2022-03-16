@@ -56,7 +56,10 @@ export class anotherUser extends Component {
         !this.props.data.loadingPagination &&
         this.props.data.scrollListener
       ) {
-        if (this.props.data.anotherUserProfile.albums.length > 0) {
+        if (
+          this.props.data.anotherUserProfile.albums &&
+          this.props.data.anotherUserProfile.albums.length > 0
+        ) {
           const sendAlbumPagination = {
             username: this.props.match.params.username,
             limit:

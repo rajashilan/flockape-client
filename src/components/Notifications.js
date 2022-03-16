@@ -35,14 +35,12 @@ export class Notifications extends Component {
       notificationTitle = `@${sender} started following your Book
         "${contentName}."`;
       albumDetailsDisplay = (
-        <Link to={`/${recipient}/book/${contentID}`}>
-          <div className="notifications-details-container">
-            <h3 className="notifications-details-action">
-              {notificationTitle}
-            </h3>
-            <p className="notifications-details-contentCreatedAt">{time}</p>
-          </div>
-        </Link>
+        //<Link to={`/${recipient}/book/${contentID}`}>
+        <div className="notifications-details-container">
+          <h3 className="notifications-details-action">{notificationTitle}</h3>
+          <p className="notifications-details-contentCreatedAt">{time}</p>
+        </div>
+        //</Link>
       );
     } else if (type === "link") {
       notificationTitle = `@${sender} liked your page
@@ -55,6 +53,19 @@ export class Notifications extends Component {
       );
     }
 
+    const toAlbumDetails = {
+      pathname: `/${recipient}/book/${contentID}`,
+      state: { history: window.location.pathname },
+    };
+
+    function AlbumImage() {
+      return (
+        <Link to={toAlbumDetails}>
+          <img src={contentImg} className="notifications-contentImg" />
+        </Link>
+      );
+    }
+
     return (
       <div className="notifications-container">
         <Link to={`/@${sender}`} className="notifications-link">
@@ -64,7 +75,12 @@ export class Notifications extends Component {
           />
         </Link>
         {albumDetailsDisplay}
-        <img src={contentImg} className="notifications-contentImg" />
+        <Link
+          to={`/${recipient}/book/${contentID}`}
+          className="notifications-contentImg"
+        >
+          <AlbumImage />
+        </Link>
       </div>
     );
   }
