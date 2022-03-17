@@ -34,23 +34,45 @@ class albumDetails extends Component {
   componentDidMount() {
     this.props.resetScrollListener();
     this.props.getAlbum(this.props.match.params.albumID);
-    this.userLoadTimeOut = setTimeout(() => {
-      if (
-        this.props.user.authenticated &&
-        this.props.user.credentials.username === this.props.album.username
-      ) {
-        this.props.setIsAlbumTrue();
-      } else {
-        this.props.setIsAlbumFalse();
-      }
-    }, 3000);
+    // this.userLoadTimeOut = setTimeout(() => {
+    //   if (
+    //     this.props.user.authenticated &&
+    //     this.props.user.credentials.username === this.props.album.username
+    //   ) {
+    //     this.props.setIsAlbumTrue();
+    //   } else {
+    //     this.props.setIsAlbumFalse();
+    //   }
+    // }, 3000);
     window.addEventListener("scroll", this.handleScroll);
   }
 
-  componentWillUnmount() {
-    if (this.userLoadTimeOut) {
-      clearTimeout(this.userLoadTimeOut);
+  //logic to set is album
+  componentDidUpdate(nextProps) {
+    if (this.props.album !== nextProps.album) {
+      if (nextProps.user || this.props.user) {
+        if (nextProps.album) {
+          if (
+            (nextProps.user.authenticated &&
+              nextProps.user.credentials.username ===
+                nextProps.album.username) ||
+            (this.props.user.authenticated &&
+              this.props.user.credentials.username ===
+                this.props.album.username)
+          ) {
+            this.props.setIsAlbumTrue();
+          } else {
+            this.props.setIsAlbumFalse();
+          }
+        }
+      }
     }
+  }
+
+  componentWillUnmount() {
+    // if (this.userLoadTimeOut) {
+    //   clearTimeout(this.userLoadTimeOut);
+    // }
     this.props.resetScrollListener();
     this.props.setIsAlbumFalse();
     this.props.clearCheckLikedLinksPagination();
