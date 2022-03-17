@@ -193,7 +193,7 @@ class albumDetails extends Component {
     let addLinkButton =
       !loading && authenticated && credentials.username === username ? (
         <div className="albumDetails-button-container">
-          <Link to="/add-page" className="albumDetails-primary-button">
+          <Link to="/add-page" className="albumDetails-primary-top-button">
             Add a Page
           </Link>
         </div>
@@ -243,8 +243,8 @@ class albumDetails extends Component {
             />
             {searchBarIcon}
           </div>
-          <div className="link-main-container">{linksDisplay}</div>
           {addLinkButton}
+          <div className="link-main-container">{linksDisplay}</div>
         </div>
       </div>
     );

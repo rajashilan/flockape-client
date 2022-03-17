@@ -190,14 +190,14 @@ export class albums extends Component {
 
     let addAnAlbumButton = authenticated ? (
       credentials.isVerified ? (
-        <Link to="/create-book" className="album-primary-button">
+        <Link to="/create-book" className="album-primary-top-button">
           Create a Book
         </Link>
       ) : (
         <button
           type="button"
           onClick={this.handleButtonNotVerified}
-          className="album-secondary-button"
+          className="album-secondary-top-button"
         >
           Create a Book
         </button>
@@ -205,7 +205,7 @@ export class albums extends Component {
     ) : null;
 
     let verificationErrorLabel = this.state.showNotVerifiedText ? (
-      <p className="album-label-error">
+      <p className="album-label-top-error">
         Please verify your email to create a Book
       </p>
     ) : null;
@@ -238,11 +238,11 @@ export class albums extends Component {
             />
             {searchBarIcon}
           </div>
-          <div className="album-container">{albumData}</div>
           <div className="album-button-container">
             {addAnAlbumButton}
             {verificationErrorLabel}
           </div>
+          <div className="album-container">{albumData}</div>
           {loadingPaginationText}
         </div>
       </div>
