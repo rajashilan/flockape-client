@@ -200,6 +200,7 @@ export const markNotificationsRead = (notificationIds) => (dispatch) => {
 
 //general, including other users
 export const getCheckLikedAlbumsPagination = (sendLikesAlbum) => (dispatch) => {
+  console.log("send likes album: ", sendLikesAlbum);
   axios
     .post("/getLikedAlbumGeneralPagination", sendLikesAlbum)
     .then((res) => {

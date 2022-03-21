@@ -209,7 +209,7 @@ export class editAlbum extends Component {
                     to={`/${username}/book/${this.props.album.albumID}`}
                     className="addAlbum-cancel-button"
                   >
-                    Cancel
+                    Back
                   </Link>
                 </div>
               </form>

@@ -1,8 +1,12 @@
 import {
   SET_ALBUMS,
   SET_SEARCH_ALBUMS,
+  SET_SEARCH_LIKED_ALBUMS,
+  SET_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS,
   CLEAR_ALBUMS,
   CLEAR_SEARCH_ALBUMS,
+  CLEAR_SEARCH_LIKED_ALBUMS,
+  CLEAR_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS,
   SET_ALBUM,
   CLEAR_ALBUM,
   SET_LINK,
@@ -33,6 +37,7 @@ const initialState = {
   albums: [],
   album: {},
   searchedAlbums: [],
+  searchedLikedAlbums: [],
   likedAlbums: [],
   likedLinks: [],
   failedLinks: [],
@@ -88,6 +93,26 @@ export default function (state = initialState, action) {
           loadingPagination: false,
         };
       }
+    case SET_SEARCH_LIKED_ALBUMS: {
+      if (state.searchedLikedAlbums.length > 0) {
+        return {
+          ...state,
+          searchedLikedAlbums: [
+            ...state.searchedLikedAlbums,
+            ...action.payload,
+          ],
+          loading: false,
+          loadingPagination: false,
+        };
+      } else {
+        return {
+          ...state,
+          searchedLikedAlbums: action.payload,
+          loading: false,
+          loadingPagination: false,
+        };
+      }
+    }
     case CLEAR_ALBUMS:
       return {
         ...state,
@@ -97,6 +122,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         searchedAlbums: [],
+      };
+    case CLEAR_SEARCH_LIKED_ALBUMS:
+      return {
+        ...state,
+        searchedLikedAlbums: [],
       };
     case SET_ALBUM:
       if (state.album.links && state.album.links.length > 0) {
@@ -273,11 +303,47 @@ export default function (state = initialState, action) {
           loadingPagination: false,
         };
       }
+    case SET_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS:
+      if (state.anotherUserProfile && state.anotherUserProfile.searchedAlbums) {
+        return {
+          ...state,
+          anotherUserProfile: {
+            ...state.anotherUserProfile,
+            searchedAlbums: [
+              ...state.anotherUserProfile.searchedAlbums,
+              ...action.payload.searchedAlbums,
+            ],
+          },
+          loading: false,
+          loadingPagination: false,
+        };
+      } else {
+        return {
+          ...state,
+          anotherUserProfile: {
+            ...state.anotherUserProfile,
+            searchedAlbums: action.payload.searchedAlbums,
+          },
+          loading: false,
+          loadingPagination: false,
+        };
+      }
     case CLEAR_ANOTHER_USER_PROFILE:
       return {
         ...state,
         anotherUserProfile: {},
       };
+    case CLEAR_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS: {
+      if (state.anotherUserProfile && state.anotherUserProfile.searchedAlbums) {
+        return {
+          ...state,
+          anotherUserProfile: {
+            ...state.anotherUserProfile,
+            searchedAlbums: [],
+          },
+        };
+      }
+    }
     case SET_FAILED_LINKS:
       return {
         ...state,

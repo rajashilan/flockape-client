@@ -1,8 +1,12 @@
 import {
   SET_ALBUMS,
   SET_SEARCH_ALBUMS,
+  SET_SEARCH_LIKED_ALBUMS,
+  SET_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS,
   CLEAR_ALBUMS,
   CLEAR_SEARCH_ALBUMS,
+  CLEAR_SEARCH_LIKED_ALBUMS,
+  CLEAR_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS,
   SET_ALBUM,
   CLEAR_ALBUM,
   SET_LINK,
@@ -116,6 +120,26 @@ export const getSearchedAlbums = (searchQuery) => (dispatch) => {
     });
 };
 
+export const getSearchedLikedAlbums = (searchQuery) => (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  axios
+    .post("/searchLikedAlbums", searchQuery)
+    .then((res) => {
+      dispatch({ type: CLEAR_SEARCH_LIKED_ALBUMS });
+      dispatch({
+        type: SET_SEARCH_LIKED_ALBUMS,
+        payload: res.data,
+      });
+    })
+    .catch((error) => {
+      dispatch({
+        type: SET_SEARCH_LIKED_ALBUMS,
+        payload: [],
+      });
+      dispatch(handleUnauthorised(error));
+    });
+};
+
 export const getSearchedAlbumsPagination = (searchQuery) => (dispatch) => {
   dispatch({ type: LOADING_DATA_PAGINATION });
   axios
@@ -141,8 +165,37 @@ export const getSearchedAlbumsPagination = (searchQuery) => (dispatch) => {
     });
 };
 
+export const getSearchedLikedAlbumsPagination = (searchQuery) => (dispatch) => {
+  dispatch({ type: LOADING_DATA_PAGINATION });
+  axios
+    .post("/searchLikedAlbums", searchQuery)
+    .then((res) => {
+      dispatch({
+        type: SET_SEARCH_LIKED_ALBUMS,
+        payload: res.data,
+      });
+    })
+    .catch((error) => {
+      if (error && error.response.status === 404) {
+        dispatch({
+          type: REMOVE_SCROLL_LISTENER,
+        });
+      } else {
+        dispatch({
+          type: SET_SEARCH_LIKED_ALBUMS,
+          payload: [],
+        });
+      }
+      dispatch(handleUnauthorised(error));
+    });
+};
+
 export const clearSearchedAlbums = () => (dispatch) => {
   dispatch({ type: CLEAR_SEARCH_ALBUMS });
+};
+
+export const clearSearchedLikedAlbums = () => (dispatch) => {
+  dispatch({ type: CLEAR_SEARCH_LIKED_ALBUMS });
 };
 
 export const getAlbumOnly = (albumID) => (dispatch) => {
@@ -934,8 +987,59 @@ export const getAnotherUserProfilePagination =
       });
   };
 
+export const getAnotherUserProfileSearchedAlbums =
+  (searchQuery) => (dispatch) => {
+    dispatch({ type: LOADING_DATA });
+    axios
+      .post(`/user/${searchQuery.username}/search`, searchQuery)
+      .then((res) => {
+        dispatch({ type: CLEAR_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS });
+        dispatch({
+          type: SET_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS,
+          payload: res.data,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: SET_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS,
+          payload: [],
+        });
+        dispatch(handleUnauthorised(error));
+      });
+  };
+
+export const getAnotherUserProfileSearchedAlbumsPagination =
+  (searchQuery) => (dispatch) => {
+    dispatch({ type: LOADING_DATA_PAGINATION });
+    axios
+      .post(`/user/${searchQuery.username}/search`, searchQuery)
+      .then((res) => {
+        dispatch({
+          type: SET_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS,
+          payload: res.data,
+        });
+      })
+      .catch((error) => {
+        if (error && error.response.status === 404) {
+          dispatch({
+            type: REMOVE_SCROLL_LISTENER,
+          });
+        } else {
+          dispatch({
+            type: SET_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS,
+            payload: [],
+          });
+        }
+        dispatch(handleUnauthorised(error));
+      });
+  };
+
 export const clearAnotherUserProfile = () => (dispatch) => {
   dispatch({ type: CLEAR_ANOTHER_USER_PROFILE });
+};
+
+export const clearAnotherUserProfileSearchedAlbums = () => (dispatch) => {
+  dispatch({ type: CLEAR_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS });
 };
 
 export const deleteAlbum = (albumID) => (dispatch) => {
