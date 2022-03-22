@@ -2,10 +2,12 @@ import {
   SET_ALBUMS,
   SET_SEARCH_ALBUMS,
   SET_SEARCH_LIKED_ALBUMS,
+  SET_SEARCH_LIKED_LINKS,
   SET_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS,
   CLEAR_ALBUMS,
   CLEAR_SEARCH_ALBUMS,
   CLEAR_SEARCH_LIKED_ALBUMS,
+  CLEAR_SEARCH_LIKED_LINKS,
   CLEAR_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS,
   SET_ALBUM,
   CLEAR_ALBUM,
@@ -121,6 +123,7 @@ export const getSearchedAlbums = (searchQuery) => (dispatch) => {
 };
 
 export const getSearchedLikedAlbums = (searchQuery) => (dispatch) => {
+  console.log("called");
   dispatch({ type: LOADING_DATA });
   axios
     .post("/searchLikedAlbums", searchQuery)
@@ -358,6 +361,52 @@ export const getLikedLinks = (sendLink) => (dispatch) => {
     });
 };
 
+export const getSearchedLikedLinks = (searchQuery) => (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  axios
+    .post("/searchLikedLinks", searchQuery)
+    .then((res) => {
+      console.log("dei: ", res.data);
+      dispatch({ type: CLEAR_SEARCH_LIKED_LINKS });
+      dispatch({
+        type: SET_SEARCH_LIKED_LINKS,
+        payload: res.data,
+      });
+    })
+    .catch((error) => {
+      dispatch({
+        type: SET_SEARCH_LIKED_LINKS,
+        payload: [],
+      });
+      dispatch(handleUnauthorised(error));
+    });
+};
+
+export const getSearchedLikedLinksPagination = (searchQuery) => (dispatch) => {
+  dispatch({ type: LOADING_DATA_PAGINATION });
+  axios
+    .post("/searchLikedLinks", searchQuery)
+    .then((res) => {
+      dispatch({
+        type: SET_SEARCH_LIKED_LINKS,
+        payload: res.data,
+      });
+    })
+    .catch((error) => {
+      if (error && error.response.status === 404) {
+        dispatch({
+          type: REMOVE_SCROLL_LISTENER,
+        });
+      } else {
+        dispatch({
+          type: SET_SEARCH_LIKED_LINKS,
+          payload: [],
+        });
+      }
+      dispatch(handleUnauthorised(error));
+    });
+};
+
 export const getLikedLinksPagination = (sendLink) => (dispatch) => {
   dispatch({ type: LOADING_DATA_PAGINATION });
   axios
@@ -383,6 +432,10 @@ export const getLikedLinksPagination = (sendLink) => (dispatch) => {
 
 export const clearLikedLinks = () => (dispatch) => {
   dispatch({ type: CLEAR_LIKED_LINKS });
+};
+
+export const clearSearchedLikedLinks = () => (dispatch) => {
+  dispatch({ type: CLEAR_SEARCH_LIKED_LINKS });
 };
 
 export const likeAlbum = (albumID) => (dispatch) => {

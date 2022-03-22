@@ -2,10 +2,12 @@ import {
   SET_ALBUMS,
   SET_SEARCH_ALBUMS,
   SET_SEARCH_LIKED_ALBUMS,
+  SET_SEARCH_LIKED_LINKS,
   SET_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS,
   CLEAR_ALBUMS,
   CLEAR_SEARCH_ALBUMS,
   CLEAR_SEARCH_LIKED_ALBUMS,
+  CLEAR_SEARCH_LIKED_LINKS,
   CLEAR_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS,
   SET_ALBUM,
   CLEAR_ALBUM,
@@ -38,6 +40,7 @@ const initialState = {
   album: {},
   searchedAlbums: [],
   searchedLikedAlbums: [],
+  searchedLikedLinks: [],
   likedAlbums: [],
   likedLinks: [],
   failedLinks: [],
@@ -113,6 +116,23 @@ export default function (state = initialState, action) {
         };
       }
     }
+    case SET_SEARCH_LIKED_LINKS: {
+      if (state.searchedLikedLinks.length > 0) {
+        return {
+          ...state,
+          searchedLikedLinks: [...state.searchedLikedLinks, ...action.payload],
+          loading: false,
+          loadingPagination: false,
+        };
+      } else {
+        return {
+          ...state,
+          searchedLikedLinks: action.payload,
+          loading: false,
+          loadingPagination: false,
+        };
+      }
+    }
     case CLEAR_ALBUMS:
       return {
         ...state,
@@ -127,6 +147,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         searchedLikedAlbums: [],
+      };
+    case CLEAR_SEARCH_LIKED_LINKS:
+      return {
+        ...state,
+        searchedLikedLinks: [],
       };
     case SET_ALBUM:
       if (state.album.links && state.album.links.length > 0) {

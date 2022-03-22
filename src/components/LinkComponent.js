@@ -33,6 +33,7 @@ export class LinkComponent extends Component {
   likeLink = () => {
     let linkData = {
       albumID: this.props.albumID,
+      linkTitle: this.props.link.linkTitle,
       linkID: this.props.link.linkID,
     };
 
