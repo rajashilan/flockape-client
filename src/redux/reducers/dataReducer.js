@@ -3,11 +3,13 @@ import {
   SET_SEARCH_ALBUMS,
   SET_SEARCH_LIKED_ALBUMS,
   SET_SEARCH_LIKED_LINKS,
+  SET_SEARCH_ALBUM_DETAILS_LINKS,
   SET_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS,
   CLEAR_ALBUMS,
   CLEAR_SEARCH_ALBUMS,
   CLEAR_SEARCH_LIKED_ALBUMS,
   CLEAR_SEARCH_LIKED_LINKS,
+  CLEAR_SEARCH_ALBUM_DETAILS_LINKS,
   CLEAR_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS,
   SET_ALBUM,
   CLEAR_ALBUM,
@@ -133,6 +135,33 @@ export default function (state = initialState, action) {
         };
       }
     }
+    case SET_SEARCH_ALBUM_DETAILS_LINKS: {
+      if (
+        state.album &&
+        state.album.searchedLinks &&
+        state.album.searchedLinks.length > 0
+      ) {
+        return {
+          ...state,
+          album: {
+            ...state.album,
+            searchedLinks: [...state.album.searchedLinks, ...action.payload],
+          },
+          loading: false,
+          loadingPagination: false,
+        };
+      } else {
+        return {
+          ...state,
+          album: {
+            ...state.album,
+            searchedLinks: action.payload,
+          },
+          loading: false,
+          loadingPagination: false,
+        };
+      }
+    }
     case CLEAR_ALBUMS:
       return {
         ...state,
@@ -153,8 +182,28 @@ export default function (state = initialState, action) {
         ...state,
         searchedLikedLinks: [],
       };
+    case CLEAR_SEARCH_ALBUM_DETAILS_LINKS: {
+      if (
+        state.album &&
+        state.album.searchedLinks &&
+        state.album.searchedLinks.length > 0
+      ) {
+        return {
+          ...state,
+          album: {
+            ...state.album,
+            links: [...state.album.links],
+            searchedLinks: [],
+          },
+        };
+      } else {
+        return {
+          ...state,
+        };
+      }
+    }
     case SET_ALBUM:
-      if (state.album.links && state.album.links.length > 0) {
+      if (state.album && state.album.links && state.album.links.length > 0) {
         //this is to handle album detail link's pagination
         //here if true, action.payload contains the paginated links data
         return {

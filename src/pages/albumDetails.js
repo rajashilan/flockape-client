@@ -17,6 +17,9 @@ import {
   resetScrollListener,
   removeScrollListener,
   getAlbumDetailLinksPagination,
+  getSearchedAlbumDetailsLinks,
+  getSearchedAlbumDetailsLinksPagination,
+  clearSearchedAlbumDetailLinks,
 } from "../redux/actions/dataActions";
 
 import { setIsAlbumTrue, setIsAlbumFalse } from "../redux/actions/uiActions";
@@ -76,6 +79,7 @@ class albumDetails extends Component {
     this.props.resetScrollListener();
     this.props.setIsAlbumFalse();
     this.props.clearCheckLikedLinksPagination();
+    //this.props.clearSearchedAlbumDetailLinks();
     //this.props.clearAlbum();
     window.removeEventListener("scroll", this.handleScroll);
   }
@@ -83,47 +87,116 @@ class albumDetails extends Component {
   handleScroll = () => {
     let difference = document.documentElement.scrollHeight - window.innerHeight;
     var scrollposition = document.documentElement.scrollTop;
-    if (
-      difference - scrollposition <= 250 &&
-      !this.props.data.loadingPagination &&
-      this.props.data.scrollListener
-    ) {
-      if (this.props.album.links && this.props.album.links.length > 0) {
-        let albumDetailLinks = {
-          limit:
-            this.props.data.album.links[this.props.data.album.links.length - 1],
-        };
 
-        //if there is data in the last liked album detail link under user state,
-        //use it to get the next 16 liked links data for the particular album
-        if (
-          this.props.user.lastLikedAlbumDetailLink &&
-          this.props.user.lastLikedAlbumDetailLink.length > 0
-        ) {
-          albumDetailLinks.limitLikedLinks =
-            this.props.user.lastLikedAlbumDetailLink[
-              this.props.user.lastLikedAlbumDetailLink.length - 1
-            ];
+    if (this.state.searchText.length === 0) {
+      if (
+        difference - scrollposition <= 250 &&
+        !this.props.data.loadingPagination &&
+        this.props.data.scrollListener
+      ) {
+        if (this.props.album.links && this.props.album.links.length > 0) {
+          let albumDetailLinks = {
+            limit:
+              this.props.data.album.links[
+                this.props.data.album.links.length - 1
+              ],
+          };
+
+          //if there is data in the last liked album detail link under user state,
+          //use it to get the next 16 liked links data for the particular album
+          if (
+            this.props.user.lastLikedAlbumDetailLink &&
+            this.props.user.lastLikedAlbumDetailLink.length > 0
+          ) {
+            albumDetailLinks.limitLikedLinks =
+              this.props.user.lastLikedAlbumDetailLink[
+                this.props.user.lastLikedAlbumDetailLink.length - 1
+              ];
+          }
+          //this.props.getCheckLikedUserAlbumsPagination(albumDetailLinks);
+          this.props.getAlbumDetailLinksPagination(
+            this.props.match.params.albumID,
+            albumDetailLinks
+          );
         }
-        //this.props.getCheckLikedUserAlbumsPagination(albumDetailLinks);
-        this.props.getAlbumDetailLinksPagination(
-          this.props.match.params.albumID,
-          albumDetailLinks
-        );
+      }
+    } else {
+      if (
+        difference - scrollposition <= 250 &&
+        !this.props.data.loadingPagination &&
+        this.props.data.scrollListener
+      ) {
+        if (this.props.data.searchedAlbums.length > 0) {
+          const searchedAlbumDetailLink = {
+            limit:
+              this.props.data.searchedAlbums[
+                this.props.data.searchedAlbums.length - 1
+              ],
+            search: this.state.searchText,
+            albumID: this.props.match.params.albumID,
+          };
+
+          if (
+            this.props.user.lastLikedAlbumDetailLink &&
+            this.props.user.lastLikedAlbumDetailLink.length > 0
+          ) {
+            searchedAlbumDetailLink.limitLikedLinks =
+              this.props.user.lastLikedAlbumDetailLink[
+                this.props.user.lastLikedAlbumDetailLink.length - 1
+              ];
+          }
+
+          this.props.resetScrollListener();
+          this.props.getSearchedAlbumDetailsLinksPagination(
+            searchedAlbumDetailLink
+          );
+        }
       }
     }
   };
 
   handleSearch = (event) => {
-    this.setState({
-      searchText: event.target.value,
-    });
+    this.setState(
+      {
+        searchText: event.target.value,
+      },
+      () => {
+        if (this.state.searchText.length === 0) {
+          this.props.clearSearchedAlbumDetailLinks();
+        } else {
+          const searchQuery = {
+            limit: null,
+            search: this.state.searchText,
+            albumID: this.props.match.params.albumID,
+          };
+
+          if (
+            this.props.user.lastLikedAlbumDetailLink &&
+            this.props.user.lastLikedAlbumDetailLink.length > 0
+          ) {
+            searchQuery.limitLikedLinks =
+              this.props.user.lastLikedAlbumDetailLink[
+                this.props.user.lastLikedAlbumDetailLink.length - 1
+              ];
+          }
+
+          this.props.getSearchedAlbumDetailsLinks(searchQuery);
+        }
+        this.props.resetScrollListener();
+      }
+    );
   };
 
   handleSearchReset = () => {
-    this.setState({
-      searchText: "",
-    });
+    this.setState(
+      {
+        searchText: "",
+      },
+      () => {
+        this.props.resetScrollListener();
+        this.props.clearSearchedAlbumDetailLinks();
+      }
+    );
   };
 
   render() {
@@ -145,26 +218,28 @@ class albumDetails extends Component {
         profileImg,
         security,
         links,
+        searchedLinks = [],
       },
+      data: { loadingPagination },
       UI: { loading },
     } = this.props;
 
     //searching functionalities
-    let searches = [];
+    // let searches = [];
 
-    if (this.state.searchText !== "") {
-      let searchText = this.state.searchText;
-      if (links && links.length > 0) {
-        links.forEach((link) => {
-          if (
-            link.linkTitle.toLowerCase().substring(0, searchText.length) ===
-            searchText.toLowerCase()
-          ) {
-            searches.push(link);
-          }
-        });
-      }
-    }
+    // if (this.state.searchText !== "") {
+    //   let searchText = this.state.searchText;
+    //   if (links && links.length > 0) {
+    //     links.forEach((link) => {
+    //       if (
+    //         link.linkTitle.toLowerCase().substring(0, searchText.length) ===
+    //         searchText.toLowerCase()
+    //       ) {
+    //         searches.push(link);
+    //       }
+    //     });
+    //   }
+    // }
     //end of searching functionalities
 
     let linkCount = 0;
@@ -186,7 +261,7 @@ class albumDetails extends Component {
               />
             ))
           ) : (
-            searches.map((link) => (
+            searchedLinks.map((link) => (
               <LinkComponent
                 key={link.linkID}
                 link={link}
@@ -200,6 +275,10 @@ class albumDetails extends Component {
           <p>Loading...</p>
         )
       ) : null;
+
+    let loadingPaginationText = loadingPagination ? (
+      <p>Loading pagination</p>
+    ) : null;
 
     let userDisplay =
       !loading && (!authenticated || credentials.username !== username) ? (
@@ -267,6 +346,7 @@ class albumDetails extends Component {
           </div>
           {addLinkButton}
           <div className="link-main-container">{linksDisplay}</div>
+          {loadingPaginationText}
         </div>
       </div>
     );
@@ -289,6 +369,9 @@ const mapActionToProps = {
   resetScrollListener,
   removeScrollListener,
   clearCheckLikedLinksPagination,
+  getSearchedAlbumDetailsLinks,
+  clearSearchedAlbumDetailLinks,
+  getSearchedAlbumDetailsLinksPagination,
 };
 
 albumDetails.propTypes = {
@@ -304,6 +387,9 @@ albumDetails.propTypes = {
   resetScrollListener: PropTypes.func.isRequired,
   removeScrollListener: PropTypes.func.isRequired,
   clearCheckLikedLinksPagination: PropTypes.func.isRequired,
+  getSearchedAlbumDetailsLinks: PropTypes.func.isRequired,
+  clearSearchedAlbumDetailLinks: PropTypes.func.isRequired,
+  getSearchedAlbumDetailsLinksPagination: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapActionToProps)(albumDetails);

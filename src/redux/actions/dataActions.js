@@ -4,10 +4,12 @@ import {
   SET_SEARCH_LIKED_ALBUMS,
   SET_SEARCH_LIKED_LINKS,
   SET_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS,
+  SET_SEARCH_ALBUM_DETAILS_LINKS,
   CLEAR_ALBUMS,
   CLEAR_SEARCH_ALBUMS,
   CLEAR_SEARCH_LIKED_ALBUMS,
   CLEAR_SEARCH_LIKED_LINKS,
+  CLEAR_SEARCH_ALBUM_DETAILS_LINKS,
   CLEAR_ANOTHER_USER_PROFILE_SEARCHED_ALBUMS,
   SET_ALBUM,
   CLEAR_ALBUM,
@@ -294,6 +296,66 @@ export const getAlbumDetailLinksPagination =
       });
   };
 
+export const getSearchedAlbumDetailsLinks = (searchQuery) => (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  axios
+    .post("/searchAlbumDetailLinks", searchQuery)
+    .then((res) => {
+      console.log("data: ", res.data);
+      dispatch({ type: CLEAR_SEARCH_ALBUM_DETAILS_LINKS });
+      dispatch({
+        type: SET_SEARCH_ALBUM_DETAILS_LINKS,
+        payload: res.data.links,
+      });
+      if (res.data.likedLinks) {
+        dispatch({
+          type: SET_CHECK_LIKED_LINKS,
+          payload: res.data.likedLinks,
+        });
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      dispatch({
+        type: SET_SEARCH_ALBUM_DETAILS_LINKS,
+        payload: [],
+      });
+      dispatch(handleUnauthorised(error));
+    });
+};
+
+export const getSearchedAlbumDetailsLinksPagination =
+  (searchQuery) => (dispatch) => {
+    dispatch({ type: LOADING_DATA_PAGINATION });
+    axios
+      .post("/searchAlbumDetailLinks", searchQuery)
+      .then((res) => {
+        dispatch({
+          type: SET_SEARCH_ALBUM_DETAILS_LINKS,
+          payload: res.data.links,
+        });
+        if (res.data.likedLinks) {
+          dispatch({
+            type: SET_CHECK_LIKED_LINKS,
+            payload: res.data.likedLinks,
+          });
+        }
+      })
+      .catch((error) => {
+        if (error && error.response.status === 404) {
+          dispatch({
+            type: REMOVE_SCROLL_LISTENER,
+          });
+        } else {
+          dispatch({
+            type: SET_SEARCH_ALBUM_DETAILS_LINKS,
+            payload: [],
+          });
+        }
+        dispatch(handleUnauthorised(error));
+      });
+  };
+
 export const getLikedAlbums = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
   axios
@@ -436,6 +498,10 @@ export const clearLikedLinks = () => (dispatch) => {
 
 export const clearSearchedLikedLinks = () => (dispatch) => {
   dispatch({ type: CLEAR_SEARCH_LIKED_LINKS });
+};
+
+export const clearSearchedAlbumDetailLinks = () => (dispatch) => {
+  dispatch({ type: CLEAR_SEARCH_ALBUM_DETAILS_LINKS });
 };
 
 export const likeAlbum = (albumID) => (dispatch) => {
