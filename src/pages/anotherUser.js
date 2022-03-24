@@ -71,7 +71,9 @@ export class anotherUser extends Component {
                 this.props.data.anotherUserProfile.albums.length - 1
               ],
           };
-          this.props.getCheckLikedUserAlbumsPagination(sendAlbumPagination);
+          if (this.props.user.authenticated) {
+            this.props.getCheckLikedUserAlbumsPagination(sendAlbumPagination);
+          }
           this.props.getAnotherUserProfilePagination(sendAlbumPagination);
         }
       }
@@ -247,6 +249,7 @@ export class anotherUser extends Component {
 
 const mapStateToProps = (state) => ({
   data: state.data,
+  user: state.user,
 });
 
 const mapActionToProps = {
@@ -264,6 +267,7 @@ const mapActionToProps = {
 
 anotherUser.propTypes = {
   data: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
   getAnotherUserProfile: PropTypes.func.isRequired,
   getAnotherUserProfilePagination: PropTypes.func.isRequired,
   clearAnotherUserProfile: PropTypes.func.isRequired,

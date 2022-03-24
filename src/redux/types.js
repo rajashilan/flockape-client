@@ -8,6 +8,8 @@ export const SET_NOTIFICATIONS = "SET_NOTIFICATIONS"; //for notifications pagina
 export const CLEAR_NOTIFICATIONS = "CLEAR_NOTIFICATIONS"; //clear the remaining notifications to avoid duplicate data
 export const LOADING_NOTIFICATIONS = "LOADING_NOTIFICATIONS"; //loading for notifications pagination
 export const STOP_LOADING_NOTIFICATIONS = "STOP_LOADING_NOTIFICATIONS"; //stop loading sign for when scroll listener is removed for notifications page
+export const SET_FEEDBACK_MESSAGE = "SET_FEEDBACK_MESSAGE";
+export const CLEAR_FEEDBACK_MESSAGE = "CLEAR_FEEDBACK_MESSAGE";
 
 //ui reducer types
 export const SET_ERRORS = "SET_ERRORS";

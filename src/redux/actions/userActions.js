@@ -17,6 +17,9 @@ import {
   STOP_LOADING_NOTIFICATIONS,
   SET_NOTIFICATIONS,
   CLEAR_NOTIFICATIONS,
+  CLEAR_FEEDBACK_MESSAGE,
+  SET_FEEDBACK_MESSAGE,
+  CLEAR_ERRORS_WITHOUT_LOAD,
 } from "../types";
 
 export const loginUser = (userData, history) => (dispatch) => {
@@ -196,6 +199,30 @@ export const markNotificationsRead = (notificationIds) => (dispatch) => {
     .catch((error) => {
       console.log(error);
     });
+};
+
+export const submitFeedback = (feedback) => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  dispatch({ type: CLEAR_FEEDBACK_MESSAGE });
+  dispatch({ type: CLEAR_ERRORS_WITHOUT_LOAD });
+  axios
+    .post("/submitFeedback", feedback)
+    .then((res) => {
+      dispatch({ type: STOP_LOADING_UI });
+      dispatch({ type: CLEAR_ERRORS_WITHOUT_LOAD });
+      dispatch({ type: SET_FEEDBACK_MESSAGE, payload: res.data.message });
+    })
+    .catch((error) => {
+      console.log(error);
+      dispatch({
+        type: SET_ERRORS,
+        payload: error.response.data,
+      });
+    });
+};
+
+export const clearFeedbackMessage = () => (dispatch) => {
+  dispatch({ type: CLEAR_FEEDBACK_MESSAGE });
 };
 
 //general, including other users

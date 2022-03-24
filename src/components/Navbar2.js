@@ -276,7 +276,7 @@ export class Navbar2 extends Component {
         </Link>
         <div className="menuItemsContainer">
           <ul className="noBullets">
-            <li>
+            {/* <li>
               <Link
                 onClick={this.showMenu}
                 className="menuItems-Priority"
@@ -284,17 +284,21 @@ export class Navbar2 extends Component {
               >
                 Support Us
               </Link>
-            </li>
+            </li> */}
             <li>
-              <Link onClick={this.showMenu} className="menuItems" to="/profile">
+              <Link
+                onClick={this.showMenu}
+                className="menuItems"
+                to="/feedback"
+              >
                 Leave Feedback
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link onClick={this.showMenu} className="menuItems" to="/profile">
                 Share flockape
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>
@@ -332,7 +336,7 @@ export class Navbar2 extends Component {
               </Link>
             </li>
             <li>{shareUrlButton}</li>
-            <li>
+            {/* <li>
               <Link
                 onClick={this.showMenu}
                 className="menuItems-Priority"
@@ -340,12 +344,12 @@ export class Navbar2 extends Component {
               >
                 Support Us
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 onClick={this.showMenu}
                 className="menuItems"
-                to="/albumDetails"
+                to="/feedback"
               >
                 Leave Feedback
               </Link>

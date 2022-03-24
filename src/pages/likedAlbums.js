@@ -192,7 +192,7 @@ export class likedAlbums extends Component {
             <input
               className="search-bar"
               type="text"
-              placeholder="Search the Books you follow"
+              placeholder="Search for Books or username"
               value={this.state.searchText}
               onChange={this.handleSearch}
             />

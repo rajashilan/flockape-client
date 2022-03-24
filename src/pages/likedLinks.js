@@ -200,7 +200,7 @@ export class likedLinks extends Component {
             <input
               className="search-bar"
               type="text"
-              placeholder="Search your liked pages"
+              placeholder="Search for pages or username"
               value={this.state.searchText}
               onChange={this.handleSearch}
             />

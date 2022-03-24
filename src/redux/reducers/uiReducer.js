@@ -15,6 +15,8 @@ import {
   IS_NOT_ALBUM,
   SET_NAV_ACTIVE,
   CLEAR_NAV_ACTIVE,
+  SET_FEEDBACK_MESSAGE,
+  CLEAR_FEEDBACK_MESSAGE,
 } from "../types";
 
 const initialState = {
@@ -25,6 +27,7 @@ const initialState = {
   isAlbum: false,
   linkError: false,
   navActive: false,
+  feedbackMessage: "",
 };
 
 export default function (state = initialState, action) {
@@ -134,6 +137,17 @@ export default function (state = initialState, action) {
       return {
         ...state,
         navActive: false,
+      };
+    case SET_FEEDBACK_MESSAGE:
+      return {
+        ...state,
+        feedbackMessage: action.payload,
+        loading: false,
+      };
+    case CLEAR_FEEDBACK_MESSAGE:
+      return {
+        ...state,
+        feedbackMessage: "",
       };
     default:
       return state;

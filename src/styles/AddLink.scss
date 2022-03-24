@@ -63,6 +63,20 @@
     margin-bottom: 1.25rem;
   }
 
+  &-input-margin {
+    background-color: $bgColor3;
+    border-radius: 0.3125rem;
+    color: $primaryText;
+    font-weight: 300;
+    font-size: 1rem;
+    width: 100%;
+    padding: 0.75rem 0.625rem;
+    border: none;
+    border-color: transparent;
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
   &-input-textarea {
     background-color: $bgColor3;
     border-radius: 0.3125rem;
@@ -75,6 +89,21 @@
     border-color: transparent;
     margin-top: 0;
     margin-bottom: 1.25rem;
+    resize: vertical;
+  }
+
+  &-input-textarea-margin {
+    background-color: $bgColor3;
+    border-radius: 0.3125rem;
+    color: $primaryText;
+    font-weight: 300;
+    font-size: 1rem;
+    width: 100%;
+    padding: 0.75rem 0.625rem;
+    border: none;
+    border-color: transparent;
+    margin-top: 0.875rem;
+    margin-bottom: 1rem;
     resize: vertical;
   }
 
@@ -95,6 +124,13 @@
       font-weight: 300;
       font-size: 0.75rem;
       margin: 0 0.3125rem 1.25rem 0.3125rem;
+      text-align: center;
+    }
+
+    &-success-no-margin {
+      color: $bgColorSuccess;
+      font-weight: 300;
+      font-size: 0.75rem;
       text-align: center;
     }
 

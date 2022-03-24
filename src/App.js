@@ -38,6 +38,7 @@ import editAlbum from "./pages/editAlbum";
 import resetPassword from "./pages/resetPassword";
 import updatePassword from "./pages/updatePassword";
 import notifications from "./pages/notifications";
+import feedback from "./pages/feedback";
 
 axios.defaults.baseURL =
   "http://localhost:5500/sharesite-test/asia-southeast1/api";
@@ -89,6 +90,7 @@ class App extends Component {
               <Route path="/update-password" component={updatePassword} />
               <Route path="/:username/book/:albumID" component={albumDetails} />
               <Route path="/@:username" component={anotherUser} />
+              <Route path="/feedback" component={feedback} />
               <ProfileCardMain />
             </div>
           </Switch>

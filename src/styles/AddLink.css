@@ -61,6 +61,20 @@
   margin-bottom: 1.25rem;
 }
 
+.addLink-input-margin {
+  background-color: #4a4a64;
+  border-radius: 0.3125rem;
+  color: #f2f2f2;
+  font-weight: 300;
+  font-size: 1rem;
+  width: 100%;
+  padding: 0.75rem 0.625rem;
+  border: none;
+  border-color: transparent;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
 .addLink-input-textarea {
   background-color: #4a4a64;
   border-radius: 0.3125rem;
@@ -73,6 +87,21 @@
   border-color: transparent;
   margin-top: 0;
   margin-bottom: 1.25rem;
+  resize: vertical;
+}
+
+.addLink-input-textarea-margin {
+  background-color: #4a4a64;
+  border-radius: 0.3125rem;
+  color: #f2f2f2;
+  font-weight: 300;
+  font-size: 1rem;
+  width: 100%;
+  padding: 0.75rem 0.625rem;
+  border: none;
+  border-color: transparent;
+  margin-top: 0.875rem;
+  margin-bottom: 1rem;
   resize: vertical;
 }
 
@@ -94,6 +123,13 @@
   font-weight: 300;
   font-size: 0.75rem;
   margin: 0 0.3125rem 1.25rem 0.3125rem;
+  text-align: center;
+}
+
+.addLink-label-success-no-margin {
+  color: #4ee28c;
+  font-weight: 300;
+  font-size: 0.75rem;
   text-align: center;
 }
 
