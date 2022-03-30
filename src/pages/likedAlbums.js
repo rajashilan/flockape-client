@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import HomeNavigation from "../components/HomeNavigation";
 
 import "../styles/HomeNavigation.css";
@@ -9,6 +9,7 @@ import searchIcon from "../components/images/searchIcon@2x.png";
 import closeIcon from "../components/images/closeIcon@2x.png";
 
 import Album from "../components/Album";
+import AlbumLoading from "../components/AlbumLoading";
 
 import {
   getLikedAlbums,
@@ -170,9 +171,7 @@ export class likedAlbums extends Component {
         <p>Loading...</p>
       );
 
-    let loadingPaginationText = loadingPagination ? (
-      <p>Loading pagination</p>
-    ) : null;
+    let loadingPaginationText = loadingPagination ? <AlbumLoading /> : null;
 
     let searchBarIcon = this.state.searchText ? (
       <img
@@ -182,6 +181,20 @@ export class likedAlbums extends Component {
       />
     ) : (
       <img className="search-icon" src={searchIcon} />
+    );
+
+    let likedAlbumsContainer = !loading ? (
+      <div className="album-likes-container">{albumData}</div>
+    ) : (
+      <Fragment>
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+      </Fragment>
     );
 
     return (
@@ -198,7 +211,7 @@ export class likedAlbums extends Component {
             />
             {searchBarIcon}
           </div>
-          <div className="album-likes-container">{albumData}</div>
+          {likedAlbumsContainer}
           {loadingPaginationText}
         </div>
       </div>

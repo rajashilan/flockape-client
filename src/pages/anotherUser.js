@@ -1,9 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 
 import AnotherProfile from "../components/AnotherProfile";
 import Album from "../components/Album";
+import AlbumLoading from "../components/AlbumLoading";
 
 import "../styles/Album.css";
+import "../styles/Profile.css";
 
 import "../styles/SearchBar.css";
 import searchIcon from "../components/images/searchIcon@2x.png";
@@ -145,9 +147,7 @@ export class anotherUser extends Component {
       loadingPagination,
     } = this.props.data;
 
-    let loadingPaginationText = loadingPagination ? (
-      <p>Loading pagination</p>
-    ) : null;
+    let loadingPaginationText = loadingPagination ? <AlbumLoading /> : null;
 
     //searching functionalities
     // let searches = [];
@@ -222,7 +222,37 @@ export class anotherUser extends Component {
         />
       ) : null
     ) : (
-      <p>Loading...</p>
+      <div className="profile-primary-container">
+        <div className="profile-secondary-container">
+          <div className="profile-img-loading"></div>
+          <div className="profile-main-details-container">
+            <h3 className="profile-username-loading"></h3>
+            <div className="profile-albums-details-container">
+              <p className="profile-album-details-loading"></p>
+            </div>
+          </div>
+        </div>
+        <div className="profile-tertiary-container">
+          <h2 className="profile-name-loading"></h2>
+          <h4 className="profile-other-details-loading"></h4>
+          <h4 className="profile-other-details-loading"></h4>
+          <a href="#" className="profile-website-link-loading"></a>
+        </div>
+      </div>
+    );
+
+    let anotherUserAlbumsContainer = !loading ? (
+      <div className="album-container">{albumData}</div>
+    ) : (
+      <Fragment>
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+      </Fragment>
     );
 
     return (
@@ -239,7 +269,7 @@ export class anotherUser extends Component {
             />
             {searchBarIcon}
           </div>
-          <div className="album-container">{albumData}</div>
+          {anotherUserAlbumsContainer}
           {loadingPaginationText}
         </div>
       </div>

@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 
 import Notifications from "../components/Notifications";
+import NotificationsLoading from "../components/NotificationsLoading";
 
 import {
   markNotificationsRead,
@@ -67,15 +68,32 @@ export class notifications extends Component {
         ))
       ) : (
         <h2 className="notifications-default-title">
-          You don't have any notifications.
+          You don't have any notifications yet. Start sharing your books!
         </h2>
       )
     ) : (
-      <h2 className="notifications-default-title">Loading...</h2>
+      <Fragment>
+        <NotificationsLoading />
+        <NotificationsLoading />
+        <NotificationsLoading />
+        <NotificationsLoading />
+        <NotificationsLoading />
+        <NotificationsLoading />
+        <NotificationsLoading />
+        <NotificationsLoading />
+        <NotificationsLoading />
+        <NotificationsLoading />
+        <NotificationsLoading />
+        <NotificationsLoading />
+        <NotificationsLoading />
+        <NotificationsLoading />
+        <NotificationsLoading />
+        <NotificationsLoading />
+      </Fragment>
     );
 
     let loadingNotificationsText = loadingNotifications ? (
-      <p>Loading pagination</p>
+      <NotificationsLoading />
     ) : null;
 
     return (

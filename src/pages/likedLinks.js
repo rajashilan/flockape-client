@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import HomeNavigation from "../components/HomeNavigation";
 
 import "../styles/HomeNavigation.css";
@@ -9,6 +9,7 @@ import searchIcon from "../components/images/searchIcon@2x.png";
 import closeIcon from "../components/images/closeIcon@2x.png";
 
 import LinkComponent from "../components/LinkComponent";
+import LinkLoading from "../components/LinkLoading";
 
 import {
   getLikedLinks,
@@ -28,6 +29,7 @@ import {
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 export class likedLinks extends Component {
   state = {
@@ -153,9 +155,7 @@ export class likedLinks extends Component {
     // }
     //end of searching functionalities
 
-    let loadingPaginationText = loadingPagination ? (
-      <p>Loading pagination</p>
-    ) : null;
+    let loadingPaginationText = loadingPagination ? <LinkLoading /> : null;
 
     let linkData =
       !loading && likedLinks ? (
@@ -179,7 +179,24 @@ export class likedLinks extends Component {
           ))
         )
       ) : (
-        <p>Loading...</p>
+        <Fragment>
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+        </Fragment>
       );
 
     let searchBarIcon = this.state.searchText ? (
@@ -206,8 +223,10 @@ export class likedLinks extends Component {
             />
             {searchBarIcon}
           </div>
-          <div className="link-likes-container">{linkData}</div>
-          {loadingPaginationText}
+          <div className="link-likes-container">
+            {linkData}
+            {loadingPaginationText}
+          </div>
         </div>
       </div>
     );

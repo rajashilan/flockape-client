@@ -45,6 +45,14 @@
       width: 6.25rem;
       object-fit: cover;
       margin: 0 0 1rem 0;
+
+      &-loading {
+        border-radius: 50%;
+        height: 6.25rem;
+        width: 6.25rem;
+        margin: 0 auto 1rem auto;
+        background-color: $bgColor3;
+      }
     }
 
     &-username {
@@ -52,6 +60,13 @@
       font-weight: 400;
       font-size: 1rem;
       margin: 0 0 0.312rem 0;
+
+      &-loading {
+        height: 1rem;
+        margin: 0 auto 0.625rem auto;
+        background-color: $bgColor3;
+        width: 60%;
+      }
     }
 
     &-details-container {
@@ -65,6 +80,27 @@
       font-weight: 300;
       font-size: 0.875rem;
       margin: 0 1rem 0 0;
+
+      &-last {
+        color: $secondaryText;
+        font-weight: 300;
+        font-size: 0.875rem;
+        margin: 0;
+      }
+
+      &-loading {
+        height: 0.875rem;
+        margin: 0 1rem 0 0;
+        background-color: $bgColor3;
+        width: 80%;
+      }
+
+      &-loading-last {
+        height: 0.875rem;
+        margin: 0;
+        background-color: $bgColor3;
+        width: 80%;
+      }
     }
 
     &-bottom-container {
@@ -79,6 +115,13 @@
       font-weight: 400;
       font-size: 1rem;
       margin: 0 0 0.1875rem 0;
+
+      &-loading {
+        height: 1rem;
+        margin: 0 0 0.625rem 0;
+        background-color: $bgColor3;
+        width: 60%;
+      }
     }
 
     &-other-details {
@@ -86,6 +129,13 @@
       color: $tertiaryText;
       font-weight: 300;
       font-size: 0.875rem;
+
+      &-loading {
+        margin-bottom: 0.625rem;
+        height: 0.875rem;
+        width: 80%;
+        background-color: $bgColor3;
+      }
     }
 
     &-website-link {

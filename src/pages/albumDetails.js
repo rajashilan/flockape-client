@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 
 import "../styles/Link.css";
@@ -10,6 +10,8 @@ import closeIcon from "../components/images/closeIcon@2x.png";
 
 import LinkComponent from "../components/LinkComponent";
 import AlbumDetails from "../components/AlbumDetails";
+import AlbumDetailsLoading from "../components/AlbumDetailsLoading";
+import LinkLoading from "../components/LinkLoading";
 
 import {
   getAlbum,
@@ -272,13 +274,47 @@ class albumDetails extends Component {
             ))
           )
         ) : (
-          <p>Loading...</p>
+          <Fragment>
+            <LinkLoading />
+            <LinkLoading />
+            <LinkLoading />
+            <LinkLoading />
+            <LinkLoading />
+            <LinkLoading />
+            <LinkLoading />
+            <LinkLoading />
+            <LinkLoading />
+            <LinkLoading />
+            <LinkLoading />
+            <LinkLoading />
+            <LinkLoading />
+            <LinkLoading />
+            <LinkLoading />
+            <LinkLoading />
+          </Fragment>
         )
-      ) : null;
+      ) : !loading ? null : (
+        <Fragment>
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+          <LinkLoading />
+        </Fragment>
+      );
 
-    let loadingPaginationText = loadingPagination ? (
-      <p>Loading pagination</p>
-    ) : null;
+    let loadingPaginationText = loadingPagination ? <LinkLoading /> : null;
 
     let userDisplay =
       !loading && (!authenticated || credentials.username !== username) ? (
@@ -315,24 +351,30 @@ class albumDetails extends Component {
       <img className="search-icon" src={searchIcon} />
     );
 
+    let albumDetailsDisplay = !loading ? (
+      <AlbumDetails
+        key={albumID}
+        albumTitle={albumTitle}
+        albumImg={albumImg}
+        likeCount={likeCount}
+        viewCount={viewCount}
+        albumID={albumID}
+        security={security}
+        linkCount={linkCount}
+        username={username}
+        options={true}
+        history={toHistory}
+      />
+    ) : (
+      <AlbumDetailsLoading />
+    );
+
     return (
       <div className="albumDetails-main-overall-container">
         <div className="albumDetails-card-container">
           <div className="albumDetails-main-container">
             {userDisplay}
-            <AlbumDetails
-              key={albumID}
-              albumTitle={albumTitle}
-              albumImg={albumImg}
-              likeCount={likeCount}
-              viewCount={viewCount}
-              albumID={albumID}
-              security={security}
-              linkCount={linkCount}
-              username={username}
-              options={true}
-              history={toHistory}
-            />
+            {albumDetailsDisplay}
           </div>
           <div className="search-container">
             <input
@@ -345,8 +387,10 @@ class albumDetails extends Component {
             {searchBarIcon}
           </div>
           {addLinkButton}
-          <div className="link-main-container">{linksDisplay}</div>
-          {loadingPaginationText}
+          <div className="link-main-container">
+            {linksDisplay}
+            {loadingPaginationText}
+          </div>
         </div>
       </div>
     );

@@ -148,6 +148,10 @@
   display: none;
 }
 
+.navbar-topbar-secondary-button {
+  display: none;
+}
+
 .navbar-profile-image-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -184,7 +188,7 @@
   max-width: 2.1875rem;
   border-radius: 50%;
   border: none;
-  background-color: #989898;
+  background-color: #4a4a64;
   -o-object-fit: cover;
      object-fit: cover;
 }

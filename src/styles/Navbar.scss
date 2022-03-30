@@ -121,6 +121,10 @@
     display: none;
   }
 
+  &-topbar-secondary-button {
+    display: none;
+  }
+
   &-profile-image-container {
     display: flex;
     justify-content: center;
@@ -149,7 +153,7 @@
       max-width: 2.1875rem;
       border-radius: 50%;
       border: none;
-      background-color: $tertiaryText;
+      background-color: $bgColor3;
       object-fit: cover;
     }
   }

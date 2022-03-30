@@ -19,7 +19,9 @@ class signup extends Component {
       confirmPassword: "",
       username: "",
       fullName: "",
-      birthday: "",
+      day: "",
+      month: "",
+      year: "",
       loading: false,
       errors: {},
     };
@@ -45,13 +47,19 @@ class signup extends Component {
       fullName: this.state.fullName,
       birthday: this.state.birthday,
     };
-    if (this.state.birthday.trim()) {
-      const dateSplit = this.state.birthday.split("-");
-      const day = parseInt(dateSplit[2], 10);
-      const month = parseInt(dateSplit[1], 10);
-      const year = parseInt(dateSplit[0], 10);
-      const birthdayFormatted = day + "/" + month + "/" + year;
-      console.log(birthdayFormatted);
+    // if (this.state.birthday.trim()) {
+    //   const dateSplit = this.state.birthday.split("-");
+    //   const day = parseInt(dateSplit[2], 10);
+    //   const month = parseInt(dateSplit[1], 10);
+    //   const year = parseInt(dateSplit[0], 10);
+    //   const birthdayFormatted = day + "/" + month + "/" + year;
+    //   console.log(birthdayFormatted);
+    //   newUserData.birthday = birthdayFormatted;
+    // }
+
+    if (this.state.day && this.state.month && this.state.year) {
+      const birthdayFormatted =
+        this.state.day + "/" + this.state.month + "/" + this.state.year;
       newUserData.birthday = birthdayFormatted;
     }
     this.props.signupUser(newUserData, this.props.history);
@@ -148,7 +156,7 @@ class signup extends Component {
             <label htmlFor="birthday" className="login-label">
               Birthday
             </label>
-            <input
+            {/* <input
               id="birthday"
               name="birthday"
               placeholder="Birthday"
@@ -156,7 +164,36 @@ class signup extends Component {
               className="login-input"
               value={this.state.birthday}
               onChange={this.handleChange}
-            />
+            /> */}
+            <div className="login-birthday-container">
+              <input
+                id="day"
+                name="day"
+                type="number"
+                className="login-input-birthday"
+                placeholder="Day"
+                value={this.state.day}
+                onChange={this.handleChange}
+              />
+              <input
+                id="month"
+                name="month"
+                type="number"
+                className="login-input-birthday"
+                placeholder="Month"
+                value={this.state.month}
+                onChange={this.handleChange}
+              />
+              <input
+                id="year"
+                name="year"
+                type="number"
+                className="login-input-birthday-last"
+                placeholder="Year"
+                value={this.state.year}
+                onChange={this.handleChange}
+              />
+            </div>
             <label htmlFor="birthday" className="login-label-mini">
               Your birthday will not be shared with other users.
             </label>

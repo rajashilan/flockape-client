@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import "../styles/ProfileCardMain.css";
 
+import ProfileCardMainLoading from "./ProfileCardMainLoading";
+
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -69,44 +71,50 @@ class ProfileCardMain extends Component {
     }
 
     let profileCardDisplay = authenticated ? (
-      <div>
-        <div className="profileCardMain-top-container">
-          <img src={profileImg} alt="" className="profileCardMain-img" />
-          <h3 className="profileCardMain-username">@{username}</h3>
-          <div className="profileCardMain-details-container">
-            <h5 className="profileCardMain-details">
-              {abbrNum(albumCount.albums, 1)} Books
-            </h5>
-            <h5 className="profileCardMain-details">
-              {abbrNum(albumCount.likes, 1)} follows
-            </h5>
-            <h5 className="profileCardMain-details">
-              {abbrNum(albumCount.views, 1)} views
-            </h5>
+      !loading ? (
+        <div>
+          <div className="profileCardMain-top-container">
+            <img src={profileImg} alt="" className="profileCardMain-img" />
+            <h3 className="profileCardMain-username">@{username}</h3>
+            <div className="profileCardMain-details-container">
+              <h5 className="profileCardMain-details">
+                {abbrNum(albumCount.albums, 1)} Books
+              </h5>
+              <h5 className="profileCardMain-details">
+                {abbrNum(albumCount.likes, 1)} follows
+              </h5>
+              <h5 className="profileCardMain-details-last">
+                {abbrNum(albumCount.views, 1)} views
+              </h5>
+            </div>
+          </div>
+          <div className="profileCardMain-bottom-container">
+            {fullName && <h2 className="profileCardMain-name">{fullName}</h2>}
+            {bio && <h4 className="profileCardMain-other-details">{bio}</h4>}
+            {location && (
+              <h4 className="profileCardMain-other-details">{location}</h4>
+            )}
+            {website && (
+              <a
+                href={website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="profileCardMain-website-link"
+              >
+                {website}
+              </a>
+            )}
+            <h4 className="profileCardMain-other-details">
+              url: {domain}@{username}
+            </h4>
           </div>
         </div>
-        <div className="profileCardMain-bottom-container">
-          {fullName && <h2 className="profileCardMain-name">{fullName}</h2>}
-          {bio && <h4 className="profileCardMain-other-details">{bio}</h4>}
-          {location && (
-            <h4 className="profileCardMain-other-details">{location}</h4>
-          )}
-          {website && (
-            <a
-              href={website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="profileCardMain-website-link"
-            >
-              {website}
-            </a>
-          )}
-          <h4 className="profileCardMain-other-details">
-            url: {domain}@{username}
-          </h4>
-        </div>
-      </div>
-    ) : null;
+      ) : (
+        <ProfileCardMainLoading />
+      )
+    ) : !loading ? null : (
+      <ProfileCardMainLoading />
+    );
 
     let profileCardMainContainerClassName = authenticated
       ? "profileCardMain-main-container"

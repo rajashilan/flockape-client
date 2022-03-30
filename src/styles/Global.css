@@ -41,7 +41,7 @@ a {
   background-color: #282840;
   border-radius: 0.3125rem;
   padding: 1rem;
-  margin: 2.5rem 1rem 0 1rem;
+  margin: 1rem 1rem;
   color: #d3d3d3;
   font-weight: 300;
   font-size: 1rem;
@@ -52,7 +52,7 @@ a {
   background-color: #bf7e45;
   border-radius: 0.3125rem;
   padding: 1rem;
-  margin: 2.5rem 1rem 0 1rem;
+  margin: 0 1rem;
   color: #242424;
   font-weight: 400;
   font-size: 1rem;
@@ -101,5 +101,18 @@ a {
 
 .hidden {
   display: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 /*# sourceMappingURL=Global.css.map */

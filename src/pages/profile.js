@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 
 import Profile from "../components/Profile";
 import Album from "../components/Album";
+import AlbumLoading from "../components/AlbumLoading";
 
 import "../styles/Album.css";
 
@@ -167,9 +168,7 @@ export class profile extends Component {
       <img className="search-icon" src={searchIcon} />
     );
 
-    let loadingPaginationText = loadingPagination ? (
-      <p>Loading pagination</p>
-    ) : null;
+    let loadingPaginationText = loadingPagination ? <AlbumLoading /> : null;
 
     let albumCount = {
       albums: albums.length,
@@ -183,6 +182,20 @@ export class profile extends Component {
         albumCount.likes += album.likeCount;
       });
     }
+
+    let profileAlbumsContainer = !loading ? (
+      <div className="album-likes-container">{albumData}</div>
+    ) : (
+      <Fragment>
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+      </Fragment>
+    );
 
     return (
       <div className="profile-main-container">
@@ -203,7 +216,7 @@ export class profile extends Component {
             />
             {searchBarIcon}
           </div>
-          <div className="album-likes-container">{albumData}</div>
+          {profileAlbumsContainer}
           {loadingPaginationText}
         </div>
       </div>

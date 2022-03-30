@@ -39,6 +39,7 @@ import resetPassword from "./pages/resetPassword";
 import updatePassword from "./pages/updatePassword";
 import notifications from "./pages/notifications";
 import feedback from "./pages/feedback";
+import notFound from "./pages/notFound";
 
 axios.defaults.baseURL =
   "http://localhost:5500/sharesite-test/asia-southeast1/api";
@@ -77,20 +78,28 @@ class App extends Component {
             <Route path="/signup-add-details" component={signupAddDetails} />
             <div className="app-main-container">
               <Route exact path={["/", "/books"]} component={albums} />
-              <Route path="/followed-books" component={likedAlbums} />
-              <Route path="/liked-pages" component={likedLinks} />
-              <Route path="/profile" component={profile} />
-              <Route path="/notifications" component={notifications} />
-              <Route path="/create-book" component={addAlbum} />
-              <Route path="/add-book-cover" component={addAlbumImage} />
-              <Route path="/add-page" component={addLink} />
-              <Route path="/add-page-manually" component={addLinkManually} />
-              <Route path="/manage-account" component={manageAccount} />
-              <Route path="/edit-book" component={editAlbum} />
-              <Route path="/update-password" component={updatePassword} />
-              <Route path="/:username/book/:albumID" component={albumDetails} />
-              <Route path="/@:username" component={anotherUser} />
-              <Route path="/feedback" component={feedback} />
+              <Route exact path="/followed-books" component={likedAlbums} />
+              <Route exact path="/liked-pages" component={likedLinks} />
+              <Route exact path="/profile" component={profile} />
+              <Route exact path="/notifications" component={notifications} />
+              <Route exact path="/create-book" component={addAlbum} />
+              <Route exact path="/add-book-cover" component={addAlbumImage} />
+              <Route exact path="/add-page" component={addLink} />
+              <Route
+                exact
+                path="/add-page-manually"
+                component={addLinkManually}
+              />
+              <Route exact path="/manage-account" component={manageAccount} />
+              <Route exact path="/edit-book" component={editAlbum} />
+              <Route exact path="/update-password" component={updatePassword} />
+              <Route
+                exact
+                path="/:username/book/:albumID"
+                component={albumDetails}
+              />
+              <Route exact path="/@:username" component={anotherUser} />
+              <Route exact path="/feedback" component={feedback} />
               <ProfileCardMain />
             </div>
           </Switch>

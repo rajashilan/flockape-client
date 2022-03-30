@@ -1,8 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 
 import HomeNavigation from "../components/HomeNavigation";
 import Album from "../components/Album";
+import AlbumLoading from "../components/AlbumLoading";
+import VerificationLabel from "../components/VerificationLabel";
 //css
 import "../styles/HomeNavigation.css";
 import "../styles/Album.css";
@@ -129,22 +131,6 @@ export class albums extends Component {
     });
   };
 
-  Verification = () => {
-    if (
-      this.props.location.state &&
-      this.props.location.state.verification &&
-      this.props.location.state.verification === "verified"
-    ) {
-      return (
-        <p className="label-verification">
-          A verification link has been sent to your email. Please click the link
-          and complete your registration process to start creating Books. Thank
-          you!
-        </p>
-      );
-    } else return null;
-  };
-
   render() {
     const {
       albums,
@@ -210,9 +196,7 @@ export class albums extends Component {
       </p>
     ) : null;
 
-    let loadingPaginationText = loadingPagination ? (
-      <p>Loading pagination</p>
-    ) : null;
+    let loadingPaginationText = loadingPagination ? <AlbumLoading /> : null;
 
     let searchBarIcon = this.state.searchText ? (
       <img
@@ -223,10 +207,25 @@ export class albums extends Component {
     ) : (
       <img className="search-icon" src={searchIcon} />
     );
+
+    let albumsContainer = !loading ? (
+      <div className="album-container">{albumData}</div>
+    ) : (
+      <Fragment>
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+        <AlbumLoading />
+      </Fragment>
+    );
+
     return (
       <div className="album-main-container">
         <div className="album-card-container">
-          <this.Verification />
+          <VerificationLabel />
           <HomeNavigation />
           <div className="search-container">
             <input
@@ -242,7 +241,7 @@ export class albums extends Component {
             {addAnAlbumButton}
             {verificationErrorLabel}
           </div>
-          <div className="album-container">{albumData}</div>
+          {albumsContainer}
           {loadingPaginationText}
         </div>
       </div>

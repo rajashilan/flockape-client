@@ -22,6 +22,14 @@
     object-fit: cover;
     border: none;
     border-radius: 0.3125rem;
+
+    &-loading {
+      width: 100%;
+      height: 8.875rem;
+      border: none;
+      border-radius: 0.3125rem;
+      background-color: $bgColor3;
+    }
   }
 
   &-details-container {
@@ -57,6 +65,14 @@
     display: block;
     -webkit-line-clamp: 1; /* number of lines to show */
     -webkit-box-orient: vertical;
+
+    &-loading {
+      width: 60%;
+      height: 1rem;
+      background-color: $bgColor3;
+      margin-top: 0.5rem;
+      margin-left: -0.3125rem;
+    }
   }
 
   &-icon-div {
@@ -105,6 +121,15 @@
       color: $secondaryText;
       font-weight: 300;
       font-size: 0.625rem;
+    }
+
+    &-loading {
+      display: flex;
+      align-items: center;
+      width: 25%;
+      height: 0.75rem;
+      background-color: $bgColor3;
+      margin-top: 0.3125rem;
     }
   }
 
@@ -398,6 +423,14 @@
       object-fit: cover;
       border: none;
       border-radius: 0.3125rem;
+
+      &-loading {
+        width: 100%;
+        height: 10.25rem;
+        border: none;
+        border-radius: 0.3125rem;
+        background-color: $bgColor3;
+      }
     }
 
     &-more {
@@ -437,6 +470,14 @@
       object-fit: cover;
       border: none;
       border-radius: 0.3125rem;
+
+      &-loading {
+        width: 100%;
+        height: 12.5rem;
+        border: none;
+        border-radius: 0.3125rem;
+        background-color: $bgColor3;
+      }
     }
 
     &-more {
@@ -477,6 +518,14 @@
       object-fit: cover;
       border: none;
       border-radius: 0.3125rem;
+
+      &-loading {
+        width: 100%;
+        height: 12.5rem;
+        border: none;
+        border-radius: 0.3125rem;
+        background-color: $bgColor3;
+      }
     }
 
     &-more {

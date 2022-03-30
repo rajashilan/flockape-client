@@ -42,11 +42,24 @@
        object-fit: cover;
     margin: 0 0 1rem 0;
   }
+  .profileCardMain-img-loading {
+    border-radius: 50%;
+    height: 6.25rem;
+    width: 6.25rem;
+    margin: 0 auto 1rem auto;
+    background-color: #4a4a64;
+  }
   .profileCardMain-username {
     color: #f2f2f2;
     font-weight: 400;
     font-size: 1rem;
     margin: 0 0 0.312rem 0;
+  }
+  .profileCardMain-username-loading {
+    height: 1rem;
+    margin: 0 auto 0.625rem auto;
+    background-color: #4a4a64;
+    width: 60%;
   }
   .profileCardMain-details-container {
     display: -webkit-box;
@@ -65,6 +78,24 @@
     font-size: 0.875rem;
     margin: 0 1rem 0 0;
   }
+  .profileCardMain-details-last {
+    color: #d3d3d3;
+    font-weight: 300;
+    font-size: 0.875rem;
+    margin: 0;
+  }
+  .profileCardMain-details-loading {
+    height: 0.875rem;
+    margin: 0 1rem 0 0;
+    background-color: #4a4a64;
+    width: 80%;
+  }
+  .profileCardMain-details-loading-last {
+    height: 0.875rem;
+    margin: 0;
+    background-color: #4a4a64;
+    width: 80%;
+  }
   .profileCardMain-bottom-container {
     background-color: #1e1e2b;
     display: block;
@@ -77,11 +108,23 @@
     font-size: 1rem;
     margin: 0 0 0.1875rem 0;
   }
+  .profileCardMain-name-loading {
+    height: 1rem;
+    margin: 0 0 0.625rem 0;
+    background-color: #4a4a64;
+    width: 60%;
+  }
   .profileCardMain-other-details {
     margin: 0.125rem;
     color: #989898;
     font-weight: 300;
     font-size: 0.875rem;
+  }
+  .profileCardMain-other-details-loading {
+    margin-bottom: 0.625rem;
+    height: 0.875rem;
+    width: 80%;
+    background-color: #4a4a64;
   }
   .profileCardMain-website-link {
     margin: 0.125rem 0 0 0;

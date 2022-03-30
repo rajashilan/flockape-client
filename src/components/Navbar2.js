@@ -368,9 +368,15 @@ export class Navbar2 extends Component {
       ? "navbar-search-button-authenticated-container"
       : "navbar-search-button-unauthenticated-container";
 
-    let userImageClassName = loading
-      ? "navbar-profile-image-loading"
-      : "navbar-profile-image";
+    let userImageElement = loading ? (
+      <div className="navbar-profile-image-container">
+        <div src={profileImg} className="navbar-profile-image-loading"></div>
+      </div>
+    ) : (
+      <Link to="/profile" className="navbar-profile-image-container">
+        <img src={profileImg} className="navbar-profile-image" />
+      </Link>
+    );
 
     let searchedUserData = this.state.searchedUsers ? (
       this.state.searchedUsers.map((user) => (
@@ -447,11 +453,7 @@ export class Navbar2 extends Component {
 
         {authenticated && !this.state.showSearchButton && topBarButton}
 
-        {authenticated && !this.state.showSearchButton && (
-          <Link to="/profile" className="navbar-profile-image-container">
-            <img src={profileImg} className={userImageClassName} />
-          </Link>
-        )}
+        {authenticated && !this.state.showSearchButton && userImageElement}
 
         {!authenticated && !this.state.showSearchButton && (
           <Link className="navbar-signup-button" to="/signup">
