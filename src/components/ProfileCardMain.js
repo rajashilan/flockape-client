@@ -14,24 +14,33 @@ class ProfileCardMain extends Component {
     const {
       user: {
         authenticated,
-        credentials: { username, profileImg, fullName, bio, website, location },
+        credentials: {
+          username,
+          profileImg,
+          fullName,
+          bio,
+          website,
+          location,
+          albums,
+          views,
+          follows,
+        },
         loading,
       },
-      data: { albums },
     } = this.props;
 
-    let albumCount = {
-      albums: albums.length,
-      views: 0,
-      likes: 0,
-    };
+    // let albumCount = {
+    //   albums: albums.length,
+    //   views: 0,
+    //   likes: 0,
+    // };
 
-    if (albums.length > 0) {
-      albums.forEach((album) => {
-        albumCount.views += album.viewCount;
-        albumCount.likes += album.likeCount;
-      });
-    }
+    // if (albums.length > 0) {
+    //   albums.forEach((album) => {
+    //     albumCount.views += album.viewCount;
+    //     albumCount.likes += album.likeCount;
+    //   });
+    // }
 
     const domain = "https://sharesite-test.web.app/";
 
@@ -78,13 +87,13 @@ class ProfileCardMain extends Component {
             <h3 className="profileCardMain-username">@{username}</h3>
             <div className="profileCardMain-details-container">
               <h5 className="profileCardMain-details">
-                {abbrNum(albumCount.albums, 1)} Books
+                {abbrNum(albums, 1)} Books
               </h5>
               <h5 className="profileCardMain-details">
-                {abbrNum(albumCount.likes, 1)} follows
+                {abbrNum(follows, 1)} follows
               </h5>
               <h5 className="profileCardMain-details-last">
-                {abbrNum(albumCount.views, 1)} views
+                {abbrNum(views, 1)} views
               </h5>
             </div>
           </div>

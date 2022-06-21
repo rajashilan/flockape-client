@@ -10,10 +10,17 @@ import { connect } from "react-redux";
 class AnotherProfile extends Component {
   render() {
     const {
-      albums,
-      likes,
-      views,
-      user: { username, fullName, profileImg, website, location, bio },
+      user: {
+        username,
+        fullName,
+        profileImg,
+        website,
+        location,
+        bio,
+        albums,
+        views,
+        follows,
+      },
       data: { loading },
     } = this.props;
 
@@ -63,7 +70,7 @@ class AnotherProfile extends Component {
                 {abbrNum(albums, 1)} Books
               </p>
               <p className="profile-album-details">
-                {abbrNum(likes, 1)} follows
+                {abbrNum(follows, 1)} follows
               </p>
               <p className="profile-album-details">{abbrNum(views, 1)} views</p>
             </div>

@@ -195,31 +195,26 @@ export class anotherUser extends Component {
 
     let albumLength = 0;
 
-    if (albums) {
-      albumLength = albums.length;
-    }
+    // if (albums) {
+    //   albumLength = albums.length;
+    // }
 
-    let albumCount = {
-      albums: albumLength,
-      views: 0,
-      likes: 0,
-    };
+    // let albumCount = {
+    //   albums: albumLength,
+    //   views: 0,
+    //   likes: 0,
+    // };
 
-    if (albums && albums.length > 0) {
-      albums.forEach((album) => {
-        albumCount.views += album.viewCount;
-        albumCount.likes += album.likeCount;
-      });
-    }
+    // if (albums && albums.length > 0) {
+    //   albums.forEach((album) => {
+    //     albumCount.views += album.viewCount;
+    //     albumCount.likes += album.likeCount;
+    //   });
+    // }
 
     let userData = !loading ? (
       user ? (
-        <AnotherProfile
-          albums={albumCount.albums}
-          views={albumCount.views}
-          likes={albumCount.likes}
-          user={user}
-        />
+        <AnotherProfile user={user} />
       ) : null
     ) : (
       <div className="profile-primary-container">

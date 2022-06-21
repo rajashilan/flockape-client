@@ -39,11 +39,18 @@ class Profile extends Component {
 
   render() {
     const {
-      albums,
-      likes,
-      views,
       user: {
-        credentials: { username, profileImg, fullName, bio, website, location },
+        credentials: {
+          username,
+          profileImg,
+          fullName,
+          bio,
+          website,
+          location,
+          albums,
+          views,
+          follows,
+        },
         loading,
       },
     } = this.props;
@@ -100,7 +107,7 @@ class Profile extends Component {
                 {abbrNum(albums, 1)} Books
               </p>
               <p className="profile-album-details">
-                {abbrNum(likes, 1)} follows
+                {abbrNum(follows, 1)} follows
               </p>
               <p className="profile-album-details">{abbrNum(views, 1)} views</p>
             </div>

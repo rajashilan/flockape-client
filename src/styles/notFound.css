@@ -1,0 +1,206 @@
+.notFound-container {
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: block;
+}
+
+.notFound-inner-container {
+  width: 60%;
+  display: block;
+  margin-left: auto;
+}
+
+.notFound-img {
+  width: auto;
+  margin: 0 3rem 0 3rem;
+  height: 15.625rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.notFound-img-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.notFound-text {
+  margin: 0;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.notFound-text-container {
+  margin-top: 3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.notFound-link {
+  margin-left: 0.375rem;
+  text-decoration: underline;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #f22b3e;
+}
+
+.notFound-link-container {
+  margin-bottom: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@media only screen and (max-width: 23.4375em) {
+  .notFound-inner-container {
+    width: 100%;
+    display: block;
+    margin-left: 0;
+  }
+  .notFound-img {
+    width: auto;
+    margin: 0 3rem 0 3rem;
+    height: 10rem;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  .notFound-img-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .notFound-text {
+    margin: 0;
+    font-weight: 400;
+    font-size: 0.75rem;
+  }
+  .notFound-text-container {
+    width: 100%;
+    margin-top: 1rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .notFound-link {
+    margin-left: 0.375rem;
+    text-decoration: underline;
+    font-weight: 500;
+    font-size: 0.75rem;
+    color: #f22b3e;
+  }
+  .notFound-link-container {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+}
+
+@media only screen and (min-width: 38.75em) {
+  .notFound-main-container {
+    padding: 1.5rem 4rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .notFound-inner-container {
+    width: 45%;
+    display: block;
+    margin-left: auto;
+  }
+  .notFound-card-container {
+    background-color: #1e1e2b;
+    border: none;
+    border-radius: 0.3125rem;
+    padding: 1rem 1rem;
+    width: 38rem;
+  }
+  .notFound-text {
+    margin: 0;
+    font-weight: 400;
+    font-size: 1rem;
+  }
+  .notFound-text-container {
+    margin-top: 1rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .notFound-link {
+    margin-left: 0.375rem;
+    text-decoration: underline;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #f22b3e;
+  }
+  .notFound-link-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+@media only screen and (min-width: 61.25em) {
+  .notFound-main-container {
+    padding: 1.5rem 1rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    margin: 0 0 0 auto;
+  }
+  .notFound-inner-container {
+    width: 40%;
+    display: block;
+    margin-left: auto;
+  }
+  .notFound-card-container {
+    background-color: #1e1e2b;
+    border: none;
+    border-radius: 0.3125rem;
+    padding: 1rem 1rem;
+    width: 38rem;
+  }
+  .notFound-text {
+    margin: 0;
+    font-weight: 400;
+    font-size: 1rem;
+  }
+  .notFound-text-container {
+    margin-top: 1rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .notFound-link {
+    margin-left: 0.375rem;
+    text-decoration: underline;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #f22b3e;
+  }
+  .notFound-link-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+/*# sourceMappingURL=notFound.css.map */

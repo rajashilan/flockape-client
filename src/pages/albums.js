@@ -51,6 +51,9 @@ export class albums extends Component {
     this.props.clearAlbums();
     this.props.clearSearchedAlbums();
     window.removeEventListener("scroll", this.handleScroll);
+    if (this.userLoadTimeOut) {
+      clearTimeout(this.userLoadTimeOut);
+    }
   }
 
   handleScroll = () => {
@@ -222,10 +225,18 @@ export class albums extends Component {
       </Fragment>
     );
 
+    let verification = !this.props.user.loading ? (
+      this.props.user &&
+      this.props.user.credentials &&
+      !this.props.user.credentials.isVerified ? (
+        <VerificationLabel />
+      ) : null
+    ) : null;
+
     return (
       <div className="album-main-container">
         <div className="album-card-container">
-          <VerificationLabel />
+          {verification}
           <HomeNavigation />
           <div className="search-container">
             <input

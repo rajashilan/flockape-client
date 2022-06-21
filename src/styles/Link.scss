@@ -266,6 +266,47 @@
     }
   }
 
+  //380PX SCREEN SIZE and below
+  @media only screen and (max-width: 23.75em) {
+    &-more {
+      &-container {
+        width: 9rem;
+        height: 4.125rem;
+        display: flex;
+        align-items: center;
+        background-color: $bgColor1;
+        padding: 0.3125rem 0.5rem;
+        text-align: center;
+        float: right;
+        border: none;
+        border-radius: 0.3125rem;
+      }
+
+      &-secondary-button {
+        display: block;
+        background-color: $bgColor3;
+        color: $secondaryText;
+        font-size: 0.875rem;
+        font-weight: 400;
+        padding: 0.5rem 1rem;
+        width: auto;
+        border: none;
+        border-radius: 0.3125rem;
+        margin: 0;
+        cursor: pointer;
+      }
+
+      &-cancel-button {
+        display: block;
+        color: $primaryText;
+        font-weight: 300;
+        font-size: 0.875rem;
+        margin: 0 0.625rem;
+        cursor: pointer;
+      }
+    }
+  }
+
   // 420PX SCREEN SIZE
   @media only screen and (min-width: 26.25em) {
     &-details-container {

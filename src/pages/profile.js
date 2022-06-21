@@ -170,18 +170,18 @@ export class profile extends Component {
 
     let loadingPaginationText = loadingPagination ? <AlbumLoading /> : null;
 
-    let albumCount = {
-      albums: albums.length,
-      views: 0,
-      likes: 0,
-    };
+    // let albumCount = {
+    //   albums: albums.length,
+    //   views: 0,
+    //   likes: 0,
+    // };
 
-    if (albums.length > 0) {
-      albums.forEach((album) => {
-        albumCount.views += album.viewCount;
-        albumCount.likes += album.likeCount;
-      });
-    }
+    // if (albums.length > 0) {
+    //   albums.forEach((album) => {
+    //     albumCount.views += album.viewCount;
+    //     albumCount.likes += album.likeCount;
+    //   });
+    // }
 
     let profileAlbumsContainer = !loading ? (
       <div className="album-likes-container">{albumData}</div>
@@ -200,12 +200,7 @@ export class profile extends Component {
     return (
       <div className="profile-main-container">
         <div className="profile-card-container">
-          <Profile
-            albums={albumCount.albums}
-            views={albumCount.views}
-            likes={albumCount.likes}
-            user={user}
-          />
+          <Profile user={user} />
           <div className="search-container">
             <input
               className="search-bar"

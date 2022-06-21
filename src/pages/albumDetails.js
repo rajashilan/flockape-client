@@ -215,6 +215,7 @@ class albumDetails extends Component {
         albumImg,
         likeCount,
         viewCount,
+        linkCount,
         albumID,
         username,
         profileImg,
@@ -243,11 +244,6 @@ class albumDetails extends Component {
     //   }
     // }
     //end of searching functionalities
-
-    let linkCount = 0;
-    if (links && links.length > 0) {
-      links.forEach((link) => linkCount++);
-    }
 
     let linksDisplay =
       links && links.length > 0 ? (

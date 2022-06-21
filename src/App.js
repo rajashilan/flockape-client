@@ -42,7 +42,7 @@ import feedback from "./pages/feedback";
 import notFound from "./pages/notFound";
 
 axios.defaults.baseURL =
-  "http://localhost:5500/sharesite-test/asia-southeast1/api";
+  "https://asia-southeast1-sharesite-test.cloudfunctions.net/api";
 
 const token = localStorage.FBIdToken;
 if (token) {
@@ -77,29 +77,37 @@ class App extends Component {
             />
             <Route path="/signup-add-details" component={signupAddDetails} />
             <div className="app-main-container">
-              <Route exact path={["/", "/books"]} component={albums} />
-              <Route exact path="/followed-books" component={likedAlbums} />
-              <Route exact path="/liked-pages" component={likedLinks} />
-              <Route exact path="/profile" component={profile} />
-              <Route exact path="/notifications" component={notifications} />
-              <Route exact path="/create-book" component={addAlbum} />
-              <Route exact path="/add-book-cover" component={addAlbumImage} />
-              <Route exact path="/add-page" component={addLink} />
-              <Route
-                exact
-                path="/add-page-manually"
-                component={addLinkManually}
-              />
-              <Route exact path="/manage-account" component={manageAccount} />
-              <Route exact path="/edit-book" component={editAlbum} />
-              <Route exact path="/update-password" component={updatePassword} />
-              <Route
-                exact
-                path="/:username/book/:albumID"
-                component={albumDetails}
-              />
-              <Route exact path="/@:username" component={anotherUser} />
-              <Route exact path="/feedback" component={feedback} />
+              <Switch>
+                <Route exact path={["/", "/books"]} component={albums} />
+                <Route exact path="/followed-books" component={likedAlbums} />
+                <Route exact path="/liked-pages" component={likedLinks} />
+                <Route exact path="/profile" component={profile} />
+                <Route exact path="/notifications" component={notifications} />
+                <Route exact path="/create-book" component={addAlbum} />
+                <Route exact path="/add-book-cover" component={addAlbumImage} />
+                <Route exact path="/add-page" component={addLink} />
+                <Route
+                  exact
+                  path="/add-page-manually"
+                  component={addLinkManually}
+                />
+                <Route exact path="/manage-account" component={manageAccount} />
+                <Route exact path="/edit-book" component={editAlbum} />
+                <Route
+                  exact
+                  path="/update-password"
+                  component={updatePassword}
+                />
+                <Route
+                  exact
+                  path="/:username/book/:albumID"
+                  component={albumDetails}
+                />
+                <Route exact path="/@:username" component={anotherUser} />
+                <Route exact path="/feedback" component={feedback} />
+                <Route path="/@*" component={notFound} />
+                <Route path="*" component={notFound} />
+              </Switch>
               <ProfileCardMain />
             </div>
           </Switch>
