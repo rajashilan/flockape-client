@@ -5,7 +5,7 @@ import "../styles/ProgressSpinner.css";
 
 import Album from "../components/Album";
 
-import { uploadAlbumImage } from "../redux/actions/dataActions";
+import { uploadAlbumImage, clearAlbums } from "../redux/actions/dataActions";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -42,6 +42,7 @@ class addAlbumImage extends Component {
   }
 
   handleFinish = () => {
+    this.props.clearAlbums();
     this.props.history.push("/books");
   };
 
@@ -119,10 +120,16 @@ class addAlbumImage extends Component {
   }
 }
 
+const mapActionToProps = {
+  uploadAlbumImage,
+  clearAlbums,
+};
+
 addAlbumImage.propTypes = {
   data: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired,
   uploadAlbumImage: PropTypes.func.isRequired,
+  clearAlbums: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -130,4 +137,4 @@ const mapStateToProps = (state) => ({
   data: state.data,
 });
 
-export default connect(mapStateToProps, { uploadAlbumImage })(addAlbumImage);
+export default connect(mapStateToProps, mapActionToProps)(addAlbumImage);
